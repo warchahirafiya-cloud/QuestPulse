@@ -1,1 +1,328 @@
 
+
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#100d27">
+<meta name="description" content="QuestPulse - دليل فرص Web3 والإيردروب والمكافآت في الجزائر">
+<title>QuestPulse | فرص Web3</title>
+
+<style>
+:root{
+--bg:#0c0a1b;
+--panel:#17132e;
+--text:#f7f4ff;
+--muted:#bdb6d5;
+--purple:#a78bfa;
+--pink:#ec8bd5;
+--line:#ffffff20;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth;scroll-padding-top:90px}
+body{
+margin:0;
+font-family:Tahoma,Arial,sans-serif;
+background:radial-gradient(circle at 85% 0%,#39236b 0,transparent 30%),linear-gradient(160deg,#0c0a1b,#11102a 60%,#17102c);
+color:var(--text);
+line-height:1.8
+}
+a{color:inherit;text-decoration:none}
+.wrap{width:min(1120px,92%);margin:auto}
+header{
+position:sticky;top:0;z-index:10;
+background:#0c0a1bea;
+border-bottom:1px solid var(--line)
+}
+nav{
+display:flex;align-items:center;
+justify-content:space-between;
+gap:18px;padding:13px 0
+}
+.brand{font-size:1.35rem;font-weight:900}
+.brand span,.gradient{
+background:linear-gradient(90deg,var(--purple),var(--pink));
+-webkit-background-clip:text;
+background-clip:text;color:transparent
+}
+.links{display:flex;gap:15px;flex-wrap:wrap;font-size:.9rem;color:var(--muted)}
+.links a:hover{color:white}
+.hero{
+padding:66px 0 48px;
+display:grid;grid-template-columns:1.2fr .8fr;
+gap:35px;align-items:center
+}
+.eyebrow{
+display:inline-block;padding:5px 13px;
+border:1px solid #a78bfa66;border-radius:99px;
+color:#ddceff;background:#a78bfa12
+}
+h1{font-size:clamp(2.3rem,6vw,4.4rem);line-height:1.2;margin:18px 0}
+.lead{font-size:1.08rem;color:var(--muted)}
+.actions{display:flex;gap:12px;flex-wrap:wrap;margin-top:25px}
+.btn{
+display:inline-block;padding:10px 18px;
+border-radius:12px;font-weight:bold;
+background:linear-gradient(110deg,#8b5cf6,#c084fc);
+color:#120d27
+}
+.btn.secondary{background:#ffffff0b;color:white;border:1px solid var(--line)}
+.orb{
+min-height:260px;border-radius:28px;
+border:1px solid #ffffff22;
+background:radial-gradient(circle,#9b72ff55,transparent 62%);
+display:grid;place-items:center
+}
+.pulse{font-size:6rem;text-shadow:0 0 40px #c4a5fd}
+section{padding:36px 0}
+.section-title{font-size:1.8rem;margin:0 0 5px}
+.sub,.card p{color:var(--muted)}
+.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:15px}
+.card{
+padding:20px;border:1px solid var(--line);
+border-radius:18px;
+background:linear-gradient(145deg,#211a43dd,#15122ddd)
+}
+.card h3{margin:8px 0 5px}
+.icon{font-size:1.8rem}
+.tag{
+display:inline-block;padding:3px 9px;
+border-radius:20px;font-size:.78rem;
+background:#a78bfa20;color:#ddceff;
+border:1px solid #a78bfa44
+}
+.notice{
+border:1px solid #a78bfa55;
+background:#a78bfa12;
+border-radius:16px;padding:17px
+}
+.warning{border-color:#fbbf2455;background:#fbbf2410;color:#ffedbd}
+.filters{display:flex;gap:10px;flex-wrap:wrap;margin:15px 0}
+.filters input,.filters select{
+background:#17132e;color:white;
+border:1px solid var(--line);
+border-radius:10px;padding:11px 13px;font:inherit
+}
+.steps{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+.step{padding:16px;border-radius:15px;background:#ffffff08;border:1px solid var(--line)}
+.small{font-size:.88rem;color:var(--muted)}
+footer{border-top:1px solid var(--line);padding:25px 0;color:var(--muted);margin-top:35px}
+[hidden]{display:none!important}
+@media(max-width:760px){
+.hero{grid-template-columns:1fr;padding-top:42px}
+.orb{min-height:180px}
+.grid,.steps{grid-template-columns:1fr}
+nav{align-items:flex-start;flex-direction:column}
+.links{gap:10px 14px}
+}
+</style>
+</head>
+
+<body>
+<header>
+<div class="wrap">
+<nav>
+<a class="brand" href="#home">Quest<span>Pulse</span></a>
+<div class="links">
+<a href="#home">الرئيسية</a>
+<a href="#airdrops">الإيردروب</a>
+<a href="#telegram">بوتات تيليغرام</a>
+<a href="#referrals">الإحالات</a>
+<a href="#apps">التطبيقات</a>
+<a href="#safety">الأمان</a>
+<a href="#about">عن الموقع</a>
+</div>
+</nav>
+</div>
+</header>
+
+<main class="wrap">
+
+<section class="hero" id="home">
+<div>
+<span class="eyebrow">بوابتك العربية إلى عالم Web3</span>
+<h1>اكتشف الفرص<br><span class="gradient">وتحقق قبل أن تشارك</span></h1>
+<p class="lead">
+QuestPulse دليل لمتابعة الإيردروب وبوتات تيليغرام وبرامج الإحالة وتطبيقات المكافآت. نركز على وضوح الشروط والمخاطر ومدى التوفر في الجزائر.
+</p>
+<div class="actions">
+<a class="btn" href="#airdrops">استكشف الفرص</a>
+<a class="btn secondary" href="#safety">إرشادات الأمان</a>
+</div>
+</div>
+<div class="orb"><div class="pulse">✦</div></div>
+</section>
+
+<div class="notice warning">
+<strong>تنبيه مهم:</strong>
+لا توجد أرباح مضمونة في Web3. لا ترسل أموالاً لمجرد وعد بالتعدين أو الربح، ولا تشارك عبارة الاسترداد أو المفتاح الخاص مع أي شخص.
+</div>
+
+<section id="airdrops">
+<h2 class="section-title">🪂 فرص الإيردروب</h2>
+<p class="sub">تابع الحملات ومهام المشاريع وتحقق من الشروط ومواعيد التوزيع.</p>
+<div class="grid">
+<article class="card">
+<div class="icon">🚀</div>
+<h3>مشاريع واعدة</h3>
+<p>فرص المشاركة في المشاريع الجديدة بعد التحقق من مصادرها الرسمية.</p>
+<span class="tag">قيد الإضافة والتحقق</span>
+</article>
+<article class="card">
+<div class="icon">🎁</div>
+<h3>حملات المكافآت</h3>
+<p>المهام المطلوبة والأهلية ومواعيد التوزيع ورسوم المطالبة.</p>
+<span class="tag">قيد الإضافة والتحقق</span>
+</article>
+<article class="card">
+<div class="icon">🔎</div>
+<h3>تحليل المخاطر</h3>
+<p>السيولة وFDV وتوزيع العملات وعمليات فتح العملات ومخاطر العقود.</p>
+<span class="tag">منهج التقييم</span>
+</article>
+</div>
+</section>
+
+<section id="telegram">
+<h2 class="section-title">🤖 بوتات تيليغرام</h2>
+<p class="sub">دليل بوتات التعدين والمكافآت والمهام.</p>
+<div class="card">
+<h3>بوتات التعدين والمكافآت</h3>
+<p>سنوضح الرابط الرسمي وإثباتات الدفع والحد الأدنى للسحب ورسوم التفعيل والإيداع.</p>
+<p>سنوضح أيضاً مدى توفر كل بوت في الجزائر.</p>
+<span class="tag">لا توجد بوتات موثقة مضافة حالياً</span>
+</div>
+</section>
+
+<section id="referrals">
+<h2 class="section-title">🔗 مواقع الإحالة والمكافآت</h2>
+<p class="sub">مواقع تمنح مكافآت مقابل التسجيل أو تنفيذ المهام أو دعوة الأصدقاء.</p>
+<div class="card">
+<h3>فرص الإحالة</h3>
+<p>قيمة المكافأة وشروط الحصول عليها والحد الأدنى للسحب وطريقة الدفع.</p>
+<span class="tag">قيد التحقق</span>
+</div>
+</section>
+
+<section id="apps">
+<h2 class="section-title">📱 تطبيقات الكسب والتعدين</h2>
+<p class="sub">ابحث عن الفرص حسب الاسم أو نوع النشاط.</p>
+
+<div class="filters">
+<input id="searchInput" type="search" placeholder="ابحث عن تطبيق أو فرصة...">
+<select id="typeFilter">
+<option value="all">كل الأنواع</option>
+<option value="mining">التعدين الخفيف</option>
+<option value="tasks">المهام والمكافآت</option>
+<option value="referral">الإحالات</option>
+</select>
+</div>
+
+<div id="opportunityList" class="grid">
+<article class="card opportunity" data-type="mining">
+<div class="icon">⛏️</div>
+<h3>التعدين الخفيف</h3>
+<p>تطبيقات التعدين والتشغيل الدوري بعد التحقق من طريقة احتساب المكافآت.</p>
+<span class="tag">قيد التحقق</span>
+</article>
+
+<article class="card opportunity" data-type="tasks">
+<div class="icon">🧩</div>
+<h3>المهام اليومية</h3>
+<p>مهام تجربة التطبيقات والمواقع والاستبيانات وشروط الدفع.</p>
+<span class="tag">قيد التحقق</span>
+</article>
+
+<article class="card opportunity" data-type="referral">
+<div class="icon">👥</div>
+<h3>برامج الإحالة</h3>
+<p>مكافآت دعوة الأصدقاء وشروط السحب.</p>
+<span class="tag">قيد التحقق</span>
+</article>
+</div>
+
+<p id="noResults" class="notice" hidden>لا توجد نتائج مطابقة لبحثك.</p>
+</section>
+
+<section id="how">
+<h2 class="section-title">⏱️ معلومات كل فرصة</h2>
+<p class="sub">ستتضمن بطاقة كل فرصة المعلومات التالية:</p>
+<div class="steps">
+<div class="step">
+<strong>🇩🇿 التوفر في الجزائر</strong>
+<p class="small">متاح أو غير متاح أو غير مؤكد.</p>
+</div>
+<div class="step">
+<strong>🔄 توقيت إعادة التعدين</strong>
+<p class="small">كل ساعة أو 3 ساعات أو 24 ساعة أو تلقائي.</p>
+</div>
+<div class="step">
+<strong>💸 السحب والرسوم</strong>
+<p class="small">الحد الأدنى والعملة والشبكة ورسوم السحب.</p>
+</div>
+</div>
+</section>
+
+<section id="safety">
+<h2 class="section-title">🛡️ قواعد الأمان</h2>
+<div class="notice">
+<ul>
+<li>تحقق من الرابط والحساب الرسمي قبل ربط المحفظة.</li>
+<li>لا تشارك عبارة الاسترداد أو المفتاح الخاص مطلقاً.</li>
+<li>احذر رسوم التفعيل وفتح السحب غير الموثقة.</li>
+<li>افحص السيولة وFDV وجدول Vesting وعمليات فتح العملات.</li>
+<li>إثبات الدفع السابق لا يضمن استمرار الدفع مستقبلاً.</li>
+</ul>
+</div>
+</section>
+
+<section id="about">
+<h2 class="section-title">عن QuestPulse</h2>
+<p class="sub">
+QuestPulse مشروع دليل مستقل باللغة العربية لمساعدة المستخدمين على استكشاف فرص Web3 بحذر وشفافية، مع اهتمام خاص بتوضيح مدى توفر الخدمات في الجزائر.
+</p>
+<p class="small">
+المعلومات لأغراض تعليمية فقط، وليست ضماناً للعائد أو توصية استثمارية. يجب مراجعة المصدر الرسمي لكل مشروع قبل المشاركة.
+</p>
+</section>
+
+</main>
+
+<footer>
+<div class="wrap">
+© <span id="year"></span> QuestPulse — جميع الحقوق محفوظة.
+<p class="small">تحقق أولاً. شارك بوعي. احمِ محفظتك.</p>
+</div>
+</footer>
+
+<script>
+document.getElementById("year").textContent = new Date().getFullYear();
+
+const searchInput = document.getElementById("searchInput");
+const typeFilter = document.getElementById("typeFilter");
+const cards = Array.from(document.querySelectorAll(".opportunity"));
+const noResults = document.getElementById("noResults");
+
+function filterOpportunities(){
+const query = searchInput.value.trim().toLowerCase();
+const type = typeFilter.value;
+let visible = 0;
+
+cards.forEach(card => {
+const matchesText = card.textContent.toLowerCase().includes(query);
+const matchesType = type === "all" || card.dataset.type === type;
+const show = matchesText && matchesType;
+card.hidden = !show;
+if(show) visible++;
+});
+
+noResults.hidden = visible !== 0;
+}
+
+searchInput.addEventListener("input",filterOpportunities);
+typeFilter.addEventListener("change",filterOpportunities);
+</script>
+
+</body>
+</html>
