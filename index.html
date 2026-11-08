@@ -1,238 +1,112 @@
-
-
 <!doctype html>
 <html lang="ar" dir="rtl">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="theme-color" content="#100d27">
-<meta name="description" content="QuestPulse - دليل فرص Web3 والإيردروب والمكافآت في الجزائر">
-<title>QuestPulse | فرص Web3</title>
-
+<meta name="theme-color" content="#0b1020">
+<meta name="description" content="QuestPulse — اكتشف فرص Web3 وتحقق قبل المشاركة">
+<title>QuestPulse | Web3 Discovery</title>
 <style>
-:root{
---bg:#0c0a1b;
---panel:#17132e;
---text:#f7f4ff;
---muted:#bdb6d5;
---purple:#a78bfa;
---pink:#ec8bd5;
---line:#ffffff20;
-}
-*{box-sizing:border-box}
-html{scroll-behavior:smooth;scroll-padding-top:90px}
-body{
-margin:0;
-font-family:Tahoma,Arial,sans-serif;
-background:radial-gradient(circle at 85% 0%,#39236b 0,transparent 30%),linear-gradient(160deg,#0c0a1b,#11102a 60%,#17102c);
-color:var(--text);
-line-height:1.8
-}
-a{color:inherit;text-decoration:none}
-.wrap{width:min(1120px,92%);margin:auto}
-header{
-position:sticky;top:0;z-index:10;
-background:#0c0a1bea;
-border-bottom:1px solid var(--line)
-}
-nav{
-display:flex;align-items:center;
-justify-content:space-between;
-gap:18px;padding:13px 0
-}
-.brand{font-size:1.35rem;font-weight:900}
-.brand span,.gradient{
-background:linear-gradient(90deg,var(--purple),var(--pink));
--webkit-background-clip:text;
-background-clip:text;color:transparent
-}
-.links{display:flex;gap:15px;flex-wrap:wrap;font-size:.9rem;color:var(--muted)}
-.links a:hover{color:white}
-.hero{
-padding:66px 0 48px;
-display:grid;grid-template-columns:1.2fr .8fr;
-gap:35px;align-items:center
-}
-.eyebrow{
-display:inline-block;padding:5px 13px;
-border:1px solid #a78bfa66;border-radius:99px;
-color:#ddceff;background:#a78bfa12
-}
-h1{font-size:clamp(2.3rem,6vw,4.4rem);line-height:1.2;margin:18px 0}
-.lead{font-size:1.08rem;color:var(--muted)}
-.actions{display:flex;gap:12px;flex-wrap:wrap;margin-top:25px}
-.btn{
-display:inline-block;padding:10px 18px;
-border-radius:12px;font-weight:bold;
-background:linear-gradient(110deg,#8b5cf6,#c084fc);
-color:#120d27
-}
-.btn.secondary{background:#ffffff0b;color:white;border:1px solid var(--line)}
-.orb{
-min-height:260px;border-radius:28px;
-border:1px solid #ffffff22;
-background:radial-gradient(circle,#9b72ff55,transparent 62%);
-display:grid;place-items:center
-}
-.pulse{font-size:6rem;text-shadow:0 0 40px #c4a5fd}
-section{padding:36px 0}
-.section-title{font-size:1.8rem;margin:0 0 5px}
-.sub,.card p{color:var(--muted)}
-.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:15px}
-.card{
-padding:20px;border:1px solid var(--line);
-border-radius:18px;
-background:linear-gradient(145deg,#211a43dd,#15122ddd)
-}
-.card h3{margin:8px 0 5px}
-.icon{font-size:1.8rem}
-.tag{
-display:inline-block;padding:3px 9px;
-border-radius:20px;font-size:.78rem;
-background:#a78bfa20;color:#ddceff;
-border:1px solid #a78bfa44
-}
-.notice{
-border:1px solid #a78bfa55;
-background:#a78bfa12;
-border-radius:16px;padding:17px
-}
-.warning{border-color:#fbbf2455;background:#fbbf2410;color:#ffedbd}
-.filters{display:flex;gap:10px;flex-wrap:wrap;margin:15px 0}
-.filters input,.filters select{
-background:#17132e;color:white;
-border:1px solid var(--line);
-border-radius:10px;padding:11px 13px;font:inherit
-}
-.steps{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
-.step{padding:16px;border-radius:15px;background:#ffffff08;border:1px solid var(--line)}
-.small{font-size:.88rem;color:var(--muted)}
-footer{border-top:1px solid var(--line);padding:25px 0;color:var(--muted);margin-top:35px}
+:root{--bg:#090e1b;--panel:#111a2d;--panel2:#17233a;--text:#f4f7ff;--muted:#9eacc4;--line:#ffffff16;--violet:#9b8cff;--cyan:#55d6d0;--pink:#ed91d0;--good:#39d6a2;--warn:#f4bd62;--bad:#ff7185;--usage:#39d6a2}
+*{box-sizing:border-box}html{scroll-behavior:smooth;scroll-padding-top:90px}
+body{margin:0;background:radial-gradient(ellipse at 85% -10%,#34316b88,transparent 38%),radial-gradient(ellipse at 0% 35%,#124e5b33,transparent 35%),var(--bg);color:var(--text);font-family:Inter,system-ui,-apple-system,"Segoe UI",Tahoma,Arial,sans-serif;line-height:1.7}
+a{color:inherit;text-decoration:none}button,input,select{font:inherit}.wrap{width:min(1180px,92%);margin:auto}
+header{position:sticky;top:0;z-index:20;background:#090e1beF;border-bottom:1px solid var(--line);backdrop-filter:blur(16px)}
+nav{min-height:72px;display:flex;align-items:center;justify-content:space-between;gap:18px}
+.brand{font-size:1.4rem;font-weight:900;letter-spacing:-.6px}.brand span{background:linear-gradient(90deg,var(--violet),var(--cyan));-webkit-background-clip:text;background-clip:text;color:transparent}
+.navlinks{display:flex;gap:19px;align-items:center;flex-wrap:wrap;color:var(--muted);font-size:.91rem}.navlinks a:hover{color:var(--text)}
+.navtools{display:flex;align-items:center;gap:10px}.lang{background:var(--panel);color:var(--text);border:1px solid var(--line);border-radius:10px;padding:8px 10px}
+.qp{display:inline-flex;align-items:center;gap:7px;border:1px solid #9b8cff55;background:#9b8cff16;padding:6px 10px;border-radius:14px;font-weight:800;font-size:.9rem}
+.candy{width:22px;height:22px;display:grid;place-items:center;border-radius:8px;background:linear-gradient(145deg,#f3a5e1,#9b8cff);color:#17112c;font-size:14px}
+.hero{padding:76px 0 48px;display:grid;grid-template-columns:1.15fr .85fr;gap:40px;align-items:center}
+.eyebrow{display:inline-flex;gap:8px;align-items:center;border:1px solid #55d6d055;background:#55d6d012;color:#a7f1e9;border-radius:99px;padding:6px 13px;font-size:.85rem}
+h1{font-size:clamp(2.5rem,6vw,5rem);line-height:1.08;letter-spacing:-2px;margin:20px 0}
+.gradient{background:linear-gradient(95deg,#a99bff,#68e1d5 75%);-webkit-background-clip:text;background-clip:text;color:transparent}
+.lead{font-size:1.08rem;color:var(--muted);max-width:660px}.actions{display:flex;gap:12px;flex-wrap:wrap;margin-top:26px}
+.btn{display:inline-flex;align-items:center;justify-content:center;padding:11px 18px;border-radius:12px;background:linear-gradient(110deg,#a99bff,#68d9d0);color:#0a1020;font-weight:850;border:0;cursor:pointer}
+.btn.secondary{background:#ffffff08;color:var(--text);border:1px solid var(--line)}
+.hero-art{min-height:310px;border:1px solid #ffffff20;border-radius:28px;background:linear-gradient(145deg,#1b2440aa,#111a2dcc);display:flex;flex-direction:column;justify-content:center;align-items:center;position:relative;overflow:hidden}
+.hero-art:before,.hero-art:after{content:"";position:absolute;border:1px solid #a99bff30;border-radius:50%;width:260px;height:260px}.hero-art:after{width:190px;height:190px}
+.orbit{font-size:5rem;z-index:1;text-shadow:0 0 50px #9b8cff}.art-caption{z-index:1;color:var(--muted);font-size:.9rem}
+section{padding:35px 0}.section-head{display:flex;justify-content:space-between;align-items:end;gap:20px;margin-bottom:18px}.section-title{font-size:1.65rem;margin:0}.sub{color:var(--muted);margin:4px 0 0}
+.grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px}
+.card{padding:20px;border:1px solid var(--line);border-radius:18px;background:linear-gradient(145deg,#17233ad9,#10182ad9);box-shadow:0 12px 35px #00000012}
+.card h3{margin:8px 0 5px;font-size:1.08rem}.card p{color:var(--muted);margin:6px 0 14px}.card-icon{font-size:1.7rem}
+.tag{display:inline-flex;border:1px solid #9b8cff44;background:#9b8cff15;color:#d4ccff;border-radius:99px;padding:3px 9px;font-size:.77rem}
+.notice{padding:16px 18px;border-radius:15px;border:1px solid #f4bd6255;background:#f4bd620d;color:#f7dfb3}
+.metric-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px}.metric{padding:19px;border-radius:18px;background:#121d30;border:1px solid var(--line)}
+.metric-top{display:flex;justify-content:space-between;gap:10px;align-items:center}.metric strong{font-size:1.4rem}
+.trend{width:100%;height:72px;margin-top:8px;overflow:visible}.trend polyline{fill:none;stroke:var(--usage);stroke-width:4;stroke-linecap:round;stroke-linejoin:round}
+.metric[data-level="low"]{--usage:var(--bad)}.metric[data-level="medium"]{--usage:var(--warn)}.metric[data-level="high"]{--usage:var(--good)}
+.filters{display:flex;gap:10px;flex-wrap:wrap;margin:18px 0}.filters input,.filters select{background:#111a2d;color:var(--text);border:1px solid var(--line);border-radius:11px;padding:11px 13px;min-width:190px}
+.opportunity{display:flex;flex-direction:column;min-height:230px}.opportunity .meta{margin-top:auto;display:flex;justify-content:space-between;gap:8px;align-items:center;flex-wrap:wrap}.muted{color:var(--muted);font-size:.85rem}
+.steps{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}.step{padding:17px;border:1px solid var(--line);border-radius:15px;background:#ffffff06}.step b{display:block;margin-bottom:5px}
+footer{margin-top:35px;border-top:1px solid var(--line);padding:26px 0;color:var(--muted);font-size:.9rem}
 [hidden]{display:none!important}
-@media(max-width:760px){
-.hero{grid-template-columns:1fr;padding-top:42px}
-.orb{min-height:180px}
-.grid,.steps{grid-template-columns:1fr}
-nav{align-items:flex-start;flex-direction:column}
-.links{gap:10px 14px}
-}
+@media(max-width:850px){.hero{grid-template-columns:1fr;padding-top:48px}.hero-art{min-height:220px}.grid{grid-template-columns:repeat(2,minmax(0,1fr))}.navlinks{gap:11px}}
+@media(max-width:620px){nav{padding:12px 0;align-items:flex-start;flex-direction:column}.navtools{position:absolute;top:15px;inset-inline-end:4%}.navlinks{padding-bottom:10px}.grid,.steps,.metric-grid{grid-template-columns:1fr}.section-head{align-items:flex-start;flex-direction:column}h1{letter-spacing:-1px}}
 </style>
 </head>
-
 <body>
-<header>
-<div class="wrap">
-<nav>
+<header><div class="wrap"><nav>
 <a class="brand" href="#home">Quest<span>Pulse</span></a>
-<div class="links">
-<a href="#home">الرئيسية</a>
-<a href="#airdrops">الإيردروب</a>
-<a href="#telegram">بوتات تيليغرام</a>
-<a href="#referrals">الإحالات</a>
-<a href="#apps">التطبيقات</a>
-<a href="#safety">الأمان</a>
-<a href="#about">عن الموقع</a>
+<div class="navlinks">
+<a href="#home" data-i18n="navHome">الرئيسية</a><a href="#discover" data-i18n="navDiscover">اكتشف الفرص</a><a href="#telegram" data-i18n="navTelegram">بوتات تيليغرام</a><a href="#apps" data-i18n="navApps">التطبيقات</a><a href="#safety" data-i18n="navSafety">الأمان</a><a href="#about" data-i18n="navAbout">عن المنصة</a>
 </div>
-</nav>
-</div>
-</header>
-
+<div class="navtools"><span class="qp" title="QuestPulse Points"><span class="candy">✦</span><span>QP</span><span id="qpCount">0</span></span><select class="lang" id="language" aria-label="Language"><option value="ar">العربية</option><option value="en">English</option><option value="fr">Français</option></select></div>
+</nav></div></header>
 <main class="wrap">
-
 <section class="hero" id="home">
-<div>
-<span class="eyebrow">بوابتك العربية إلى عالم Web3</span>
-<h1>اكتشف الفرص<br><span class="gradient">وتحقق قبل أن تشارك</span></h1>
-<p class="lead">
-QuestPulse دليل لمتابعة الإيردروب وبوتات تيليغرام وبرامج الإحالة وتطبيقات المكافآت. نركز على وضوح الشروط والمخاطر ومدى التوفر في الجزائر.
-</p>
-<div class="actions">
-<a class="btn" href="#airdrops">استكشف الفرص</a>
-<a class="btn secondary" href="#safety">إرشادات الأمان</a>
-</div>
-</div>
-<div class="orb"><div class="pulse">✦</div></div>
+<div><span class="eyebrow" data-i18n="eyebrow">✦ بوابتك الذكية إلى عالم Web3</span>
+<h1><span data-i18n="heroLine1">اكتشف الفرص.</span><br><span class="gradient" data-i18n="heroLine2">تحقق قبل أن تشارك.</span></h1>
+<p class="lead" data-i18n="heroText">منصة لاكتشاف فرص Web3 والإيردروب وبوتات تيليغرام ومواقع وتطبيقات المكافآت، مع عرض الشروط ومصادر التحقق والمخاطر بوضوح.</p>
+<div class="actions"><a class="btn" href="#discover" data-i18n="explore">استكشف الفرص</a><a class="btn secondary" href="#safety" data-i18n="safetyGuide">دليل الأمان</a></div></div>
+<div class="hero-art"><div class="orbit">✧</div><div class="art-caption">DISCOVER · VERIFY · EARN</div></div>
 </section>
+<div class="notice"><strong data-i18n="noticeTitle">تنبيه مهم:</strong> <span data-i18n="noticeText">لا توجد أرباح مضمونة. تحقق من المصدر الرسمي ولا تدفع رسوم تفعيل أو تكشف بيانات محفظتك لمجرد وعود بالربح.</span></div>
 
-<div class="notice warning">
-<strong>تنبيه مهم:</strong>
-لا توجد أرباح مضمونة في Web3. لا ترسل أموالاً لمجرد وعد بالتعدين أو الربح، ولا تشارك عبارة الاسترداد أو المفتاح الخاص مع أي شخص.
-</div>
-
-<section id="airdrops">
-<h2 class="section-title">🪂 فرص الإيردروب</h2>
-<p class="sub">تابع الحملات ومهام المشاريع وتحقق من الشروط ومواعيد التوزيع.</p>
+<section id="discover"><div class="section-head"><div><h2 class="section-title" data-i18n="discoverTitle">اكتشف الفرص</h2><p class="sub" data-i18n="discoverSub">تصنيفات واضحة للوصول إلى الفرص ومراجعتها.</p></div></div>
 <div class="grid">
-<article class="card">
-<div class="icon">🚀</div>
-<h3>مشاريع واعدة</h3>
-<p>فرص المشاركة في المشاريع الجديدة بعد التحقق من مصادرها الرسمية.</p>
-<span class="tag">قيد الإضافة والتحقق</span>
-</article>
-<article class="card">
-<div class="icon">🎁</div>
-<h3>حملات المكافآت</h3>
-<p>المهام المطلوبة والأهلية ومواعيد التوزيع ورسوم المطالبة.</p>
-<span class="tag">قيد الإضافة والتحقق</span>
-</article>
-<article class="card">
-<div class="icon">🔎</div>
-<h3>تحليل المخاطر</h3>
-<p>السيولة وFDV وتوزيع العملات وعمليات فتح العملات ومخاطر العقود.</p>
-<span class="tag">منهج التقييم</span>
-</article>
-</div>
-</section>
+<article class="card"><div class="card-icon">🪂</div><h3 data-i18n="airdropTitle">الإيردروب والحملات</h3><p data-i18n="airdropText">المهام، الأهلية، مواعيد التوزيع، ورسوم المطالبة.</p><span class="tag" data-i18n="coming">قيد الإضافة والتحقق</span></article>
+<article class="card" id="telegram"><div class="card-icon">🤖</div><h3 data-i18n="telegramTitle">بوتات تيليغرام</h3><p data-i18n="telegramText">الرابط الرسمي، آلية العمل، إثباتات الدفع، ورسوم التفعيل والسحب.</p><span class="tag" data-i18n="verifyStatus">تُضاف بعد التحقق</span></article>
+<article class="card"><div class="card-icon">🔗</div><h3 data-i18n="referralTitle">الإحالات والمكافآت</h3><p data-i18n="referralText">قيمة المكافأة وشروطها والحد الأدنى للسحب وطريقة الدفع.</p><span class="tag" data-i18n="coming">قيد الإضافة والتحقق</span></article>
+</div></section>
 
-<section id="telegram">
-<h2 class="section-title">🤖 بوتات تيليغرام</h2>
-<p class="sub">دليل بوتات التعدين والمكافآت والمهام.</p>
-<div class="card">
-<h3>بوتات التعدين والمكافآت</h3>
-<p>سنوضح الرابط الرسمي وإثباتات الدفع والحد الأدنى للسحب ورسوم التفعيل والإيداع.</p>
-<p>سنوضح أيضاً مدى توفر كل بوت في الجزائر.</p>
-<span class="tag">لا توجد بوتات موثقة مضافة حالياً</span>
-</div>
-</section>
+<section id="usage"><div class="section-head"><div><h2 class="section-title" data-i18n="usageTitle">مؤشر نشاط المنتجات</h2><p class="sub" data-i18n="usageSub">معاينة لشكل المؤشر؛ يتغير لون المسار حسب مستوى الاستخدام عند ربط بيانات فعلية.</p></div></div>
+<div class="metric-grid">
+<div class="metric" data-level="high"><div class="metric-top"><span data-i18n="metricHigh">مستوى استخدام مرتفع</span><strong>↗</strong></div><svg class="trend" viewBox="0 0 320 72" role="img" aria-label="Rising multi-turn trend line"><polyline points="4,60 34,47 54,54 83,30 107,40 136,22 158,32 188,15 210,25 239,8 263,17 290,3 316,8"/></svg></div>
+<div class="metric" data-level="medium"><div class="metric-top"><span data-i18n="metricMedium">مستوى استخدام متوسط</span><strong>↗</strong></div><svg class="trend" viewBox="0 0 320 72" role="img" aria-label="Rising multi-turn trend line"><polyline points="4,62 35,53 58,59 86,43 109,48 138,35 163,43 191,29 215,35 244,23 269,29 294,16 316,20"/></svg></div>
+</div><p class="muted" data-i18n="demoNote">هذه رسومات توضيحية فقط وليست إحصاءات استخدام حقيقية.</p></section>
 
-<section id="referrals">
-<h2 class="section-title">🔗 مواقع الإحالة والمكافآت</h2>
-<p class="sub">مواقع تمنح مكافآت مقابل التسجيل أو تنفيذ المهام أو دعوة الأصدقاء.</p>
-<div class="card">
-<h3>فرص الإحالة</h3>
-<p>قيمة المكافأة وشروط الحصول عليها والحد الأدنى للسحب وطريقة الدفع.</p>
-<span class="tag">قيد التحقق</span>
-</div>
-</section>
-
-<section id="apps">
-<h2 class="section-title">📱 تطبيقات الكسب والتعدين</h2>
-<p class="sub">ابحث عن الفرص حسب الاسم أو نوع النشاط.</p>
-
-<div class="filters">
-<input id="searchInput" type="search" placeholder="ابحث عن تطبيق أو فرصة...">
-<select id="typeFilter">
-<option value="all">كل الأنواع</option>
-<option value="mining">التعدين الخفيف</option>
-<option value="tasks">المهام والمكافآت</option>
-<option value="referral">الإحالات</option>
-</select>
-</div>
-
+<section id="apps"><div class="section-head"><div><h2 class="section-title" data-i18n="appsTitle">التطبيقات ومواقع الكسب</h2><p class="sub" data-i18n="appsSub">ابحث وصنّف الفرص حسب نوع النشاط.</p></div></div>
+<div class="filters"><input id="searchInput" type="search" placeholder="ابحث عن فرصة..." data-i18n-placeholder="searchPlaceholder"><select id="typeFilter" aria-label="Filter"><option value="all" data-i18n="allTypes">كل الأنواع</option><option value="mining" data-i18n="mining">التعدين الخفيف</option><option value="tasks" data-i18n="tasks">المهام والمكافآت</option><option value="referral" data-i18n="referrals">الإحالات</option></select></div>
 <div id="opportunityList" class="grid">
-<article class="card opportunity" data-type="mining">
-<div class="icon">⛏️</div>
-<h3>التعدين الخفيف</h3>
-<p>تطبيقات التعدين والتشغيل الدوري بعد التحقق من طريقة احتساب المكافآت.</p>
-<span class="tag">قيد التحقق</span>
-</article>
+<article class="card opportunity" data-type="mining"><div class="card-icon">⛏️</div><h3 data-i18n="miningTitle">التعدين الخفيف</h3><p data-i18n="miningText">تطبيقات التشغيل الدوري مع توضيح طريقة احتساب المكافآت.</p><div class="meta"><span class="tag" data-i18n="sample">تصنيف تجريبي</span><span class="muted" data-i18n="intervalUnknown">التوقيت: غير محدد</span></div></article>
+<article class="card opportunity" data-type="tasks"><div class="card-icon">🧩</div><h3 data-i18n="tasksTitle">المهام اليومية</h3><p data-i18n="tasksText">تجربة التطبيقات والمواقع والاستبيانات وشروط الدفع.</p><div class="meta"><span class="tag" data-i18n="sample">تصنيف تجريبي</span><span class="muted" data-i18n="payoutUnknown">السحب: غير محدد</span></div></article>
+<article class="card opportunity" data-type="referral"><div class="card-icon">👥</div><h3 data-i18n="referralsTitle">برامج الإحالة</h3><p data-i18n="referralsText">مكافآت الدعوة وشروط الاستحقاق والحد الأدنى للسحب.</p><div class="meta"><span class="tag" data-i18n="sample">تصنيف تجريبي</span><span class="muted" data-i18n="payoutUnknown">السحب: غير محدد</span></div></article>
+</div><p id="noResults" class="notice" hidden data-i18n="noResults">لا توجد نتائج مطابقة لبحثك.</p></section>
 
-<article class="card opportunity" data-type="tasks">
-<div class="icon">🧩</div>
-<h3>المهام اليومية</h3>
-<p>مهام تجربة التطبيقات والمواقع والاستبيانات وشروط الدفع.</p>
-<span class="tag">قيد التحقق</span>
-</article>
+<section id="how"><div class="section-head"><div><h2 class="section-title" data-i18n="howTitle">ماذا ستجد في بطاقة كل فرصة؟</h2><p class="sub" data-i18n="howSub">معلومات عملية تساعد على اتخاذ قرار واعٍ.</p></div></div>
+<div class="steps"><div class="step"><b>🌍 <span data-i18n="availabilityTitle">التوفر والأهلية</span></b><span class="muted" data-i18n="availabilityText">حالة التوفر، الدول المدعومة، ومتطلبات التسجيل.</span></div><div class="step"><b>⏱️ <span data-i18n="timerTitle">توقيت إعادة التعدين</span></b><span class="muted" data-i18n="timerText">كل ساعة أو 3 ساعات أو 24 ساعة أو تشغيل تلقائي.</span></div><div class="step"><b>💸 <span data-i18n="withdrawTitle">السحب والرسوم</span></b><span class="muted" data-i18n="withdrawText">الحد الأدنى، العملة، الشبكة، والرسوم.</span></div></div></section>
 
-<article class="card opportunity" data-type="referral">
-
+<section id="safety"><h2 class="section-title" data-i18n="safetyTitle">قواعد الأمان والتحقق</h2><div class="card"><ul>
+<li data-i18n="safe1">تحقق من الرابط والحساب الرسمي قبل ربط المحفظة.</li><li data-i18n="safe2">لا تشارك عبارة الاسترداد أو المفتاح الخاص مطلقاً.</li><li data-i18n="safe3">احذر رسوم التفعيل وفتح السحب غير الموثقة.</li><li data-i18n="safe4">راجع السيولة وFDV وجدول Vesting وعمليات فتح العملات.</li><li data-i18n="safe5">إثبات الدفع السابق لا يضمن استمرار الدفع مستقبلاً.</li>
+</ul></div></section>
+<section id="about"><h2 class="section-title" data-i18n="aboutTitle">عن QuestPulse</h2><p class="sub" data-i18n="aboutText">QuestPulse منصة مستقلة لاكتشاف فرص Web3 ومراجعة شروطها ومصادرها ومخاطرها بشفافية.</p><p class="muted" data-i18n="disclaimer">المحتوى لأغراض تعليمية فقط، ولا يمثل ضماناً للعائد أو توصية استثمارية. يجب مراجعة المصادر الرسمية قبل المشاركة.</p></section>
+</main>
+<footer><div class="wrap"><strong>QuestPulse</strong> · <span data-i18n="footerText">تحقق أولاً. شارك بوعي. احمِ محفظتك.</span><span style="float:inline-end">© <span id="year"></span></span></div></footer>
+<script>
+const translations={
+ar:{navHome:"الرئيسية",navDiscover:"اكتشف الفرص",navTelegram:"بوتات تيليغرام",navApps:"التطبيقات",navSafety:"الأمان",navAbout:"عن المنصة",eyebrow:"✦ بوابتك الذكية إلى عالم Web3",heroLine1:"اكتشف الفرص.",heroLine2:"تحقق قبل أن تشارك.",heroText:"منصة لاكتشاف فرص Web3 والإيردروب وبوتات تيليغرام ومواقع وتطبيقات المكافآت، مع عرض الشروط ومصادر التحقق والمخاطر بوضوح.",explore:"استكشف الفرص",safetyGuide:"دليل الأمان",noticeTitle:"تنبيه مهم:",noticeText:"لا توجد أرباح مضمونة. تحقق من المصدر الرسمي ولا تدفع رسوم تفعيل أو تكشف بيانات محفظتك لمجرد وعود بالربح.",discoverTitle:"اكتشف الفرص",discoverSub:"تصنيفات واضحة للوصول إلى الفرص ومراجعتها.",airdropTitle:"الإيردروب والحملات",airdropText:"المهام، الأهلية، مواعيد التوزيع، ورسوم المطالبة.",coming:"قيد الإضافة والتحقق",telegramTitle:"بوتات تيليغرام",telegramText:"الرابط الرسمي، آلية العمل، إثباتات الدفع، ورسوم التفعيل والسحب.",verifyStatus:"تُضاف بعد التحقق",referralTitle:"الإحالات والمكافآت",referralText:"قيمة المكافأة وشروطها والحد الأدنى للسحب وطريقة الدفع.",usageTitle:"مؤشر نشاط المنتجات",usageSub:"معاينة لشكل المؤشر؛ يتغير لون المسار حسب مستوى الاستخدام عند ربط بيانات فعلية.",metricHigh:"مستوى استخدام مرتفع",metricMedium:"مستوى استخدام متوسط",demoNote:"هذه رسومات توضيحية فقط وليست إحصاءات استخدام حقيقية.",appsTitle:"التطبيقات ومواقع الكسب",appsSub:"ابحث وصنّف الفرص حسب نوع النشاط.",searchPlaceholder:"ابحث عن فرصة...",allTypes:"كل الأنواع",mining:"التعدين الخفيف",tasks:"المهام والمكافآت",referrals:"الإحالات",miningTitle:"التعدين الخفيف",miningText:"تطبيقات التشغيل الدوري مع توضيح طريقة احتساب المكافآت.",sample:"تصنيف تجريبي",intervalUnknown:"التوقيت: غير محدد",tasksTitle:"المهام اليومية",tasksText:"تجربة التطبيقات والمواقع والاستبيانات وشروط الدفع.",payoutUnknown:"السحب: غير محدد",referralsTitle:"برامج الإحالة",referralsText:"مكافآت الدعوة وشروط الاستحقاق والحد الأدنى للسحب.",noResults:"لا توجد نتائج مطابقة لبحثك.",howTitle:"ماذا ستجد في بطاقة كل فرصة؟",howSub:"معلومات عملية تساعد على اتخاذ قرار واعٍ.",availabilityTitle:"التوفر والأهلية",availabilityText:"حالة التوفر، الدول المدعومة، ومتطلبات التسجيل.",timerTitle:"توقيت إعادة التعدين",timerText:"كل ساعة أو 3 ساعات أو 24 ساعة أو تشغيل تلقائي.",withdrawTitle:"السحب والرسوم",withdrawText:"الحد الأدنى، العملة، الشبكة، والرسوم.",safetyTitle:"قواعد الأمان والتحقق",safe1:"تحقق من الرابط والحساب الرسمي قبل ربط المحفظة.",safe2:"لا تشارك عبارة الاسترداد أو المفتاح الخاص مطلقاً.",safe3:"احذر رسوم التفعيل وفتح السحب غير الموثقة.",safe4:"راجع السيولة وFDV وجدول Vesting وعمليات فتح العملات.",safe5:"إثبات الدفع السابق لا يضمن استمرار الدفع مستقبلاً.",aboutTitle:"عن QuestPulse",aboutText:"QuestPulse منصة مستقلة لاكتشاف فرص Web3 ومراجعة شروطها ومصادرها ومخاطرها بشفافية.",disclaimer:"المحتوى لأغراض تعليمية فقط، ولا يمثل ضماناً للعائد أو توصية استثمارية. يجب مراجعة المصادر الرسمية قبل المشاركة.",footerText:"تحقق أولاً. شارك بوعي. احمِ محفظتك."},
+en:{navHome:"Home",navDiscover:"Discover",navTelegram:"Telegram bots",navApps:"Apps",navSafety:"Safety",navAbout:"About",eyebrow:"✦ Your gateway to Web3",heroLine1:"Discover opportunities.",heroLine2:"Verify before you join.",heroText:"Explore Web3 opportunities, airdrops, Telegram bots, reward websites and apps, with clear terms, sources and risk information.",explore:"Explore opportunities",safetyGuide:"Safety guide",noticeTitle:"Important:",noticeText:"No rewards are guaranteed. Verify official sources and never pay activation fees or reveal wallet credentials based only on promises.",discoverTitle:"Discover opportunities",discoverSub:"Clear categories to find and review opportunities.",airdropTitle:"Airdrops & campaigns",airdropText:"Tasks, eligibility, distribution dates and claim fees.",coming:"Coming after verification",telegramTitle:"Telegram bots",telegramText:"Official links, how they work, payment evidence and activation or withdrawal fees.",verifyStatus:"Added after verification",referralTitle:"Referrals & rewards",referralText:"Reward value, conditions, minimum withdrawal and payout method.",usageTitle:"Product activity indicator",usageSub:"Indicator preview; its line color will reflect usage levels when connected to real data.",metricHigh:"High usage level",metricMedium:"Medium usage level",demoNote:"Illustrative graphics only; these are not real usage statistics.",appsTitle:"Earning apps & websites",appsSub:"Search and filter opportunities by activity.",searchPlaceholder:"Search opportunities...",allTypes:"All types",mining:"Light mining",tasks:"Tasks & rewards",referrals:"Referrals",miningTitle:"Light mining",miningText:"Periodic-use apps with transparent reward calculations.",sample:"Sample category",intervalUnknown:"Interval: not set",tasksTitle:"Daily tasks",tasksText:"App and website trials, surveys and payout terms.",payoutUnknown:"Withdrawal: not set",referralsTitle:"Referral programs",referralsText:"Invite rewards, eligibility and minimum withdrawal.",noResults:"No matching results.",howTitle:"What each opportunity card will show",howSub:"Practical details for informed decisions.",availabilityTitle:"Availability & eligibility",availabilityText:"Availability status, supported regions and signup requirements.",timerTitle:"Mining reset interval",timerText:"Every hour, 3 hours, 24 hours or automatic.",withdrawTitle:"Withdrawals & fees",withdrawText:"Minimum amount, currency, network and fees.",safetyTitle:"Safety & verification",safe1:"Verify the official link and account before connecting a wallet.",safe2:"Never share your recovery phrase or private key.",safe3:"Beware of unverified activation and withdrawal-unlock fees.",safe4:"Review liquidity, FDV, vesting schedules and token unlocks.",safe5:"Past payment evidence does not guarantee future payments.",aboutTitle:"About QuestPulse",aboutText:"QuestPulse is an independent platform for discovering Web3 opportunities and transparently reviewing their terms, sources and risks.",disclaimer:"For educational purposes only. This is not a guarantee of returns or investment advice. Review official sources before participating.",footerText:"Verify first. Participate wisely. Protect your wallet."},
+fr:{navHome:"Accueil",navDiscover:"Découvrir",navTelegram:"Bots Telegram",navApps:"Applications",navSafety:"Sécurité",navAbout:"À propos",eyebrow:"✦ Votre portail vers le Web3",heroLine1:"Découvrez des opportunités.",heroLine2:"Vérifiez avant de participer.",heroText:"Découvrez les opportunités Web3, airdrops, bots Telegram et applications de récompenses avec des conditions, sources et risques clairement présentés.",explore:"Explorer",safetyGuide:"Guide de sécurité",noticeTitle:"Important :",noticeText:"Aucun gain n'est garanti. Vérifiez les sources officielles et ne payez pas de frais d'activation ni ne divulguez vos accès sur la base de promesses.",discoverTitle:"Découvrir les opportunités",discoverSub:"Des catégories claires pour trouver et examiner les opportunités.",airdropTitle:"Airdrops et campagnes",airdropText:"Tâches, éligibilité, dates de distribution et frais de réclamation.",coming:"À ajouter après vérification",telegramTitle:"Bots Telegram",telegramText:"Liens officiels, fonctionnement, preuves de paiement et frais.",verifyStatus:"Ajout après vérification",referralTitle:"Parrainage et récompenses",referralText:"Montant, conditions, seuil minimum et méthode de paiement.",usageTitle:"Indicateur d'activité des produits",usageSub:"Aperçu visuel ; la couleur évoluera selon l'utilisation après connexion à des données réelles.",metricHigh:"Utilisation élevée",metricMedium:"Utilisation moyenne",demoNote:"Graphiques illustratifs uniquement, sans statistiques réelles.",appsTitle:"Applications et sites rémunérateurs",appsSub:"Recherchez et filtrez par type d'activité.",searchPlaceholder:"Rechercher une opportunité...",allTypes:"Tous les types",mining:"Minage léger",tasks:"Tâches et récompenses",referrals:"Parrainage",miningTitle:"Minage léger",miningText:"Applications périodiques avec calcul transparent des récompenses.",sample:"Catégorie de démonstration",intervalUnknown:"Fréquence : non définie",tasksTitle:"Tâches quotidiennes",tasksText:"Tests d'applications, sites, sondages et conditions de paiement.",payoutUnknown:"Retrait : non défini",referralsTitle:"Programmes de parrainage",referralsText:"Récompenses d'invitation, éligibilité et seuil minimum.",noResults:"Aucun résultat correspondant.",howTitle:"Informations affichées sur chaque opportunité",howSub:"Des détails utiles pour décider en connaissance de cause.",availabilityTitle:"Disponibilité et éligibilité",availabilityText:"Statut, régions prises en charge et conditions d'inscription.",timerTitle:"Intervalle de relance",timerText:"Chaque heure, 3 heures, 24 heures ou automatique.",withdrawTitle:"Retraits et frais",withdrawText:"Minimum, devise, réseau et frais.",safetyTitle:"Sécurité et vérification",safe1:"Vérifiez le lien et le compte officiels avant de connecter un portefeuille.",safe2:"Ne partagez jamais votre phrase de récupération ou clé privée.",safe3:"Méfiez-vous des frais d'activation ou de déblocage non vérifiés.",safe4:"Examinez la liquidité, le FDV, le vesting et les déverrouillages.",safe5:"Une preuve de paiement passée ne garantit pas les paiements futurs.",aboutTitle:"À propos de QuestPulse",aboutText:"QuestPulse est une plateforme indépendante pour découvrir des opportunités Web3 et examiner leurs conditions, sources et risques en toute transparence.",disclaimer:"À des fins éducatives uniquement. Ceci ne garantit aucun rendement et ne constitue pas un conseil financier. Consultez les sources officielles avant de participer.",footerText:"Vérifiez d'abord. Participez prudemment. Protégez votre portefeuille."}
+};
+function setLanguage(lang){const dict=translations[lang]||translations.ar;document.documentElement.lang=lang;document.documentElement.dir=lang==="ar"?"rtl":"ltr";document.querySelectorAll("[data-i18n]").forEach(el=>{const key=el.dataset.i18n;if(dict[key])el.textContent=dict[key]});document.querySelectorAll("[data-i18n-placeholder]").forEach(el=>{const key=el.dataset.i18nPlaceholder;if(dict[key])el.placeholder=dict[key]});}
+document.getElementById("language").addEventListener("change",e=>setLanguage(e.target.value));
+const searchInput=document.getElementById("searchInput"),typeFilter=document.getElementById("typeFilter"),cards=[...document.querySelectorAll(".opportunity")],noResults=document.getElementById("noResults");
+function filterOpportunities(){const q=searchInput.value.trim().toLocaleLowerCase(),type=typeFilter.value;let visible=0;cards.forEach(card=>{const show=card.textContent.toLocaleLowerCase().includes(q)&&(type==="all"||card.dataset.type===type);card.hidden=!show;if(show)visible++});noResults.hidden=visible!==0}
+searchInput.addEventListener("input",filterOpportunities);typeFilter.addEventListener("change",filterOpportunities);
+document.getElementById("year").textContent=new Date().getFullYear();
+</script>
+</body>
+</html>
