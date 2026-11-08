@@ -1,0 +1,20 @@
+{
+  "name": "QuestPulse — Web3 Discovery",
+  "short_name": "QuestPulse",
+  "description": "Discover and verify Web3 opportunities.",
+  "lang": "ar",
+  "dir": "rtl",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "background_color": "#090e1b",
+  "theme_color": "#0b1020",
+  "icons": [
+    {
+      "src": "assets/questpulse-icon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ]
+}
