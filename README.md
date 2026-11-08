@@ -10,7 +10,7 @@ QuestPulse helps users discover and evaluate Web3 opportunities such as airdrops
 
 - Live preview: https://warchahirafiya-cloud.github.io/QuestPulse/
 - Source repository: https://github.com/warchahirafiya-cloud/QuestPulse
-- Intended custom domain: questpulse.com (not yet owned or connected)
+- Custom domain: https://getquestpulse.com (registered; DNS and HTTPS setup in progress)
 
 ## Current status
 
