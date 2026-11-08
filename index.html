@@ -39,7 +39,9 @@ section{padding:35px 0}.section-head{display:flex;justify-content:space-between;
 .trend{width:100%;height:72px;margin-top:8px;overflow:visible}.trend polyline{fill:none;stroke:var(--usage);stroke-width:4;stroke-linecap:round;stroke-linejoin:round}
 .metric[data-level="low"]{--usage:var(--bad)}.metric[data-level="medium"]{--usage:var(--warn)}.metric[data-level="high"]{--usage:var(--good)}
 .filters{display:flex;gap:10px;flex-wrap:wrap;margin:18px 0}.filters input,.filters select{background:#111a2d;color:var(--text);border:1px solid var(--line);border-radius:11px;padding:11px 13px;min-width:190px}
-\n.miner-art{width:104px;height:112px;border-radius:16px;overflow:hidden;background:linear-gradient(145deg,#30205e,#111a2d);border:1px solid #9b8cff66;display:flex;align-items:center;justify-content:center}.miner-art img{width:100%;height:100%;object-fit:cover;object-position:48% 28%;display:block}\n.opportunity{display:flex;flex-direction:column;min-height:230px}.opportunity .meta{margin-top:auto;display:flex;justify-content:space-between;gap:8px;align-items:center;flex-wrap:wrap}.muted{color:var(--muted);font-size:.85rem}
+
+.miner-art{width:104px;height:112px;border-radius:16px;overflow:hidden;background:linear-gradient(145deg,#30205e,#111a2d);border:1px solid #9b8cff66;display:flex;align-items:center;justify-content:center}.miner-art img{width:100%;height:100%;object-fit:cover;object-position:48% 28%;display:block}
+.opportunity{display:flex;flex-direction:column;min-height:230px}.opportunity .meta{margin-top:auto;display:flex;justify-content:space-between;gap:8px;align-items:center;flex-wrap:wrap}.muted{color:var(--muted);font-size:.85rem}
 .steps{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}.step{padding:17px;border:1px solid var(--line);border-radius:15px;background:#ffffff06}.step b{display:block;margin-bottom:5px}
 footer{margin-top:35px;border-top:1px solid var(--line);padding:26px 0;color:var(--muted);font-size:.9rem}
 [hidden]{display:none!important}
@@ -106,7 +108,9 @@ document.getElementById("language").addEventListener("change",e=>setLanguage(e.t
 const searchInput=document.getElementById("searchInput"),typeFilter=document.getElementById("typeFilter"),cards=[...document.querySelectorAll(".opportunity")],noResults=document.getElementById("noResults");
 function filterOpportunities(){const q=searchInput.value.trim().toLocaleLowerCase(),type=typeFilter.value;let visible=0;cards.forEach(card=>{const show=card.textContent.toLocaleLowerCase().includes(q)&&(type==="all"||card.dataset.type===type);card.hidden=!show;if(show)visible++});noResults.hidden=visible!==0}
 searchInput.addEventListener("input",filterOpportunities);typeFilter.addEventListener("change",filterOpportunities);
-document.getElementById("year").textContent=new Date().getFullYear();\nfetch("assets/questpulse-miner.webp.b64").then(r=>{if(!r.ok)throw new Error("Artwork unavailable");return r.text()}).then(data=>{const img=document.getElementById("minerCharacter");if(img)img.src="data:image/webp;base64,"+data.trim()}).catch(()=>{});\n
+document.getElementById("year").textContent=new Date().getFullYear();
+fetch("assets/questpulse-miner.webp.b64").then(r=>{if(!r.ok)throw new Error("Artwork unavailable");return r.text()}).then(data=>{const img=document.getElementById("minerCharacter");if(img)img.src="data:image/webp;base64,"+data.trim()}).catch(()=>{});
+
 </script>
 </body>
 </html>
