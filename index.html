@@ -3,6 +3,8 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="manifest" href="./manifest.webmanifest">
+<meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="theme-color" content="#0b1020">
 <meta name="description" content="QuestPulse — اكتشف فرص Web3 وتحقق قبل المشاركة">
 <title>QuestPulse | Web3 Discovery</title>
@@ -111,6 +113,15 @@ searchInput.addEventListener("input",filterOpportunities);typeFilter.addEventLis
 document.getElementById("year").textContent=new Date().getFullYear();
 fetch("assets/questpulse-miner.webp.b64").then(r=>{if(!r.ok)throw new Error("Artwork unavailable");return r.text()}).then(data=>{const img=document.getElementById("minerCharacter");if(img)img.src="data:image/webp;base64,"+data.trim()}).catch(()=>{});
 
+</script>
+<script>
+if ("serviceWorker" in navigator) {
+  window.addEventListener("load", () => {
+    navigator.serviceWorker.register("./sw.js").catch(error => {
+      console.warn("QuestPulse offline support could not be registered.", error);
+    });
+  });
+}
 </script>
 </body>
 </html>
