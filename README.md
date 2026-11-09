@@ -16,7 +16,13 @@ QuestPulse helps users discover and evaluate Web3 opportunities such as airdrops
 
 The site is an evolving project. Some sections are placeholders pending opportunity research and verification. The QP counter and activity indicator are currently interface elements; they do not represent a live points ledger or connected usage analytics.
 
+## Public guide
+
+- [Verification, glossary, wallet safety and FAQ](guide.html)
+
 ## Documentation
+
+See [docs/EDITORIAL_POLICY.md](docs/EDITORIAL_POLICY.md) for evidence standards and publication boundaries.
 
 See [docs/PROJECT_DOSSIER.md](docs/PROJECT_DOSSIER.md) for the project overview, scope, current implementation, verification standards, safety principles, ownership guidance, domain status, and roadmap.
 
