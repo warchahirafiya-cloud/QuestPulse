@@ -60,6 +60,7 @@
 const DATA_URL="../data/opportunities.json";
 let registry=null,selectedId=null,working=null;
 const $=id=>document.getElementById(id);
+const allowedTypes=["airdrop","telegram","clicktime","tasks","referral"];
 const fields=["id","type","status","availability","riskLevel","reviewedAt","officialUrl","notes","verificationSources","paymentEvidence","withdrawalTerms","resetInterval","paymentEvidenceSummary","riskNotes"];
 function clone(v){return JSON.parse(JSON.stringify(v))}
 function validHttps(v){try{return new URL(v).protocol==="https:"}catch{return false}}
@@ -77,7 +78,6 @@ function validate(data){
   if(!["unknown","active","paused","expired"].includes(r.availability))errors.push(p+"حالة التوفر غير صالحة");
   if(!["low","medium","high","unrated"].includes(r.riskLevel))errors.push(p+"مستوى المخاطر غير صالح");
   if(!Array.isArray(r.verificationSources)||!Array.isArray(r.paymentEvidence))errors.push(p+"مصادر التحقق وأدلة الدفع يجب أن تكون مصفوفات");
-  for(const key of ["withdrawalTerms","resetInterval","paymentEvidenceSummary","riskNotes"]){if(r[key]!==null&&r[key]!==undefined&&typeof r[key]!=="string")errors.push(p+"الحقل "+key+" يجب أن يكون نصاً أو null");}
   for(const key of ["withdrawalTerms","resetInterval","paymentEvidenceSummary","riskNotes"]){if(r[key]!==null&&r[key]!==undefined&&typeof r[key]!=="string")errors.push(p+"الحقل "+key+" يجب أن يكون نصاً أو null");}
   for(const e of (r.paymentEvidence||[])){if(!e||typeof e!=="object"||Array.isArray(e))errors.push(p+"كل دليل دفع يجب أن يكون كائناً");else if(e.url&&!validHttps(e.url))errors.push(p+"رابط دليل الدفع يجب أن يستخدم HTTPS");}
   for(const s of (r.verificationSources||[])){if(!validHttps(s?.url)||!String(s?.checkedFor||"").trim())errors.push(p+"كل مصدر تحقق يحتاج رابط HTTPS وشرحاً");}
