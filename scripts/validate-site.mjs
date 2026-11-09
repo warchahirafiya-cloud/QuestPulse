@@ -86,6 +86,12 @@ if (!admin.includes("allowedTypes.includes(r.type)")) {
 if (!admin.includes("const errors=validate(data);")) {
   errors.push("Editorial console must validate imported and loaded registry data.");
 }
+for (const id of ["recordSearch", "restoreDraft", "clearDraft"]) {
+  if (!admin.includes('id="' + id + '" ') && !admin.includes('id="' + id + '"')) errors.push("Editorial console is missing draft/search control: " + id);
+}
+for (const feature of ["questpulse-editor-draft-v1", "function persistDraft()", "localStorage.setItem", "localStorage.removeItem"]) {
+  if (!admin.includes(feature)) errors.push("Editorial console is missing local draft feature: " + feature);
+}
 if (admin.includes("github_pat_") || admin.includes("ghp_")) {
   errors.push("A possible GitHub token pattern was found in the admin page.");
 }
