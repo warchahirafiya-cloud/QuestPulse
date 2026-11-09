@@ -356,5 +356,69 @@ function googleTranslateElementInit(){
 }
 </script>
 <script src="https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit" async></script>
+
+<style>
+.qp-install{display:none;align-items:center;gap:7px;padding:8px 12px;border:1px solid #55d6d066;border-radius:11px;background:#55d6d018;color:#c9fff3;font:inherit;font-size:.82rem;font-weight:800;cursor:pointer}
+.qp-install:hover{background:#55d6d02b}
+.qp-network{display:inline-flex;align-items:center;gap:6px;padding:6px 9px;border:1px solid #39d6a255;border-radius:10px;background:#39d6a210;color:#8ce8c8;font-size:.74rem;font-weight:800;white-space:nowrap}
+.qp-network.is-offline{border-color:#f4bd6255;background:#f4bd6210;color:#f6d28f}
+@media(max-width:700px){.qp-install{padding:7px 9px;font-size:.76rem}.qp-network{font-size:.68rem;padding:5px 7px}.navtools{gap:6px}.lang{max-width:105px}}
+</style>
+<script>
+(function(){
+  const tools=document.querySelector(".navtools");
+  if(!tools)return;
+  const lang=document.getElementById("language");
+  const install=document.createElement("button");
+  install.type="button";
+  install.className="qp-install";
+  install.textContent="＋ تثبيت التطبيق";
+  install.setAttribute("aria-label","تثبيت QuestPulse على الجهاز");
+  const network=document.createElement("span");
+  network.className="qp-network";
+  network.setAttribute("role","status");
+  network.setAttribute("aria-live","polite");
+  tools.insertBefore(network,tools.firstChild);
+  tools.insertBefore(install,network.nextSibling);
+
+  const labels={
+    ar:{install:"＋ تثبيت التطبيق",online:"● متصل",offline:"● دون اتصال"},
+    en:{install:"＋ Install app",online:"● Online",offline:"● Offline"},
+    fr:{install:"＋ Installer",online:"● En ligne",offline:"● Hors ligne"}
+  };
+  function updateLabels(){
+    const l=labels[lang?.value]||labels.ar;
+    install.textContent=l.install;
+    network.textContent=navigator.onLine?l.online:l.offline;
+    network.classList.toggle("is-offline",!navigator.onLine);
+  }
+  window.addEventListener("online",updateLabels);
+  window.addEventListener("offline",updateLabels);
+  lang?.addEventListener("change",updateLabels);
+  updateLabels();
+
+  let installPrompt=null;
+  const standalone=()=>window.matchMedia("(display-mode: standalone)").matches||window.navigator.standalone===true;
+  window.addEventListener("beforeinstallprompt",event=>{
+    if(standalone())return;
+    event.preventDefault();
+    installPrompt=event;
+    install.style.display="inline-flex";
+  });
+  install.addEventListener("click",async()=>{
+    if(!installPrompt)return;
+    installPrompt.prompt();
+    await installPrompt.userChoice;
+    installPrompt=null;
+    install.style.display="none";
+  });
+  window.addEventListener("appinstalled",()=>{
+    installPrompt=null;
+    install.style.display="none";
+  });
+  if(standalone())install.style.display="none";
+})();
+</script>
+
 </body>
 </html>
