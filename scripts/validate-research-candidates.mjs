@@ -5,7 +5,7 @@ const errors = [];
 const allowedReview = new Set(["research_lead", "under_review", "approved_for_editorial_review", "rejected", "expired"]);
 const allowedEvidence = new Set(["not_reviewed", "community_report_only", "independently_checked"]);
 const allowedDeposit = new Set(["not_established", "none_confirmed", "required_confirmed", "unknown"]);
-const allowedWithdrawal = new Set(["regional_non_cash_redemption", "non_cash_redemption", "conditional_account_and_region_check", "campaign_dependent", "terms_and_country_check_required", "regional_terms_check_required", "non_transferable_points_token_swap_unconfirmed", "not_an_earning_offer", "campaign_and_game_status_check_required", "unknown"]);
+const allowedWithdrawal = new Set(["regional_non_cash_redemption", "non_cash_redemption", "conditional_account_and_region_check", "campaign_dependent", "terms_and_country_check_required", "regional_terms_check_required", "non_transferable_points_token_swap_unconfirmed", "not_an_earning_offer", "campaign_and_game_status_check_required", "activity_dependent_unknown", "task_dependent_unknown", "challenge_dependent", "not_applicable", "unknown"]);
 
 function https(value) {
   if (typeof value !== "string") return false;
