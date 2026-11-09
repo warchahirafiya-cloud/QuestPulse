@@ -476,26 +476,30 @@ function googleTranslateElementInit(){
  sidebar.querySelectorAll('a').forEach(link=>link.addEventListener('click',closeMenu));
  document.addEventListener('keydown',e=>{if(e.key==='Escape')closeMenu()});
 
- // Touch navigation: swipe right from the physical left edge to open;
- // swipe left while the drawer is open to close. The menu button remains optional.
+ // Touch navigation: use a wider left-edge start zone because Android's
+ // system-back gesture can consume swipes that begin at the extreme screen edge.
+ // Read changedTouches on touchend so the final finger position is never lost.
  let startX=0,startY=0,lastX=0,lastY=0,tracking=false;
- const edge=24,threshold=65,verticalLimit=85;
+ const edgeMin=20,edgeMax=100,threshold=48,verticalLimit=90;
  document.addEventListener('touchstart',e=>{
    if(!mobile()||e.touches.length!==1)return;
    const t=e.touches[0];startX=lastX=t.clientX;startY=lastY=t.clientY;
-   tracking=(startX<=edge&&!sidebar.classList.contains('is-open'))||sidebar.classList.contains('is-open');
- },{passive:true});
+   tracking=(startX>=edgeMin&&startX<=edgeMax&&!sidebar.classList.contains('is-open'))||sidebar.classList.contains('is-open');
+ },{passive:true,capture:true});
  document.addEventListener('touchmove',e=>{
    if(!tracking||e.touches.length!==1)return;
    lastX=e.touches[0].clientX;lastY=e.touches[0].clientY;
- },{passive:true});
- document.addEventListener('touchend',()=>{
+ },{passive:true,capture:true});
+ document.addEventListener('touchend',e=>{
    if(!tracking)return;tracking=false;
+   const t=e.changedTouches&&e.changedTouches[0];
+   if(t){lastX=t.clientX;lastY=t.clientY;}
    const dx=lastX-startX,dy=lastY-startY;
    if(Math.abs(dy)>verticalLimit||Math.abs(dx)<threshold)return;
-   if(!sidebar.classList.contains('is-open')&&startX<=edge&&dx>0)openMenu();
+   if(!sidebar.classList.contains('is-open')&&startX>=edgeMin&&startX<=edgeMax&&dx>0)openMenu();
    else if(sidebar.classList.contains('is-open')&&dx<0)closeMenu();
- },{passive:true});
+ },{passive:true,capture:true});
+ document.addEventListener('touchcancel',()=>{tracking=false;},{passive:true,capture:true});
  window.addEventListener('resize',()=>{if(!mobile())closeMenu()});
 })();
 </script>
