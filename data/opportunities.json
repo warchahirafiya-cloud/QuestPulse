@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "policy": "Informational review registry. A record may only be displayed as verified when its official HTTPS URL, at least one HTTPS verification source, and a valid review date are present. No record is a recommendation or proof of availability.",
-  "updatedAt": null,
+  "updatedAt": "2026-11-09T15:14:51.985Z",
   "opportunities": [
     {
       "id": "airdrop-campaigns",
@@ -17,7 +17,8 @@
       "withdrawalTerms": null,
       "resetInterval": null,
       "paymentEvidenceSummary": null,
-      "riskNotes": null
+      "riskNotes": null,
+      "statusHistory": []
     },
     {
       "id": "telegram-bots",
@@ -33,7 +34,8 @@
       "withdrawalTerms": null,
       "resetInterval": null,
       "paymentEvidenceSummary": null,
-      "riskNotes": null
+      "riskNotes": null,
+      "statusHistory": []
     },
     {
       "id": "daily-click",
@@ -49,7 +51,8 @@
       "withdrawalTerms": null,
       "resetInterval": null,
       "paymentEvidenceSummary": null,
-      "riskNotes": null
+      "riskNotes": null,
+      "statusHistory": []
     },
     {
       "id": "task-rewards",
@@ -65,7 +68,8 @@
       "withdrawalTerms": null,
       "resetInterval": null,
       "paymentEvidenceSummary": null,
-      "riskNotes": null
+      "riskNotes": null,
+      "statusHistory": []
     },
     {
       "id": "referral-programs",
@@ -81,7 +85,8 @@
       "withdrawalTerms": null,
       "resetInterval": null,
       "paymentEvidenceSummary": null,
-      "riskNotes": null
+      "riskNotes": null,
+      "statusHistory": []
     }
   ]
 }
