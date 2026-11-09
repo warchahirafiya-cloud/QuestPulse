@@ -52,6 +52,10 @@ if (!home.includes('property="og:title"') || !home.includes('name="twitter:card"
 for (const id of ["searchInput", "typeFilter", "statusFilter", "sortFilter", "clearFilters", "emptyClear", "resultCount"]) {
   if (!home.includes('id="' + id + '"')) errors.push("Homepage is missing the mobile discovery control: " + id);
 }
+const languageSelect = home.match(/<select class="lang" id="language"[^>]*>([\\s\\S]*?)<\\/select>/);
+const homepageLanguageCodes = languageSelect ? [...languageSelect[1].matchAll(/<option value="([^"]+)"/g)].map(match => match[1]) : [];
+if (new Set(homepageLanguageCodes).size < 20) errors.push("Homepage must offer at least 20 unique language options.");
+if (!home.includes("translate.google.com/translate_a/element.js") || !home.includes("googleTranslateElementInit")) errors.push("Homepage automatic translation integration is missing.");
 for (const key of ["allStatuses", "sortRecommended", "sortNewest", "sortName", "clearFilters", "resultsLabel"]) {
   if (!home.includes(key)) errors.push("Homepage is missing a discovery filter translation: " + key);
 }
