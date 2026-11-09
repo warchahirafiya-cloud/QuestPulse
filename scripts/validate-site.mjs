@@ -77,6 +77,15 @@ for (const key of ["withdrawalTerms", "resetInterval", "paymentEvidenceSummary",
 if (!admin.includes('name="robots" content="noindex,nofollow"')) {
   errors.push("Editorial console must retain its noindex directive.");
 }
+if (!admin.includes('const allowedTypes=["airdrop","telegram","clicktime","tasks","referral"];')) {
+  errors.push("Editorial console must define every supported opportunity type before validating records.");
+}
+if (!admin.includes("allowedTypes.includes(r.type)")) {
+  errors.push("Editorial console must validate opportunity types against its supported type list.");
+}
+if (!admin.includes("const errors=validate(data);")) {
+  errors.push("Editorial console must validate imported and loaded registry data.");
+}
 if (admin.includes("github_pat_") || admin.includes("ghp_")) {
   errors.push("A possible GitHub token pattern was found in the admin page.");
 }
