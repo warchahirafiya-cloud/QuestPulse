@@ -14,6 +14,8 @@ The console enforces basic data consistency only. It does not establish legal cl
 
 ## Validation
 - Stable unique IDs and supported status/type fields.
+- Editable withdrawal terms, earning reset interval, payment-evidence summary, and risk notes; empty values remain unknown rather than being guessed.
+- Payment-evidence links, when supplied, must use HTTPS.
 - HTTPS-only official and verification URLs.
 - Valid review dates.
 - A record cannot be marked `verified` without an official HTTPS URL, at least one HTTPS verification source, and a valid review date.
