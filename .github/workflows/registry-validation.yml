@@ -130,6 +130,9 @@ jobs:
             'id="qpMenuToggle"',
             'function renderQpMonitor',
             'function monitorOpportunityChanges',
+            'Array.isArray(stored)',
+            'Object.create(null)',
+            'n.detail.slice(0,500)',
             './data/opportunities.json',
             'serviceWorker.register'
           ];
