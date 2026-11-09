@@ -92,6 +92,9 @@ if (!editor.includes("../docs/SAFE_PUBLISHING.md")) fail("admin editor must link
 else pass("admin editor links to safe publishing instructions");
 if (!editor.includes('id="addRecord"') || !editor.includes('$("addRecord").onclick')) fail("admin editor must support creating new opportunity records");
 else pass("admin editor supports dynamic opportunity creation");
+if (!editor.includes("r.title") || !editor.includes("r.categoryLabel") || !editor.includes("r.rewardToken")) fail("admin search must cover opportunity names, categories and reward tokens");
+if (!editor.includes('["متوقف",all.filter') || !editor.includes('["منتهٍ",all.filter')) fail("admin overview must count paused and expired records");
+
 for (const field of ["title","description","reward","depositRequired","minimumWithdrawal","eligibility","payoutMethod","network","rewardToken","taskTime","requiresKyc","referralRequired","expiryDate","contractAddress"]) {
   if (!editor.includes(`id="${field}"`) || !editor.includes(`"${field}"`)) fail(`admin editor is missing dynamic card field: ${field}`);
 }
