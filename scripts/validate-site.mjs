@@ -34,6 +34,32 @@ const [home, guide, privacy, terms, notFound, robots, sitemap, admin, registryTe
 ]);
 
 if (!home.includes('href="./guide.html"')) errors.push("Main navigation must link to guide.html.");
+if (!home.includes('<a class="brand" href="#home">Quest<span>Pulse</span></a>')) {
+  errors.push("Homepage header must keep the QuestPulse logo as its brand link.");
+}
+for (const id of ["qpSidebar", "qpMenuToggle", "qpSidebarBackdrop"]) {
+  if (!home.includes('id="' + id + '"')) errors.push("Homepage is missing its sidebar navigation element: " + id);
+}
+if (!home.includes('class="qp-sidebar-tools"><div class="navtools"')) {
+  errors.push("Language and utility controls must be placed inside the left sidebar.");
+}
+if (!home.includes("header .navtools{display:none!important}") ||
+    !home.includes(".qp-sidebar-tools .navtools{display:flex!important")) {
+  errors.push("Utility controls must be hidden from the header and visible inside the sidebar.");
+}
+if (!home.includes(".qp-sidebar{left:0") ||
+    !home.includes("main.wrap{margin-left:calc(var(--qp-sidebar)") ||
+    !home.includes(".qp-sidebar{display:flex!important;position:fixed")) {
+  errors.push("Sidebar must stay on the physical left and the main content must reserve its width on desktop.");
+}
+if (!home.includes(".qp-sidebar.is-open{transform:translateX(0)!important}") ||
+    !home.includes(".qp-sidebar-backdrop[hidden]{display:none}")) {
+  errors.push("Mobile sidebar must support open/close states and a dismissible backdrop.");
+}
+if (!home.includes("function closeMenu()") || !home.includes("function openMenu()")) {
+  errors.push("Mobile sidebar toggle must provide open and close handlers.");
+}
+
 for (const [name, page] of [["privacy", privacy], ["terms", terms]]) {
   if (!page.includes("<title>QuestPulse")) errors.push(name + " page is missing a QuestPulse title.");
   if (!page.includes("lang=\"ar\"")) errors.push(name + " page must declare its language.");
