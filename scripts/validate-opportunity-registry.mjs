@@ -85,6 +85,11 @@ for (const path of ["guide.html", "privacy.html", "terms.html", "manifest.webman
 const editor = await readFile("admin/index.html", "utf8");
 if (!editor.includes("../docs/SAFE_PUBLISHING.md")) fail("admin editor must link to the safe publishing guide");
 else pass("admin editor links to safe publishing instructions");
+if (!editor.includes('id="addRecord" disabled') || editor.includes('$("addRecord").onclick')) fail("admin editor must block new records until matching homepage cards exist");
+else pass("admin editor prevents records without a homepage card");
+for (const id of ["airdrop-campaigns", "telegram-bots", "daily-click", "task-rewards", "referral-programs"]) {
+  if (!editor.includes(`"${id}"`)) fail(`admin editor is missing supported homepage card ID: ${id}`);
+}
 
 const submitWorkflow = await readFile(".github/workflows/submit-opportunity-registry.yml", "utf8");
 for (const required of ["workflow_dispatch:", "permissions:", "contents: write", "pull-requests: write", "node scripts/validate-opportunity-registry.mjs", "node scripts/validate-site.mjs", "github.rest.pulls.create", "refs/heads/"]) {
