@@ -147,6 +147,11 @@ jobs:
             console.error('Missing required dashboard/PWA hooks:', missing.join(', '));
             process.exit(1);
           }
+          const swRegistrations = (html.match(/serviceWorker\\.register\\s*\\(/g) || []).length;
+          if (swRegistrations !== 1) {
+            console.error(`Expected exactly one Service Worker registration, found ${swRegistrations}.`);
+            process.exit(1);
+          }
           if (!sw.includes('addEventListener("install"') ||
               !sw.includes('addEventListener("activate"') ||
               !sw.includes('addEventListener("fetch"')) {
