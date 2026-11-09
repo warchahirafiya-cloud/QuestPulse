@@ -49,7 +49,7 @@ if (!notFound.includes("<title>404 | QuestPulse</title>")) errors.push("Custom 4
 if (!robots.includes("Disallow: /admin/")) errors.push("robots.txt must exclude the editorial console from crawling.");
 if (!sitemap.includes("<urlset") || !sitemap.includes("guide.html") || !sitemap.includes("privacy.html") || !sitemap.includes("terms.html")) errors.push("sitemap.xml is missing public pages.");
 if (!home.includes('property="og:title"') || !home.includes('name="twitter:card"')) errors.push("Homepage social sharing metadata is incomplete.");
-for (const id of ["searchInput", "typeFilter", "statusFilter", "sortFilter", "clearFilters", "resultCount"]) {
+for (const id of ["searchInput", "typeFilter", "statusFilter", "sortFilter", "clearFilters", "emptyClear", "resultCount"]) {
   if (!home.includes('id="' + id + '"')) errors.push("Homepage is missing the mobile discovery control: " + id);
 }
 for (const key of ["allStatuses", "sortRecommended", "sortNewest", "sortName", "clearFilters", "resultsLabel"]) {
