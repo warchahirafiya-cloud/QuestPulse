@@ -2,10 +2,10 @@
 
 **Document status:** Initial project record  
 **Version:** 1.0  
-**Last updated:** 2026-11-08  
+**Last updated:** 2026-11-09  
 **Project repository:** https://github.com/warchahirafiya-cloud/QuestPulse  
 **Current published URL:** https://warchahirafiya-cloud.github.io/QuestPulse/  
-**Intended domain:** questpulse.com (not owned by the project as of this document)
+**Registered domain:** getquestpulse.com (DNS and HTTPS publication must be confirmed before treating it as the live canonical domain).
 
 ## 1. Project identity
 
@@ -40,6 +40,7 @@ The current index.html contains:
 - Safety guidance.
 - About the platform.
 - A multilingual public verification guide with glossary, wallet-safety checklist, evidence standards, and FAQ.
+- Preliminary privacy notice and terms of use, pending legal and operational review.
 - A local-only editorial console under admin/ that edits an in-memory copy and exports JSON; it has no login or direct publishing capability.
 - Arabic, English, and French language selector.
 - QP points display (currently a visual counter, not a verified reward ledger).
@@ -83,7 +84,7 @@ The current QP counter is a display element only. No on-chain token, cash value,
 - Service worker: sw.js
 - App icon: assets/questpulse-icon.svg
 - Current hosting target: GitHub Pages
-- Planned custom domain: questpulse.com
+- Registered custom domain: getquestpulse.com
 
 The current repository files have been checked for basic syntax/structure. This is not a substitute for a complete browser, security, accessibility, or production-readiness audit.
 
@@ -97,26 +98,24 @@ The project owner should retain control of:
 
 ### Legal operating constraint requiring review
 
-Algeria's Law No. 25-10 of 24 July 2025 added Article 6 bis to Law No. 05-01. The published text prohibits specified activities involving virtual assets, including issuance, purchase, sale, use, possession, trading, promotion, operation of exchange platforms, and cryptocurrency-mining-related activities. The exact application to any proposed QuestPulse feature, editorial content, referral link, monetization, or cross-border operation must be assessed by qualified counsel. Until written legal advice is obtained, do not launch, monetize, promote, or facilitate features that may fall within those prohibitions. A foreign domain or foreign trademark filing does not by itself remove obligations that may apply to a person operating from Algeria.
+The exact legal treatment of the proposed operating model, content, links, referral mechanisms, rewards, and monetization must be assessed by qualified counsel in every relevant jurisdiction before launch. Until written advice is obtained, keep the public project within its neutral educational scope and do not add features that may promote, facilitate, or monetize regulated or prohibited activity. Domain registration or trademark filings do not by themselves authorize a business activity.
 
 Enable multi-factor authentication, use unique passwords, keep recovery methods current, and avoid sharing account credentials.
 
-A domain purchase does not grant trademark rights. Trademark availability and registration depend on the relevant jurisdiction and goods/services classes. INAPI's published guidance says individuals and legal entities may apply for Algerian trademark registration; this is distinct from authorization to carry out a regulated or prohibited business activity. No trademark registration or legal entity registration is claimed by this document. Any proposed classes and service descriptions for QuestPulse require review by an Algerian industrial-property professional and legal counsel before filing.
+A domain purchase does not grant trademark rights. Trademark availability and registration depend on the relevant jurisdiction and goods/services classes. Trademark filing eligibility and registration requirements vary by jurisdiction and are distinct from authorization to carry out a regulated or prohibited business activity. No trademark registration or legal entity registration is claimed by this document. Any proposed classes and service descriptions for QuestPulse require review by an appropriately qualified industrial-property professional and legal counsel before filing.
 
 ## 9. Domain status
 
-The intended domain is questpulse.com. It is currently advertised as a premium resale domain on Atom, rather than a standard unregistered domain. The listing price can change and must be reconfirmed at checkout. The project does not own the domain unless a completed transfer into the owner's registrar account is verified.
-
-Do not make payment until the final price, renewal fee, transfer procedure, registrant details, and ownership transfer conditions have been reviewed.
+The project domain recorded for this build is getquestpulse.com. The registrar account should remain under the project owner's control. DNS, custom-domain configuration, HTTPS issuance, and canonical redirects must be tested before the custom domain is described as live.Do not make payment until the final price, renewal fee, transfer procedure, registrant details, and ownership transfer conditions have been reviewed.
 
 ## 10. Roadmap
 
 1. Complete and review the project dossier and public-facing policies.
 2. Maintain the neutral educational guide and editorial workflow; keep opportunity records as unverified placeholders until all gates are cleared.
-3. Obtain written legal advice on the application of Law No. 25-10 to the proposed platform features and operating model.
+3. Obtain written legal advice on the proposed platform features, content, links, monetization and operating model in all relevant jurisdictions.
 4. Perform trademark clearance and obtain advice on the correct applicant, classes, and service descriptions; do not assume trademark registration authorizes a prohibited activity.
-5. Decide whether to negotiate for questpulse.com or use an affordable alternative domain.
-6. If purchased, transfer the domain into an account controlled by the project owner.
+5. Confirm ownership and renewal settings for getquestpulse.com.
+6. Keep registrar access and recovery methods under the project owner's control.
 7. Configure DNS, HTTPS, canonical redirects, and GitHub Pages custom-domain settings.
 8. Complete real-browser testing and security review before describing the site as production-ready.
 
