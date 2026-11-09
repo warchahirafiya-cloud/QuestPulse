@@ -57,6 +57,7 @@ section{padding:35px 0}.section-head{display:flex;justify-content:space-between;
 .opportunity:hover{transform:translateY(-3px);border-color:#9b8cff70;box-shadow:0 16px 38px #0003}
 .opp-head{display:flex;align-items:center;gap:12px}
 .opp-icon{width:52px;height:52px;flex:0 0 52px;display:grid;place-items:center;border-radius:15px;background:linear-gradient(145deg,#9b8cff2b,#55d6d01c);font-size:1.65rem;border:1px solid #ffffff16}
+.opp-icon img{display:block;width:100%;height:100%;object-fit:cover;border-radius:inherit}
 .opp-title{min-width:0;flex:1}.opp-title h3{margin:0;font-size:1.05rem}.opp-title .muted{display:block;margin-top:2px}
 .opp-status{white-space:nowrap;border-radius:99px;padding:4px 9px;font-size:.72rem;font-weight:800;border:1px solid #f4bd6255;background:#f4bd6212;color:#f6d28f}
 .opp-status.verified{border-color:#39d6a255;background:#39d6a212;color:#8ce8c8}
@@ -327,7 +328,7 @@ header .navtools{display:none!important}
 <details class="opp-details"><summary data-i18n="moreDetails">تفاصيل التحقق</summary><div class="opp-detail-grid"><div class="opp-detail-item"><span data-i18n="withdrawalTermsLabel">شروط السحب</span><b data-detail="withdrawalTerms" data-i18n="unknownValue">غير معلوم</b></div><div class="opp-detail-item"><span data-i18n="resetIntervalLabel">توقيت إعادة الكسب</span><b data-detail="resetInterval" data-i18n="unknownValue">غير معلوم</b></div><div class="opp-detail-item"><span data-i18n="paymentEvidenceLabel">أدلة الدفع</span><b data-detail="paymentEvidenceSummary" data-i18n="proofPending">غير متاح</b></div><div class="opp-detail-item"><span data-i18n="riskNotesLabel">ملاحظات المخاطر</span><b data-detail="riskNotes" data-i18n="unknownValue">غير معلوم</b></div></div><p class="opp-disclaimer" data-i18n="detailDisclaimer">المعلومات غير المتاحة معروضة بوضوح على أنها غير معلومة. التوثيق لا يضمن العائد.</p></details>
 </article>
 <article class="card opportunity" data-type="clicktime" data-opportunity-id="daily-click">
-<div class="opp-head"><div class="opp-icon">⛏️</div><div class="opp-title"><h3 data-i18n="cardClickTitle">النقر والتعدين اليومي</h3><span class="muted" data-i18n="catClick">Click · Check-in · XP</span></div><span class="opp-status" data-i18n="statusPending">بانتظار التحقق</span></div>
+<div class="opp-head"><div class="opp-icon"><img id="minerCharacter" src="./assets/questpulse-miner.webp.b64" alt="⛏️" loading="lazy"></div><div class="opp-title"><h3 data-i18n="cardClickTitle">النقر والتعدين اليومي</h3><span class="muted" data-i18n="catClick">Click · Check-in · XP</span></div><span class="opp-status" data-i18n="statusPending">بانتظار التحقق</span></div>
 <p class="opp-desc" data-i18n="cardClickDesc">فرص بسيطة تعتمد على فتح التطبيق أو ضغطة دورية أو جمع نقاط XP.</p>
 <div class="opp-facts">
 <div class="opp-fact"><span data-i18n="rewardLabel">المكافأة</span><b data-i18n="unknownValue">غير معلومة</b></div>
