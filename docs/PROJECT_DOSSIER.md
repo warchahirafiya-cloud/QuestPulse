@@ -106,7 +106,7 @@ A domain purchase does not grant trademark rights. Trademark availability and re
 
 ## 9. Domain status
 
-The project domain recorded for this build is getquestpulse.com. The registrar account should remain under the project owner's control. DNS, custom-domain configuration, HTTPS issuance, and canonical redirects must be tested before the custom domain is described as live.Do not make payment until the final price, renewal fee, transfer procedure, registrant details, and ownership transfer conditions have been reviewed.
+The project domain recorded for this build is getquestpulse.com. The registrar account should remain under the project owner's control. DNS, custom-domain configuration, HTTPS issuance, and canonical redirects must be tested before the custom domain is described as live.
 
 ## 10. Roadmap
 
