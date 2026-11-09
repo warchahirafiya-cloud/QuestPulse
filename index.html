@@ -571,15 +571,7 @@ document.getElementById("year").textContent=new Date().getFullYear();
 fetch("assets/questpulse-miner.webp.b64").then(r=>{if(!r.ok)throw new Error("Artwork unavailable");return r.text()}).then(data=>{const img=document.getElementById("minerCharacter");if(img)img.src="data:image/webp;base64,"+data.trim()}).catch(()=>{});
 
 </script>
-<script>
-if ("serviceWorker" in navigator) {
-  window.addEventListener("load", () => {
-    navigator.serviceWorker.register("./sw.js").catch(error => {
-      console.warn("QuestPulse offline support could not be registered.", error);
-    });
-  });
-}
-</script>
+
 
 <div id="google_translate_element" aria-hidden="true" style="position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0,0,0,0)"></div>
 <script>
