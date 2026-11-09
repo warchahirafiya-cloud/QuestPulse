@@ -65,6 +65,12 @@ if (!html.includes('fetch("./data/opportunities.json"')) {
 if (!html.includes("applyOpportunityRegistry(data.opportunities)") || !html.includes("function syncDynamicCards(records)") || !html.includes("function makeDynamicCard(item)")) {
   fail("homepage must pass registry records into the opportunity-card renderer");
 }
+if (!html.includes('card.dataset.registryStatus=status;const head=makeNode("div","opp-head")')) fail("dynamic card status must be initialized before use");
+for (const field of ["network","rewardToken","taskTime","requiresKyc","referralRequired","expiryDate","contractAddress"]) {
+  if (!html.includes("item."+field)) fail("dynamic card renderer is missing "+field);
+}
+if (!html.includes("verificationSources") || !html.includes("paymentEvidence")) fail("dynamic cards must expose verification and payment evidence");
+else pass("dynamic cards support extended metadata and evidence links");
 for (const item of registry.opportunities || []) {
 
 }
