@@ -13,7 +13,11 @@
       "verificationSources": [],
       "paymentEvidence": [],
       "riskLevel": "unrated",
-      "notes": "Placeholder category only. Do not publish an offer until legal review and independent source checks are complete."
+      "notes": "Placeholder category only. Do not publish an offer until legal review and independent source checks are complete.",
+      "withdrawalTerms": null,
+      "resetInterval": null,
+      "paymentEvidenceSummary": null,
+      "riskNotes": null
     },
     {
       "id": "telegram-bots",
@@ -25,7 +29,11 @@
       "verificationSources": [],
       "paymentEvidence": [],
       "riskLevel": "unrated",
-      "notes": "Placeholder category only. Do not publish bot links, deposits, or payment claims without review."
+      "notes": "Placeholder category only. Do not publish bot links, deposits, or payment claims without review.",
+      "withdrawalTerms": null,
+      "resetInterval": null,
+      "paymentEvidenceSummary": null,
+      "riskNotes": null
     },
     {
       "id": "daily-click",
@@ -37,7 +45,11 @@
       "verificationSources": [],
       "paymentEvidence": [],
       "riskLevel": "unrated",
-      "notes": "Placeholder category only. Do not imply mining or rewards are active."
+      "notes": "Placeholder category only. Do not imply mining or rewards are active.",
+      "withdrawalTerms": null,
+      "resetInterval": null,
+      "paymentEvidenceSummary": null,
+      "riskNotes": null
     },
     {
       "id": "task-rewards",
@@ -49,7 +61,11 @@
       "verificationSources": [],
       "paymentEvidence": [],
       "riskLevel": "unrated",
-      "notes": "Placeholder category only. Payment methods and withdrawal terms are unknown."
+      "notes": "Placeholder category only. Payment methods and withdrawal terms are unknown.",
+      "withdrawalTerms": null,
+      "resetInterval": null,
+      "paymentEvidenceSummary": null,
+      "riskNotes": null
     },
     {
       "id": "referral-programs",
@@ -61,7 +77,11 @@
       "verificationSources": [],
       "paymentEvidence": [],
       "riskLevel": "unrated",
-      "notes": "Placeholder category only. Referral conditions and any required deposit are unknown."
+      "notes": "Placeholder category only. Referral conditions and any required deposit are unknown.",
+      "withdrawalTerms": null,
+      "resetInterval": null,
+      "paymentEvidenceSummary": null,
+      "riskNotes": null
     }
   ]
 }
