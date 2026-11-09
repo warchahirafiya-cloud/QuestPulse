@@ -161,18 +161,52 @@ footer{padding-bottom:35px}
   .navlinks{display:none!important}
 }
 
+
+/* Final navigation layout: logo stays in header; all controls live in the left drawer. */
+header .wrap{width:100%;max-width:none;padding-inline:26px}
+header nav{justify-content:flex-start;gap:16px}
+header .brand{margin-inline-end:auto}
+header .navtools{display:none!important}
+.qp-menu-toggle{display:none;border:1px solid var(--line);background:#ffffff0a;color:var(--text);border-radius:11px;padding:8px 12px;font-size:1.1rem;cursor:pointer}
+.qp-sidebar-tools{display:flex;flex-direction:column;gap:12px;padding:4px 8px 16px;margin-bottom:6px;border-bottom:1px solid var(--line)}
+.qp-sidebar-tools .navtools{display:flex!important;flex-direction:column;align-items:stretch;gap:12px}
+.qp-sidebar-tools .qp{justify-content:center}
+.qp-sidebar-tools .lang{width:100%;min-height:42px}
+.qp-sidebar-backdrop{display:none}
+@media(min-width:701px){
+ .qp-sidebar{left:0!important;right:auto!important;inset-inline-start:auto!important;border-right:1px solid var(--line)!important;border-left:0!important}
+ main.wrap{margin-left:calc(var(--qp-sidebar) + 26px)!important;margin-right:26px!important}
+}
+@media(max-width:700px){
+ header nav{min-height:68px!important}
+ header .wrap{padding-inline:14px}
+ header .brand{margin-inline-end:auto}
+ .qp-menu-toggle{display:inline-flex;align-items:center;justify-content:center}
+ .qp-sidebar{display:flex!important;position:fixed;top:0!important;bottom:0!important;left:0!important;right:auto!important;inset-inline-start:auto!important;width:min(82vw,310px);height:100dvh!important;z-index:60;transform:translateX(-105%);transition:transform .22s ease;padding:18px 14px calc(22px + env(safe-area-inset-bottom));box-shadow:16px 0 45px #0008}
+ html[dir="rtl"] .qp-sidebar{transform:translateX(-105%)}
+ .qp-sidebar.is-open{transform:translateX(0)!important}
+ .qp-sidebar-backdrop{display:block;position:fixed;inset:0;z-index:59;background:#020611a8;backdrop-filter:blur(2px)}
+ .qp-sidebar-backdrop[hidden]{display:none}
+ main.wrap{width:min(100% - 28px,1180px)!important;margin:0 auto!important;padding-bottom:35px}
+ .qp-sidebar .qp-side-spacer{min-height:8px}
+}
+@media(prefers-reduced-motion:reduce){.qp-sidebar{transition:none!important}}
+
 </style>
 </head>
 <body>
 <header><div class="wrap"><nav>
 <a class="brand" href="#home">Quest<span>Pulse</span></a>
-<div class="navtools"><span class="qp" title="QuestPulse"><span class="candy">✦</span><span>Discover · Verify</span></span><select class="lang" id="language" aria-label="Language" title="Choose language"><option value="ar">العربية</option><option value="en">English</option><option value="fr">Français</option><option value="es">Español</option><option value="de">Deutsch</option><option value="pt">Português</option><option value="it">Italiano</option><option value="nl">Nederlands</option><option value="ru">Русский</option><option value="tr">Türkçe</option><option value="zh-CN">简体中文</option><option value="ja">日本語</option><option value="ko">한국어</option><option value="hi">हिन्दी</option><option value="id">Bahasa Indonesia</option><option value="ms">Bahasa Melayu</option><option value="th">ไทย</option><option value="vi">Tiếng Việt</option><option value="pl">Polski</option><option value="uk">Українська</option><option value="fa">فارسی</option><option value="ur">اردو</option><option value="bn">বাংলা</option><option value="sw">Kiswahili</option><option value="ha">Hausa</option><option value="yo">Yorùbá</option><option value="am">አማርኛ</option><option value="el">Ελληνικά</option><option value="sv">Svenska</option><option value="ro">Română</option></select></div>
+<button class="qp-menu-toggle" id="qpMenuToggle" type="button" aria-label="فتح القائمة" aria-expanded="false" aria-controls="qpSidebar">☰</button>
+
 <div class="navlinks">
 <a href="#home" data-i18n="navHome">الرئيسية</a><a href="#discover" data-i18n="navDiscover">اكتشف الفرص</a><a href="#telegram" data-i18n="navTelegram">بوتات تيليغرام</a><a href="#apps" data-i18n="navApps">التطبيقات</a><a href="#safety" data-i18n="navSafety">الأمان</a><a href="#about" data-i18n="navAbout">عن المنصة</a><a href="./guide.html" data-i18n="navGuide">دليل التحقق</a>
 </div>
 </nav></div></header>
 
-<aside class="qp-sidebar" aria-label="التنقل الرئيسي">
+<div class="qp-sidebar-backdrop" id="qpSidebarBackdrop" hidden></div>
+<aside class="qp-sidebar" id="qpSidebar" aria-label="التنقل الرئيسي">
+  <div class="qp-sidebar-tools"><div class="navtools"><span class="qp" title="QuestPulse"><span class="candy">✦</span><span>Discover · Verify</span></span><select class="lang" id="language" aria-label="Language" title="Choose language"><option value="ar">العربية</option><option value="en">English</option><option value="fr">Français</option><option value="es">Español</option><option value="de">Deutsch</option><option value="pt">Português</option><option value="it">Italiano</option><option value="nl">Nederlands</option><option value="ru">Русский</option><option value="tr">Türkçe</option><option value="zh-CN">简体中文</option><option value="ja">日本語</option><option value="ko">한국어</option><option value="hi">हिन्दी</option><option value="id">Bahasa Indonesia</option><option value="ms">Bahasa Melayu</option><option value="th">ไทย</option><option value="vi">Tiếng Việt</option><option value="pl">Polski</option><option value="uk">Українська</option><option value="fa">فارسی</option><option value="ur">اردو</option><option value="bn">বাংলা</option><option value="sw">Kiswahili</option><option value="ha">Hausa</option><option value="yo">Yorùbá</option><option value="am">አማርኛ</option><option value="el">Ελληνικά</option><option value="sv">Svenska</option><option value="ro">Română</option></select></div></div>
   <div class="qp-side-label">القائمة الرئيسية</div>
   <a class="qp-side-link primary" href="#home"><span class="qp-side-icon">⌂</span><span>الرئيسية</span></a>
   <a class="qp-side-link" href="#discover"><span class="qp-side-icon">✦</span><span>اكتشف الفرص</span></a>
@@ -187,13 +221,7 @@ footer{padding-bottom:35px}
   <div class="qp-side-note"><b>تحقق قبل المشاركة</b><br>نوضح حالة كل فرصة ومصادرها ورسومها ومخاطرها، ولا نعد بأرباح مضمونة.</div>
   <a class="qp-side-link" href="./admin/"><span class="qp-side-icon">⚙</span><span>لوحة التحرير</span></a>
 </aside>
-<nav class="qp-mobilebar" aria-label="التنقل السريع">
-  <a href="#home"><span>⌂</span><span>الرئيسية</span></a>
-  <a href="#discover"><span>✦</span><span>الفرص</span></a>
-  <a href="#apps"><span>▦</span><span>التطبيقات</span></a>
-  <a href="#safety"><span>◇</span><span>الأمان</span></a>
-  <a href="./guide.html"><span>▤</span><span>الدليل</span></a>
-</nav>
+
 
 <main class="wrap">
 <section class="hero" id="home">
@@ -430,6 +458,22 @@ function googleTranslateElementInit(){
     install.style.display="none";
   });
   if(standalone())install.style.display="none";
+})();
+</script>
+
+
+<script>
+(function(){
+ const sidebar=document.getElementById('qpSidebar');
+ const toggle=document.getElementById('qpMenuToggle');
+ const backdrop=document.getElementById('qpSidebarBackdrop');
+ if(!sidebar||!toggle||!backdrop)return;
+ function closeMenu(){sidebar.classList.remove('is-open');backdrop.hidden=true;toggle.setAttribute('aria-expanded','false');}
+ function openMenu(){sidebar.classList.add('is-open');backdrop.hidden=false;toggle.setAttribute('aria-expanded','true');}
+ toggle.addEventListener('click',()=>sidebar.classList.contains('is-open')?closeMenu():openMenu());
+ backdrop.addEventListener('click',closeMenu);
+ sidebar.querySelectorAll('a').forEach(link=>link.addEventListener('click',closeMenu));
+ document.addEventListener('keydown',e=>{if(e.key==='Escape')closeMenu()});
 })();
 </script>
 
