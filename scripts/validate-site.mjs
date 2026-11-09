@@ -3,6 +3,8 @@ import { access, readFile } from "node:fs/promises";
 const requiredFiles = [
   "index.html",
   "guide.html",
+  "privacy.html",
+  "terms.html",
   "admin/index.html",
   "admin/README.md",
   "data/opportunities.json",
@@ -16,14 +18,21 @@ for (const path of requiredFiles) {
   catch { errors.push("Required project file is missing: " + path); }
 }
 
-const [home, guide, admin, registryText] = await Promise.all([
+const [home, guide, privacy, terms, admin, registryText] = await Promise.all([
   readFile(new URL("../index.html", import.meta.url), "utf8"),
   readFile(new URL("../guide.html", import.meta.url), "utf8"),
+  readFile(new URL("../privacy.html", import.meta.url), "utf8"),
+  readFile(new URL("../terms.html", import.meta.url), "utf8"),
   readFile(new URL("../admin/index.html", import.meta.url), "utf8"),
   readFile(new URL("../data/opportunities.json", import.meta.url), "utf8")
 ]);
 
 if (!home.includes('href="./guide.html"')) errors.push("Main navigation must link to guide.html.");
+for (const [name, page] of [["privacy", privacy], ["terms", terms]]) {
+  if (!page.includes("<title>QuestPulse")) errors.push(name + " page is missing a QuestPulse title.");
+  if (!page.includes("lang=\"ar\"")) errors.push(name + " page must declare its language.");
+  if (!home.includes('href="./' + name + '.html"')) errors.push("Main footer must link to " + name + ".html.");
+}
 for (const key of ["navGuide"]) {
   if (!home.includes(key)) errors.push("Main page is missing the guide translation key: " + key);
 }
@@ -56,4 +65,4 @@ if (errors.length) {
   for (const error of errors) console.error("- " + error);
   process.exit(1);
 }
-console.log("QuestPulse site structure OK: required pages, navigation, language support, admin safety marker and registry checked.");
+console.log("QuestPulse site structure OK: required pages, policy links, guide language support, admin safety marker and registry checked.");
