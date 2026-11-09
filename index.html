@@ -377,7 +377,7 @@ function makeDynamicCard(item){
  titleWrap.append(title,category);head.append(ico,titleWrap,badge);card.append(head);
  card.append(makeNode("p","opp-desc",textOr(item.description,item.notes||"لا تتوفر تفاصيل إضافية بعد.")));
  const facts=makeNode("div","opp-facts");
- const factPairs=[["المكافأة",item.reward],["توقيت إعادة الكسب",item.resetInterval],["الإيداع",item.depositRequired],["الحد الأدنى للسحب",item.minimumWithdrawal],["الأهلية",item.eligibility],["طريقة الدفع",item.payoutMethod]];
+ const factPairs=[["المكافأة",item.reward],["توقيت إعادة الكسب",item.resetInterval],["الإيداع",item.depositRequired],["الحد الأدنى للسحب",item.minimumWithdrawal],["الأهلية",item.eligibility],["طريقة الدفع",item.payoutMethod],["الشبكة",item.network],["رمز المكافأة",item.rewardToken],["الوقت المتوقع",item.taskTime],["متطلبات KYC",item.requiresKyc],["الإحالة",item.referralRequired],["تاريخ الانتهاء",item.expiryDate],["عنوان العقد",item.contractAddress]];
  for(const [label,value] of factPairs){if(value!==undefined&&value!==null&&String(value).trim()){const f=makeNode("div","opp-fact"),l=makeNode("span","",label),v=makeNode("b","",String(value));f.append(l,v);facts.append(f)}}
  if(!facts.children.length){for(const [label,value] of [["المكافأة","غير معلومة"],["الإيداع","غير معلوم"],["الأهلية","لم يتم التحقق"],["السحب","غير معلوم"]]){const f=makeNode("div","opp-fact");f.append(makeNode("span","",label),makeNode("b","",value));facts.append(f)}}
  card.append(facts);
