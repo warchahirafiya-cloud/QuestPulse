@@ -31,7 +31,7 @@
 </div>
 <div class="stats" id="stats"></div>
 <div class="layout">
-<aside class="panel"><h2>السجلات</h2><input id="recordSearch" type="search" placeholder="ابحث بالمعرّف أو النوع أو الحالة" aria-label="بحث في السجلات" style="margin-bottom:10px"><div class="record-list" id="recordList"></div><div class="bottom"><button class="btn" id="addRecord">+ سجل جديد</button><button class="btn danger" id="deleteRecord">حذف السجل المحدد</button></div></aside>
+<aside class="panel"><h2>السجلات</h2><input id="recordSearch" type="search" placeholder="ابحث بالمعرّف أو النوع أو الحالة" aria-label="بحث في السجلات" style="margin-bottom:10px"><div class="record-list" id="recordList"></div><div class="bottom"><button class="btn" id="addRecord" disabled title="إضافة بطاقة جديدة تتطلب توسيع واجهة الموقع أولاً">إضافة بطاقة جديدة — غير متاحة حالياً</button><button class="btn danger" id="deleteRecord">حذف السجل المحدد</button></div></aside>
 <section class="panel">
 <h2 id="editorTitle">اختر سجلاً للبدء</h2>
 <div id="editor" hidden>
@@ -72,11 +72,13 @@ function validDate(v){return !!v && !Number.isNaN(Date.parse(v))}
 function parseArray(value,label){let v;try{v=JSON.parse(value)}catch{throw new Error(label+" يجب أن يكون JSON صالحاً")}if(!Array.isArray(v))throw new Error(label+" يجب أن يكون مصفوفة");return v}
 function validate(data){
  const errors=[],ids=new Set();
+ const homepageCardIds=new Set(["airdrop-campaigns","telegram-bots","daily-click","task-rewards","referral-programs"]);
  if(!data||data.schemaVersion!==1||!Array.isArray(data.opportunities))errors.push("بنية السجل أو schemaVersion غير صحيحة");
  for(const [i,r] of (data?.opportunities||[]).entries()){
   const p="السجل "+(i+1)+": ";
   if(!r.id||typeof r.id!=="string")errors.push(p+"المعرّف مطلوب");
   else if(ids.has(r.id))errors.push(p+"المعرّف مكرر: "+r.id);else ids.add(r.id);
+  if(r.id&&!homepageCardIds.has(r.id))errors.push(p+"لا توجد بطاقة واجهة لهذا المعرّف؛ يجب تطوير بطاقة الموقع قبل إضافته.");
   if(!allowedTypes.includes(r.type))errors.push(p+"نوع الفرصة غير صالح");
   if(!["unverified","under_review","verified","paused","expired"].includes(r.status))errors.push(p+"حالة المراجعة غير صالحة");
   if(!["unknown","active","paused","expired"].includes(r.availability))errors.push(p+"حالة التوفر غير صالحة");
@@ -113,7 +115,6 @@ function readForm(){
 async function load(){try{const res=await fetch(DATA_URL,{cache:"no-store"});if(!res.ok)throw new Error("HTTP "+res.status);const data=await res.json();const errors=validate(data);if(errors.length)throw new Error(errors.join("؛ "));registry=data;selectedId=data.opportunities[0]?.id||null;render();if(selectedId)select(selectedId);notify("تم تحميل "+data.opportunities.length+" سجلات من المصدر.","ok")}catch(e){notify("تعذر تحميل السجل: "+e.message+" — يمكنك استيراد نسخة JSON يدوياً.","err")}}
 $("saveRecord").onclick=()=>{try{const updated=readForm();const errors=validate({...registry,opportunities:registry.opportunities.map(r=>r.id===selectedId?updated:r)});if(errors.length)throw new Error(errors.join("؛ "));const i=registry.opportunities.findIndex(r=>r.id===selectedId);registry.opportunities[i]=updated;working=clone(updated);selectedId=updated.id;registry.updatedAt=new Date().toISOString();persistDraft();render();$("editorTitle").textContent="تحرير: "+selectedId;notify("حُفظت التعديلات في ذاكرة هذه الصفحة. نزّل JSON لتصديرها.","ok")}catch(e){notify(e.message,"err")}};
 $("resetRecord").onclick=()=>select(selectedId);
-$("addRecord").onclick=()=>{const id="new-record-"+(registry.opportunities.length+1);if(registry.opportunities.some(r=>r.id===id)){notify("يوجد سجل بهذا المعرّف بالفعل.","err");return}const r={id,type:"tasks",status:"unverified",availability:"unknown",officialUrl:null,reviewedAt:null,verificationSources:[],paymentEvidence:[],withdrawalTerms:null,resetInterval:null,paymentEvidenceSummary:null,riskNotes:null,riskLevel:"unrated",notes:"سجل جديد — لا تنشر قبل اكتمال المراجعة القانونية والتحقق المستقل."};registry.opportunities.push(r);selectedId=id;persistDraft();select(id);notify("أُضيف سجل محلي جديد. عدّل معرّفه وبياناته ثم احفظ.","ok")};
 $("deleteRecord").onclick=()=>{if(!selectedId||!confirm("حذف السجل المحدد من النسخة المحلية؟"))return;registry.opportunities=registry.opportunities.filter(r=>r.id!==selectedId);persistDraft();selectedId=registry.opportunities[0]?.id||null;if(selectedId)select(selectedId);else{$("editor").hidden=true;$("editorTitle").textContent="لا توجد سجلات";render()}notify("حُذف السجل من النسخة المحلية فقط.","ok")};
 $("exportBtn").onclick=()=>{const errors=validate(registry);if(errors.length){notify("تعذر التصدير: "+errors.join("؛ "),"err");return}const blob=new Blob([JSON.stringify(registry,null,2)+"\n"],{type:"application/json"});const url=URL.createObjectURL(blob);const a=document.createElement("a");a.href=url;a.download="opportunities.json";a.click();URL.revokeObjectURL(url);notify("تم تجهيز ملف JSON للتنزيل. راجعه قبل استبدال ملف المستودع.","ok")};
 $("importBtn").onclick=()=>$("importFile").click();
