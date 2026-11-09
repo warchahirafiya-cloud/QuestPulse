@@ -599,7 +599,12 @@ function googleTranslateElementInit(){
 .qp-install:hover{background:#55d6d02b}
 .qp-network{display:inline-flex;align-items:center;gap:6px;padding:6px 9px;border:1px solid #39d6a255;border-radius:10px;background:#39d6a210;color:#8ce8c8;font-size:.74rem;font-weight:800;white-space:nowrap}
 .qp-network.is-offline{border-color:#f4bd6255;background:#f4bd6210;color:#f6d28f}
-@media(max-width:700px){.qp-install{padding:7px 9px;font-size:.76rem}.qp-network{font-size:.68rem;padding:5px 7px}.navtools{gap:6px}.lang{max-width:105px}}
+.qp-health{display:inline-flex;align-items:center;gap:5px;padding:6px 9px;border:1px solid #ffffff24;border-radius:10px;background:#ffffff08;color:#c8d4e5;font-size:.72rem;font-weight:750;white-space:nowrap}
+.qp-health[data-state="ok"]{border-color:#39d6a255;background:#39d6a210;color:#8ce8c8}
+.qp-health[data-state="error"]{border-color:#ff718555;background:#ff718512;color:#ff9aaa}
+.qp-ci{display:inline-flex;align-items:center;min-height:26px}
+.qp-ci img{display:block;max-width:145px;height:20px}
+@media(max-width:700px){.qp-install{padding:7px 9px;font-size:.76rem}.qp-network{font-size:.68rem;padding:5px 7px}.qp-health{font-size:.66rem;padding:5px 7px}.qp-ci img{max-width:112px;height:18px}.navtools{gap:6px;flex-wrap:wrap}.lang{max-width:105px}}
 </style>
 <script>
 (function(){
@@ -615,24 +620,71 @@ function googleTranslateElementInit(){
   network.className="qp-network";
   network.setAttribute("role","status");
   network.setAttribute("aria-live","polite");
+  const health=document.createElement("span");
+  health.className="qp-health";
+  health.dataset.state="checking";
+  health.setAttribute("role","status");
+  health.setAttribute("aria-live","polite");
+  const ci=document.createElement("a");
+  ci.className="qp-ci";
+  ci.href="https://github.com/warchahirafiya-cloud/QuestPulse/actions/workflows/registry-validation.yml";
+  ci.target="_blank";
+  ci.rel="noopener noreferrer";
+  ci.setAttribute("aria-label","عرض حالة فحوصات GitHub Actions");
+  const ciBadge=document.createElement("img");
+  ciBadge.src="https://github.com/warchahirafiya-cloud/QuestPulse/actions/workflows/registry-validation.yml/badge.svg?branch=main";
+  ciBadge.alt="GitHub Actions workflow status";
+  ci.appendChild(ciBadge);
   tools.insertBefore(network,tools.firstChild);
-  tools.insertBefore(install,network.nextSibling);
+  tools.insertBefore(health,network.nextSibling);
+  tools.insertBefore(ci,health.nextSibling);
+  tools.insertBefore(install,ci.nextSibling);
 
   const labels={
-    ar:{install:"＋ تثبيت التطبيق",online:"● متصل",offline:"● دون اتصال"},
-    en:{install:"＋ Install app",online:"● Online",offline:"● Offline"},
-    fr:{install:"＋ Installer",online:"● En ligne",offline:"● Hors ligne"}
+    ar:{install:"＋ تثبيت التطبيق",online:"● متصل",offline:"● دون اتصال",checking:"◌ جارٍ الفحص",ok:"✓ التشغيل سليم",error:"! يوجد خلل"},
+    en:{install:"＋ Install app",online:"● Online",offline:"● Offline",checking:"◌ Checking",ok:"✓ Runtime healthy",error:"! Issue detected"},
+    fr:{install:"＋ Installer",online:"● En ligne",offline:"● Hors ligne",checking:"◌ Vérification",ok:"✓ Fonctionnement OK",error:"! Problème détecté"}
   };
   function updateLabels(){
     const l=labels[lang?.value]||labels.ar;
     install.textContent=l.install;
     network.textContent=navigator.onLine?l.online:l.offline;
     network.classList.toggle("is-offline",!navigator.onLine);
+    if(!health.dataset.complete)health.textContent=l.checking;
+    else health.textContent=health.dataset.state==="ok"?l.ok:l.error;
+  }
+  async function verifyRuntime(){
+    health.dataset.complete="";
+    health.dataset.state="checking";
+    updateLabels();
+    const checks=await Promise.allSettled([
+      Promise.resolve().then(()=>{
+        const required=["qpSidebar","qpMenuToggle","opportunityList","qpMonitorMetrics","qpRiskBreakdown","qpReviewQueue"];
+        const missing=required.filter(id=>!document.getElementById(id));
+        if(missing.length)throw new Error("Missing UI elements: "+missing.join(", "));
+      }),
+      fetch("./data/opportunities.json",{cache:"no-store"}).then(response=>{
+        if(!response.ok)throw new Error("Registry HTTP "+response.status);
+        return response.json();
+      }).then(data=>{
+        if(!data||!Array.isArray(data.opportunities))throw new Error("Invalid registry structure");
+      }),
+      ("serviceWorker" in navigator)
+        ? navigator.serviceWorker.register("./sw.js").then(()=>true)
+        : Promise.reject(new Error("Service workers unsupported"))
+    ]);
+    const failed=checks.some(result=>result.status==="rejected");
+    health.dataset.state=failed?"error":"ok";
+    health.dataset.complete="1";
+    health.title=checks.map((result,index)=>["واجهة المستخدم","سجل الفرص","Service Worker"][index]+": "+(result.status==="fulfilled"?"OK":String(result.reason?.message||result.reason))).join(" | ");
+    updateLabels();
   }
   window.addEventListener("online",updateLabels);
   window.addEventListener("offline",updateLabels);
   lang?.addEventListener("change",updateLabels);
   updateLabels();
+  verifyRuntime();
+  window.addEventListener("pageshow",()=>{if(navigator.onLine)verifyRuntime()});
 
   let installPrompt=null;
   const standalone=()=>window.matchMedia("(display-mode: standalone)").matches||window.navigator.standalone===true;
