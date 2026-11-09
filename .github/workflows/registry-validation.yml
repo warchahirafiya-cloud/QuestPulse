@@ -13,6 +13,9 @@ on:
     branches: [main]
     paths:
       - "data/opportunities.json"
+      - "index.html"
+      - "sw.js"
+      - "manifest.webmanifest"
       - ".github/workflows/registry-validation.yml"
   workflow_dispatch:
 
@@ -107,7 +110,7 @@ jobs:
           const html = fs.readFileSync('index.html', 'utf8');
           const sw = fs.readFileSync('sw.js', 'utf8');
           const manifest = JSON.parse(fs.readFileSync('manifest.webmanifest', 'utf8'));
-          const inlineScripts = [...html.matchAll(/<script\\b[^>]*>([\\s\\S]*?)<\\/script>/gi)]
+          const inlineScripts = [...html.matchAll(/<script\b[^>]*>([\s\S]*?)<\/script>/gi)]
             .map(match => match[1])
             .filter(source => source.trim());
           for (const [index, source] of inlineScripts.entries()) {
