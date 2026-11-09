@@ -5,6 +5,12 @@ on:
     paths:
       - "data/opportunities.json"
       - "scripts/validate-opportunities.mjs"
+      - "scripts/validate-site.mjs"
+      - "index.html"
+      - "guide.html"
+      - "admin/**"
+      - "README.md"
+      - "docs/**"
       - ".github/workflows/validate-opportunities.yml"
   pull_request:
     paths:
@@ -27,3 +33,5 @@ jobs:
           node-version: 22
       - name: Validate opportunity registry
         run: node scripts/validate-opportunities.mjs
+      - name: Validate site structure
+        run: node scripts/validate-site.mjs
