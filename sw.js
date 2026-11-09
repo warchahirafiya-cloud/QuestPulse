@@ -1,7 +1,10 @@
-const CACHE_NAME = "questpulse-shell-v2";
+const CACHE_NAME = "questpulse-shell-v3";
 const APP_SHELL = [
   "./",
   "./index.html",
+  "./guide.html",
+  "./privacy.html",
+  "./terms.html",
   "./manifest.webmanifest",
   "./assets/questpulse-icon.svg",
   "./assets/questpulse-miner.webp.b64"
