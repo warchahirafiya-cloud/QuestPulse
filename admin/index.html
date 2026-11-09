@@ -43,6 +43,10 @@
 <div class="field full"><label for="notes">ملاحظات المحرر</label><textarea id="notes" class="notes" dir="rtl"></textarea></div>
 <div class="field full"><label for="verificationSources">مصادر التحقق — JSON array</label><textarea id="verificationSources" spellcheck="false">[]</textarea><span class="hint">كل عنصر: {"url":"https://…","checkedFor":"ما الذي تحققت منه"}</span></div>
 <div class="field full"><label for="paymentEvidence">أدلة الدفع — JSON array</label><textarea id="paymentEvidence" spellcheck="false">[]</textarea><span class="hint">لا تضف إلا دليلاً قابلاً للفحص، واذكر حدود الدليل؛ لا تعتبره ضماناً للدفع مستقبلاً.</span></div>
+<div class="field"><label for="withdrawalTerms">شروط السحب</label><textarea id="withdrawalTerms" class="notes" placeholder="الحد الأدنى، الرسوم، الشبكة، القيود…"></textarea></div>
+<div class="field"><label for="resetInterval">توقيت إعادة الكسب</label><input id="resetInterval" placeholder="كل 24 ساعة / كل ساعة / غير معلوم"></div>
+<div class="field"><label for="paymentEvidenceSummary">ملخص أدلة الدفع</label><textarea id="paymentEvidenceSummary" class="notes" placeholder="ما الذي يثبته الدليل وما حدوده؟"></textarea></div>
+<div class="field"><label for="riskNotes">ملاحظات المخاطر</label><textarea id="riskNotes" class="notes" placeholder="مخاطر الإيداع، السحب، العقد، الخصوصية…"></textarea></div>
 </div>
 <div class="bottom"><button class="btn primary" id="saveRecord">حفظ التعديلات محلياً</button><button class="btn" id="resetRecord">تراجع عن التعديلات</button></div>
 </div>
@@ -56,7 +60,7 @@
 const DATA_URL="../data/opportunities.json";
 let registry=null,selectedId=null,working=null;
 const $=id=>document.getElementById(id);
-const fields=["id","type","status","availability","riskLevel","reviewedAt","officialUrl","notes","verificationSources","paymentEvidence"];
+const fields=["id","type","status","availability","riskLevel","reviewedAt","officialUrl","notes","verificationSources","paymentEvidence","withdrawalTerms","resetInterval","paymentEvidenceSummary","riskNotes"];
 function clone(v){return JSON.parse(JSON.stringify(v))}
 function validHttps(v){try{return new URL(v).protocol==="https:"}catch{return false}}
 function validDate(v){return !!v && !Number.isNaN(Date.parse(v))}
@@ -72,6 +76,8 @@ function validate(data){
   if(!["unknown","active","paused","expired"].includes(r.availability))errors.push(p+"حالة التوفر غير صالحة");
   if(!["low","medium","high","unrated"].includes(r.riskLevel))errors.push(p+"مستوى المخاطر غير صالح");
   if(!Array.isArray(r.verificationSources)||!Array.isArray(r.paymentEvidence))errors.push(p+"مصادر التحقق وأدلة الدفع يجب أن تكون مصفوفات");
+  for(const key of ["withdrawalTerms","resetInterval","paymentEvidenceSummary","riskNotes"]){if(r[key]!==null&&r[key]!==undefined&&typeof r[key]!=="string")errors.push(p+"الحقل "+key+" يجب أن يكون نصاً أو null");}
+  for(const e of (r.paymentEvidence||[])){if(!e||typeof e!=="object"||Array.isArray(e))errors.push(p+"كل دليل دفع يجب أن يكون كائناً");else if(e.url&&!validHttps(e.url))errors.push(p+"رابط دليل الدفع يجب أن يستخدم HTTPS");}
   for(const s of (r.verificationSources||[])){if(!validHttps(s?.url)||!String(s?.checkedFor||"").trim())errors.push(p+"كل مصدر تحقق يحتاج رابط HTTPS وشرحاً");}
   if(r.officialUrl!==null&&r.officialUrl!==undefined&&r.officialUrl!==""&&!validHttps(r.officialUrl))errors.push(p+"الرابط الرسمي يجب أن يكون HTTPS");
   if(r.reviewedAt!==null&&r.reviewedAt!==undefined&&r.reviewedAt!==""&&!validDate(r.reviewedAt))errors.push(p+"تاريخ المراجعة غير صالح");
@@ -91,13 +97,13 @@ function select(id){selectedId=id;working=clone(registry.opportunities.find(r=>r
 function fill(){for(const f of fields){let v=working[f];if(f==="verificationSources"||f==="paymentEvidence")v=JSON.stringify(v||[],null,2);$(f).value=v??""}}
 function readForm(){
  const out={...working};
- for(const f of fields){if(f==="verificationSources")out[f]=parseArray($(f).value,"مصادر التحقق");else if(f==="paymentEvidence")out[f]=parseArray($(f).value,"أدلة الدفع");else if(f==="reviewedAt"||f==="officialUrl")out[f]=$(f).value.trim()||null;else out[f]=$(f).value.trim();}
+ for(const f of fields){if(f==="verificationSources")out[f]=parseArray($(f).value,"مصادر التحقق");else if(f==="paymentEvidence")out[f]=parseArray($(f).value,"أدلة الدفع");else if(["reviewedAt","officialUrl","withdrawalTerms","resetInterval","paymentEvidenceSummary","riskNotes"].includes(f))out[f]=$(f).value.trim()||null;else out[f]=$(f).value.trim();}
  return out;
 }
 async function load(){try{const res=await fetch(DATA_URL,{cache:"no-store"});if(!res.ok)throw new Error("HTTP "+res.status);const data=await res.json();const errors=validate(data);if(errors.length)throw new Error(errors.join("؛ "));registry=data;selectedId=data.opportunities[0]?.id||null;render();if(selectedId)select(selectedId);notify("تم تحميل "+data.opportunities.length+" سجلات من المصدر.","ok")}catch(e){notify("تعذر تحميل السجل: "+e.message+" — يمكنك استيراد نسخة JSON يدوياً.","err")}}
 $("saveRecord").onclick=()=>{try{const updated=readForm();const errors=validate({...registry,opportunities:registry.opportunities.map(r=>r.id===selectedId?updated:r)});if(errors.length)throw new Error(errors.join("؛ "));const i=registry.opportunities.findIndex(r=>r.id===selectedId);registry.opportunities[i]=updated;working=clone(updated);selectedId=updated.id;registry.updatedAt=new Date().toISOString();render();$("editorTitle").textContent="تحرير: "+selectedId;notify("حُفظت التعديلات في ذاكرة هذه الصفحة. نزّل JSON لتصديرها.","ok")}catch(e){notify(e.message,"err")}};
 $("resetRecord").onclick=()=>select(selectedId);
-$("addRecord").onclick=()=>{const id="new-record-"+(registry.opportunities.length+1);if(registry.opportunities.some(r=>r.id===id)){notify("يوجد سجل بهذا المعرّف بالفعل.","err");return}const r={id,type:"tasks",status:"unverified",availability:"unknown",officialUrl:null,reviewedAt:null,verificationSources:[],paymentEvidence:[],riskLevel:"unrated",notes:"سجل جديد — لا تنشر قبل اكتمال المراجعة القانونية والتحقق المستقل."};registry.opportunities.push(r);selectedId=id;select(id);notify("أُضيف سجل محلي جديد. عدّل معرّفه وبياناته ثم احفظ.","ok")};
+$("addRecord").onclick=()=>{const id="new-record-"+(registry.opportunities.length+1);if(registry.opportunities.some(r=>r.id===id)){notify("يوجد سجل بهذا المعرّف بالفعل.","err");return}const r={id,type:"tasks",status:"unverified",availability:"unknown",officialUrl:null,reviewedAt:null,verificationSources:[],paymentEvidence:[],withdrawalTerms:null,resetInterval:null,paymentEvidenceSummary:null,riskNotes:null,riskLevel:"unrated",notes:"سجل جديد — لا تنشر قبل اكتمال المراجعة القانونية والتحقق المستقل."};registry.opportunities.push(r);selectedId=id;select(id);notify("أُضيف سجل محلي جديد. عدّل معرّفه وبياناته ثم احفظ.","ok")};
 $("deleteRecord").onclick=()=>{if(!selectedId||!confirm("حذف السجل المحدد من النسخة المحلية؟"))return;registry.opportunities=registry.opportunities.filter(r=>r.id!==selectedId);selectedId=registry.opportunities[0]?.id||null;if(selectedId)select(selectedId);else{$("editor").hidden=true;$("editorTitle").textContent="لا توجد سجلات";render()}notify("حُذف السجل من النسخة المحلية فقط.","ok")};
 $("exportBtn").onclick=()=>{const errors=validate(registry);if(errors.length){notify("تعذر التصدير: "+errors.join("؛ "),"err");return}const blob=new Blob([JSON.stringify(registry,null,2)+"\n"],{type:"application/json"});const url=URL.createObjectURL(blob);const a=document.createElement("a");a.href=url;a.download="opportunities.json";a.click();URL.revokeObjectURL(url);notify("تم تجهيز ملف JSON للتنزيل. راجعه قبل استبدال ملف المستودع.","ok")};
 $("importBtn").onclick=()=>$("importFile").click();
