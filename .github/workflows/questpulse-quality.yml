@@ -24,4 +24,6 @@ jobs:
           node-version: 22
 
       - name: Validate opportunity registry and site structure
-        run: node scripts/validate-opportunity-registry.mjs
+        run: |
+          node scripts/validate-opportunity-registry.mjs
+          node scripts/validate-site.mjs
