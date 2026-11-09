@@ -34,10 +34,15 @@ else {
     if (item.officialUrl !== null && !https(item.officialUrl)) fail(`${label}: officialUrl must be HTTPS or null`);
     for (const source of item.verificationSources || []) {
       if (!source || !https(source.url)) fail(`${label}: each verification source needs an HTTPS URL`);
+      if (typeof source?.checkedFor !== "string" || !source.checkedFor.trim()) {
+        fail(`${label}: each verification source needs a checkedFor description`);
+      }
     }
     if (item.status === "verified") {
       if (!https(item.officialUrl)) fail(`${label}: verified record needs an official HTTPS URL`);
-      if (!(item.verificationSources || []).some((source) => https(source?.url))) fail(`${label}: verified record needs an HTTPS verification source`);
+      if (!(item.verificationSources || []).some((source) => https(source?.url) && typeof source?.checkedFor === "string" && source.checkedFor.trim())) {
+        fail(`${label}: verified record needs a described HTTPS verification source`);
+      }
       if (!item.reviewedAt || Number.isNaN(Date.parse(item.reviewedAt))) fail(`${label}: verified record needs a valid reviewedAt date`);
     }
     if (item.status !== "verified" && item.availability === "active") {
@@ -48,6 +53,16 @@ else {
 }
 
 const html = await readFile("index.html", "utf8");
+if (!html.includes('fetch("./data/opportunities.json"')) {
+  fail("homepage must load the canonical data/opportunities.json registry");
+}
+if (!html.includes("applyOpportunityRegistry(data.opportunities)")) {
+  fail("homepage must pass registry records into the opportunity-card renderer");
+}
+const cardIds = new Set([...html.matchAll(/data-opportunity-id="([^"]+)"/g)].map((match) => match[1]));
+for (const item of registry.opportunities || []) {
+  if (!cardIds.has(item.id)) fail(`registry record "${item.id}" has no matching homepage card`);
+}
 const languageOptions = [...html.matchAll(/<option value="[^"]+">/g)].length;
 if (languageOptions < 20) fail(`homepage has only ${languageOptions} language options; expected at least 20`);
 else pass(`homepage exposes ${languageOptions} language options`);
