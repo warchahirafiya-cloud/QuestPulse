@@ -460,6 +460,11 @@ Object.assign(translations.ar,{monitorTitle:"لوحة مراقبة الفرص",m
 Object.assign(translations.en,{monitorTitle:"Opportunity monitoring",monitorSub:"Registry health, risk levels and review freshness.",monitorWaiting:"Waiting for registry",monitorTotal:"Total records",monitorVerified:"Verified by rules",monitorUnverified:"Unverified / unknown",monitorUrgent:"Paused or expired",monitorHigh:"High risk",monitorDue:"Review due",monitorRisk:"Risk distribution",monitorQueue:"Needs review",monitorNote:"Automated classification based on registry fields only; not a security audit or payout guarantee.",riskLow:"Low",riskMedium:"Medium",riskHigh:"High",riskUnknown:"Unrated",reasonPaused:"Status or availability is paused/expired",reasonUnverified:"Verification requirements not met",reasonNoDate:"No review date",reasonStale:"Review is older than 14 days",reasonNoSource:"No verification source",reviewAction:"View record",reviewFresh:"Recently reviewed",reviewDueLabel:"Review required",monitorNoIssues:"No records currently need review",monitorLastUpdated:"Registry updated"});
 Object.assign(translations.fr,{monitorTitle:"Suivi des opportunités",monitorSub:"État du registre, niveaux de risque et fraîcheur des vérifications.",monitorWaiting:"En attente du registre",monitorTotal:"Total des fiches",monitorVerified:"Vérifiées selon les règles",monitorUnverified:"Non vérifiées / inconnues",monitorUrgent:"Suspendues ou expirées",monitorHigh:"Risque élevé",monitorDue:"À revoir",monitorRisk:"Répartition des risques",monitorQueue:"À vérifier",monitorNote:"Classement automatique basé uniquement sur le registre ; ce n'est ni un audit de sécurité ni une garantie de paiement.",riskLow:"Faible",riskMedium:"Moyen",riskHigh:"Élevé",riskUnknown:"Non évalué",reasonPaused:"Statut ou disponibilité suspendu/expiré",reasonUnverified:"Conditions de vérification non remplies",reasonNoDate:"Aucune date de vérification",reasonStale:"Vérification datant de plus de 14 jours",reasonNoSource:"Aucune source de vérification",reviewAction:"Voir la fiche",reviewFresh:"Vérification récente",reviewDueLabel:"Vérification requise",monitorNoIssues:"Aucune fiche à revoir actuellement",monitorLastUpdated:"Registre mis à jour"});
 
+
+Object.assign(translations.ar,{alertAdded:"أُضيفت فرصة جديدة إلى السجل",alertRemoved:"أُزيلت فرصة من السجل",reasonFutureDate:"تاريخ المراجعة يقع في المستقبل"});
+Object.assign(translations.en,{alertAdded:"A new opportunity was added",alertRemoved:"An opportunity was removed",reasonFutureDate:"Review date is in the future"});
+Object.assign(translations.fr,{alertAdded:"Une nouvelle opportunité a été ajoutée",alertRemoved:"Une opportunité a été supprimée",reasonFutureDate:"La date de vérification est future"});
+
 const qpSnapshotKey="questpulse-opportunity-snapshot-v1",qpAlertsKey="questpulse-opportunity-alerts-v1";
 function qpText(key){return (translations[langNow()]||translations.ar)[key]||(translations.ar[key]||key)}
 function renderQpMonitor(records){
@@ -468,10 +473,11 @@ function renderQpMonitor(records){
  const getRisk=r=>["low","medium","high"].includes(r.riskLevel)?r.riskLevel:"unrated";
  const isVerified=r=>validVerifiedRecord(r);
  const reviewed=r=>r.reviewedAt&&Number.isFinite(Date.parse(r.reviewedAt));
- const age=r=>reviewed(r)?(now-Date.parse(r.reviewedAt))/86400000:Infinity;
+ const age=r=>reviewed(r)?Math.max(0,(now-Date.parse(r.reviewedAt))/86400000):Infinity;
+ const futureReview=r=>reviewed(r)&&Date.parse(r.reviewedAt)>now+5*60*1000;
  const urgent=r=>["paused","expired"].includes(r.status)||["paused","expired"].includes(r.availability);
  const missingSource=r=>!Array.isArray(r.verificationSources)||!r.verificationSources.some(x=>x&&typeof x.url==="string"&&/^https:\/\//i.test(x.url));
- const due=r=>!isVerified(r)||!reviewed(r)||age(r)>14||missingSource(r);
+ const due=r=>!isVerified(r)||!reviewed(r)||futureReview(r)||age(r)>14||missingSource(r);
  const counts={low:0,medium:0,high:0,unrated:0};items.forEach(r=>counts[getRisk(r)]++);
  const stats=[
   ["monitorTotal",items.length,""],
@@ -483,7 +489,7 @@ function renderQpMonitor(records){
  ];
  metrics.replaceChildren();for(const [key,value,tone] of stats){const el=document.createElement("div");el.className="qp-monitor-metric";el.dataset.tone=tone;const label=document.createElement("span");label.textContent=qpText(key);const number=document.createElement("strong");number.textContent=String(value);el.append(label,number);metrics.append(el)}
  riskBox.replaceChildren();for(const [key,value] of [["riskLow",counts.low],["riskMedium",counts.medium],["riskHigh",counts.high],["riskUnknown",counts.unrated]]){const line=document.createElement("div");line.className="qp-risk-line";const label=document.createElement("span");label.textContent=qpText(key);const number=document.createElement("b");number.textContent=String(value);line.append(label,number);riskBox.append(line)}
- const reasons=r=>{const out=[];if(urgent(r))out.push(qpText("reasonPaused"));if(!isVerified(r))out.push(qpText("reasonUnverified"));if(!reviewed(r))out.push(qpText("reasonNoDate"));else if(age(r)>14)out.push(qpText("reasonStale"));if(missingSource(r))out.push(qpText("reasonNoSource"));return [...new Set(out)].slice(0,3).join(" · ")};
+ const reasons=r=>{const out=[];if(urgent(r))out.push(qpText("reasonPaused"));if(!isVerified(r))out.push(qpText("reasonUnverified"));if(!reviewed(r))out.push(qpText("reasonNoDate"));else if(futureReview(r))out.push(qpText("reasonFutureDate"));else if(age(r)>14)out.push(qpText("reasonStale"));if(missingSource(r))out.push(qpText("reasonNoSource"));return [...new Set(out)].slice(0,3).join(" · ")};
  const pending=items.filter(due).sort((a,b)=>(Number(urgent(b))-Number(urgent(a)))||(Number(getRisk(b)==="high")-Number(getRisk(a)==="high"))||age(b)-age(a)).slice(0,7);
  document.getElementById("qpQueueCount").textContent=String(items.filter(due).length);queue.replaceChildren();
  if(!pending.length){const empty=document.createElement("div");empty.className="qp-review-empty";empty.textContent=qpText("monitorNoIssues");queue.append(empty)}
@@ -501,12 +507,41 @@ function renderQpAlerts(){
 }
 function monitorOpportunityChanges(records){
  const fields=[["status","alertStatus"],["availability","alertAvailability"],["withdrawalFee","alertFee"],["withdrawalNetwork","alertNetwork"],["minimumWithdrawal","alertMinimum"],["withdrawalTerms","alertTerms"],["resetInterval","alertCadence"]];
- const current={};for(const r of records){if(r?.id)current[r.id]=Object.fromEntries(fields.map(([k])=>[k,r[k]??null]).concat([["title",r.title||r.id]]))}
- let previous=null;try{previous=JSON.parse(localStorage.getItem(qpSnapshotKey)||"null")}catch{}
- if(previous&&typeof previous==="object"){
-  const notices=[];for(const [id,values] of Object.entries(current)){const old=previous[id];if(!old)continue;for(const [field,label] of fields){if((old[field]??null)!==(values[field]??null)){notices.push({id,title:values.title,detail:qpText(label)+": "+String(old[field]??"—")+" ← "+String(values[field]??"—"),at:new Date().toISOString()})}}}
-  if(notices.length){let saved=[];try{saved=JSON.parse(localStorage.getItem(qpAlertsKey)||"[]")}catch{}const merged=[...notices,...saved].slice(0,30);try{localStorage.setItem(qpAlertsKey,JSON.stringify(merged))}catch{}
-   if("Notification" in window&&Notification.permission==="granted"){for(const n of notices.slice(0,3)){try{new Notification("QuestPulse · "+n.title,{body:n.detail,tag:"qp-"+n.id+"-"+n.at})}catch{}}}
+ const current={};
+ for(const r of Array.isArray(records)?records:[]){
+  if(!r||typeof r.id!=="string"||!r.id.trim())continue;
+  current[r.id]=Object.fromEntries(fields.map(([k])=>[k,r[k]??null]).concat([["title",r.title||r.id]]));
+ }
+ let previous=null;
+ try{previous=JSON.parse(localStorage.getItem(qpSnapshotKey)||"null")}catch{}
+ const validSnapshot=previous&&typeof previous==="object"&&!Array.isArray(previous);
+ if(validSnapshot){
+  const notices=[],now=new Date().toISOString();
+  for(const [id,values] of Object.entries(current)){
+   const old=previous[id];
+   if(!old||typeof old!=="object"||Array.isArray(old)){
+    notices.push({id,title:values.title,detail:qpText("alertAdded"),at:now,type:"added"});
+    continue;
+   }
+   for(const [field,label] of fields){
+    if((old[field]??null)!==(values[field]??null)){
+     notices.push({id,title:values.title,detail:qpText(label)+": "+String(old[field]??"—")+" ← "+String(values[field]??"—"),at:now,type:"changed"});
+    }
+   }
+  }
+  for(const [id,old] of Object.entries(previous)){
+   if(!Object.prototype.hasOwnProperty.call(current,id)){
+    notices.push({id,title:old?.title||id,detail:qpText("alertRemoved"),at:now,type:"removed"});
+   }
+  }
+  if(notices.length){
+   let saved=[];
+   try{const parsed=JSON.parse(localStorage.getItem(qpAlertsKey)||"[]");if(Array.isArray(parsed))saved=parsed.filter(n=>n&&typeof n==="object"&&typeof n.title==="string"&&typeof n.detail==="string"&&Number.isFinite(Date.parse(n.at)))}catch{}
+   const merged=[...notices,...saved].slice(0,30);
+   try{localStorage.setItem(qpAlertsKey,JSON.stringify(merged))}catch{}
+   if("Notification" in window&&Notification.permission==="granted"){
+    for(const n of notices.slice(0,3)){try{new Notification("QuestPulse · "+n.title,{body:n.detail,tag:"qp-"+n.id+"-"+n.at})}catch{}}
+   }
   }
  }
  try{localStorage.setItem(qpSnapshotKey,JSON.stringify(current))}catch{}
