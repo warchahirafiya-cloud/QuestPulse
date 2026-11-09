@@ -83,6 +83,71 @@ footer{margin-top:35px;border-top:1px solid var(--line);padding:26px 0;color:var
 [hidden]{display:none!important}
 @media(max-width:850px){.hero{grid-template-columns:1fr;padding-top:48px}.hero-art{min-height:220px}.grid{grid-template-columns:repeat(2,minmax(0,1fr))}.navlinks{gap:11px}}
 @media(max-width:620px){.wrap{width:min(100% - 28px,1180px)}section{padding:27px 0}.hero{padding:35px 0 28px;gap:22px}.hero-art{min-height:155px;border-radius:20px}.orbit{font-size:3.6rem}.notice{padding:13px 14px;font-size:.9rem}.filters{display:grid;grid-template-columns:1fr;gap:8px;margin:14px 0}.filters input,.filters select,.filter-clear{width:100%;min-height:46px}.filter-summary{margin:0 0 12px}.opportunity{padding:14px;border-radius:15px;gap:10px}.opp-head{align-items:flex-start;gap:9px}.opp-icon{width:44px;height:44px;flex-basis:44px;font-size:1.4rem}.opp-title h3{font-size:1rem}.opp-status{white-space:normal;text-align:center;max-width:110px}.opp-desc{min-height:0}.opp-facts{gap:7px}.opp-fact{padding:8px}.opp-fact b{font-size:.8rem}.opp-foot{align-items:flex-start}.opp-actions .btn{min-height:44px}.opp-details summary{padding:7px 0}.navlinks{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));width:100%;gap:6px 10px;font-size:.84rem}.navlinks a{padding:4px 0}.navtools{top:12px}.qp{font-size:.76rem;padding:5px 7px}.lang{padding:7px 8px}.brand{font-size:1.25rem}h1{font-size:clamp(2.25rem,12vw,3.2rem);letter-spacing:-1px}.navtools{position:absolute;top:15px;inset-inline-end:4%}.navlinks{padding-bottom:10px}.grid,.steps,.metric-grid{grid-template-columns:1fr}.section-head{align-items:flex-start;flex-direction:column}h1{letter-spacing:-1px}}
+
+/* QuestPulse interface refresh — original layout, responsive navigation */
+:root{--qp-sidebar:258px;--qp-glass:rgba(13,20,38,.92);--qp-accent:#a99bff}
+body{background:radial-gradient(ellipse at 78% -8%,#443b8b66,transparent 34%),radial-gradient(ellipse at 4% 40%,#12636a2b,transparent 30%),var(--bg)}
+header{background:var(--qp-glass);box-shadow:0 8px 28px #0002}
+header nav{min-height:76px}
+.navlinks{display:none}
+.brand{font-size:1.55rem;letter-spacing:-.8px}
+.navtools{gap:12px}
+.qp-sidebar{position:fixed;z-index:19;inset-block-start:76px;inset-inline-start:0;width:var(--qp-sidebar);height:calc(100vh - 76px);padding:22px 16px 28px;background:linear-gradient(180deg,#111b30f5,#0b1222f5);border-inline-end:1px solid var(--line);display:flex;flex-direction:column;gap:8px;overflow:auto;backdrop-filter:blur(18px)}
+.qp-side-label{font-size:.72rem;font-weight:850;letter-spacing:.08em;color:#8e9db8;padding:8px 12px 4px}
+.qp-side-link{display:flex;align-items:center;gap:12px;padding:10px 12px;border:1px solid transparent;border-radius:12px;color:#c4cee0;font-size:.9rem;transition:.18s ease}
+.qp-side-link .qp-side-icon{width:28px;height:28px;display:grid;place-items:center;border-radius:9px;background:#ffffff0b;font-size:1rem}
+.qp-side-link:hover,.qp-side-link:focus-visible{background:#a99bff16;border-color:#a99bff40;color:#fff;outline:none}
+.qp-side-link.primary{background:linear-gradient(100deg,#9b8cff24,#55d6d014);border-color:#9b8cff40;color:#fff}
+.qp-side-spacer{flex:1;min-height:12px}
+.qp-side-note{padding:14px;border-radius:14px;border:1px solid #55d6d033;background:#55d6d00b;color:#b9deda;font-size:.8rem;line-height:1.65}
+main.wrap{width:auto;max-width:1440px;margin-inline-start:calc(var(--qp-sidebar) + 26px);margin-inline-end:26px}
+.hero{padding:54px 0 34px;gap:28px}
+.hero>div:first-child{padding:clamp(22px,3vw,38px);border:1px solid #ffffff16;border-radius:24px;background:linear-gradient(135deg,#1b2440b8,#111a2d8c);box-shadow:0 22px 60px #0002}
+.hero-art{min-height:330px;background:radial-gradient(circle at 50% 45%,#8d7cff25,transparent 48%),linear-gradient(145deg,#1b2440,#10182b);box-shadow:inset 0 1px #ffffff18,0 22px 60px #0002}
+.eyebrow{font-weight:750;letter-spacing:.01em}
+h1{font-size:clamp(2.4rem,4.7vw,4.6rem)}
+.notice{box-shadow:0 12px 35px #0002}
+section{scroll-margin-top:95px}
+.section-head{padding-bottom:12px;border-bottom:1px solid var(--line)}
+.section-title{font-size:1.55rem;letter-spacing:-.4px}
+#discover>.grid{grid-template-columns:repeat(3,minmax(0,1fr))}
+#discover .card{position:relative;min-height:190px;padding:22px;overflow:hidden;transition:transform .2s,border-color .2s}
+#discover .card:after{content:"";position:absolute;inset:auto -25px -50px auto;width:130px;height:130px;border-radius:50%;background:radial-gradient(circle,#9b8cff22,transparent 70%);pointer-events:none}
+#discover .card:hover{transform:translateY(-3px);border-color:#9b8cff65}
+#discover .card-icon{width:48px;height:48px;display:grid;place-items:center;border-radius:15px;background:#9b8cff18;border:1px solid #9b8cff2a}
+.filters{padding:14px;border:1px solid var(--line);border-radius:16px;background:#111a2d99}
+.filters input,.filters select{background:#0b1324}
+.opportunity{border-radius:20px;background:linear-gradient(145deg,#192640ed,#10192bed);box-shadow:0 14px 35px #0002}
+.opportunity:hover{transform:translateY(-4px);border-color:#9b8cff75;box-shadow:0 20px 45px #0004}
+.opp-icon{box-shadow:inset 0 1px #ffffff18}
+.opp-details{background:#ffffff04;border-radius:12px;padding:10px 12px}
+.opp-details summary{list-style:none;display:flex;align-items:center;justify-content:space-between;gap:10px}
+.opp-details summary::-webkit-details-marker{display:none}
+.opp-details summary:after{content:"＋";font-size:1.1rem;color:var(--cyan)}
+.opp-details[open] summary:after{content:"−"}
+.steps .step{background:linear-gradient(145deg,#17233ad9,#10182ad9);transition:border-color .2s}
+.steps .step:hover{border-color:#55d6d055}
+footer{padding-bottom:35px}
+.qp-mobilebar{display:none}
+@media(max-width:1050px){:root{--qp-sidebar:226px}main.wrap{margin-inline-start:calc(var(--qp-sidebar) + 18px);margin-inline-end:18px}.hero{grid-template-columns:1fr}.hero-art{min-height:190px}.orbit{font-size:4rem}}
+@media(max-width:700px){
+  header nav{min-height:68px}
+  .qp-sidebar{display:none}
+  main.wrap{width:min(100% - 28px,1180px);margin:0 auto;padding-bottom:88px}
+  .hero{padding:30px 0 24px;gap:16px}
+  .hero>div:first-child{padding:20px 17px;border-radius:19px}
+  .hero-art{min-height:145px;border-radius:18px}
+  #discover>.grid{grid-template-columns:1fr}
+  #discover .card{min-height:0;padding:17px}
+  .filters{padding:10px}
+  .qp-mobilebar{position:fixed;z-index:40;inset-inline:10px;inset-block-end:calc(9px + env(safe-area-inset-bottom));display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:4px;padding:8px;background:#10192bef;border:1px solid #ffffff22;border-radius:18px;box-shadow:0 12px 40px #0008;backdrop-filter:blur(18px)}
+  .qp-mobilebar a{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;color:#b9c5d8;font-size:.66rem;min-width:0;padding:4px 1px;border-radius:10px}
+  .qp-mobilebar a span:first-child{font-size:1.1rem}
+  .qp-mobilebar a:focus-visible,.qp-mobilebar a:hover{background:#9b8cff22;color:#fff;outline:none}
+  footer{padding-bottom:28px}
+}
+@media(prefers-reduced-motion:reduce){*,*::before,*::after{scroll-behavior:auto!important;transition:none!important;animation:none!important}}
+
 </style>
 </head>
 <body>
@@ -93,6 +158,30 @@ footer{margin-top:35px;border-top:1px solid var(--line);padding:26px 0;color:var
 <a href="#home" data-i18n="navHome">الرئيسية</a><a href="#discover" data-i18n="navDiscover">اكتشف الفرص</a><a href="#telegram" data-i18n="navTelegram">بوتات تيليغرام</a><a href="#apps" data-i18n="navApps">التطبيقات</a><a href="#safety" data-i18n="navSafety">الأمان</a><a href="#about" data-i18n="navAbout">عن المنصة</a><a href="./guide.html" data-i18n="navGuide">دليل التحقق</a>
 </div>
 </nav></div></header>
+
+<aside class="qp-sidebar" aria-label="التنقل الرئيسي">
+  <div class="qp-side-label">القائمة الرئيسية</div>
+  <a class="qp-side-link primary" href="#home"><span class="qp-side-icon">⌂</span><span>الرئيسية</span></a>
+  <a class="qp-side-link" href="#discover"><span class="qp-side-icon">✦</span><span>اكتشف الفرص</span></a>
+  <a class="qp-side-link" href="#telegram"><span class="qp-side-icon">◉</span><span>بوتات تيليغرام</span></a>
+  <a class="qp-side-link" href="#apps"><span class="qp-side-icon">▦</span><span>التطبيقات ومواقع الكسب</span></a>
+  <a class="qp-side-link" href="#how"><span class="qp-side-icon">◷</span><span>تفاصيل الفرص</span></a>
+  <div class="qp-side-label">الثقة والمعلومات</div>
+  <a class="qp-side-link" href="#safety"><span class="qp-side-icon">◇</span><span>الأمان والتحقق</span></a>
+  <a class="qp-side-link" href="./guide.html"><span class="qp-side-icon">▤</span><span>دليل التحقق</span></a>
+  <a class="qp-side-link" href="#about"><span class="qp-side-icon">ⓘ</span><span>عن QuestPulse</span></a>
+  <div class="qp-side-spacer"></div>
+  <div class="qp-side-note"><b>تحقق قبل المشاركة</b><br>نوضح حالة كل فرصة ومصادرها ورسومها ومخاطرها، ولا نعد بأرباح مضمونة.</div>
+  <a class="qp-side-link" href="./admin/"><span class="qp-side-icon">⚙</span><span>لوحة التحرير</span></a>
+</aside>
+<nav class="qp-mobilebar" aria-label="التنقل السريع">
+  <a href="#home"><span>⌂</span><span>الرئيسية</span></a>
+  <a href="#discover"><span>✦</span><span>الفرص</span></a>
+  <a href="#apps"><span>▦</span><span>التطبيقات</span></a>
+  <a href="#safety"><span>◇</span><span>الأمان</span></a>
+  <a href="./guide.html"><span>▤</span><span>الدليل</span></a>
+</nav>
+
 <main class="wrap">
 <section class="hero" id="home">
 <div><span class="eyebrow" data-i18n="eyebrow">✦ بوابتك الذكية إلى عالم Web3</span>
