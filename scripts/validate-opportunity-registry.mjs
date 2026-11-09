@@ -62,11 +62,9 @@ const html = await readFile("index.html", "utf8");
 if (!html.includes('fetch("./data/opportunities.json"')) {
   fail("homepage must load the canonical data/opportunities.json registry");
 }
-if (!html.includes("applyOpportunityRegistry(data.opportunities)") || !html.includes("function syncDynamicCards(records)") || !html.includes("function makeDynamicCard(item)")) {
+if (!html.includes("applyOpportunityRegistry(data.opportunities)") || !html.includes("function syncDynamicCards(records)") || !html.includes("function makeDynamicCard(item)")) fail("homepage must pass registry records into the opportunity-card renderer");
 if (!html.includes("const dynamicCardI18n={") || !html.includes('en:{unavailable:"Unavailable"') || !html.includes('fr:{unavailable:"Indisponible"')) fail("dynamic cards must provide Arabic, English and French labels");
 if (!html.includes("function dynamicText()") || !html.includes("const t=dynamicText()")) fail("dynamic cards must resolve the language dictionary at render time");
-  fail("homepage must pass registry records into the opportunity-card renderer");
-}
 if (!html.includes("const verified=validVerifiedRecord(item),status=") || !html.includes("card.dataset.registryStatus=status;")) fail("dynamic card status must be initialized before use");
 for (const field of ["network","rewardToken","taskTime","requiresKyc","referralRequired","expiryDate","contractAddress"]) {
   if (!html.includes("item."+field)) fail("dynamic card renderer is missing "+field);
