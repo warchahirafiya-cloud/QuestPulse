@@ -468,12 +468,35 @@ function googleTranslateElementInit(){
  const toggle=document.getElementById('qpMenuToggle');
  const backdrop=document.getElementById('qpSidebarBackdrop');
  if(!sidebar||!toggle||!backdrop)return;
+ const mobile=()=>window.matchMedia('(max-width:700px)').matches;
  function closeMenu(){sidebar.classList.remove('is-open');backdrop.hidden=true;toggle.setAttribute('aria-expanded','false');}
- function openMenu(){sidebar.classList.add('is-open');backdrop.hidden=false;toggle.setAttribute('aria-expanded','true');}
+ function openMenu(){if(!mobile())return;sidebar.classList.add('is-open');backdrop.hidden=false;toggle.setAttribute('aria-expanded','true');}
  toggle.addEventListener('click',()=>sidebar.classList.contains('is-open')?closeMenu():openMenu());
  backdrop.addEventListener('click',closeMenu);
  sidebar.querySelectorAll('a').forEach(link=>link.addEventListener('click',closeMenu));
  document.addEventListener('keydown',e=>{if(e.key==='Escape')closeMenu()});
+
+ // Touch navigation: swipe right from the physical left edge to open;
+ // swipe left while the drawer is open to close. The menu button remains optional.
+ let startX=0,startY=0,lastX=0,lastY=0,tracking=false;
+ const edge=24,threshold=65,verticalLimit=85;
+ document.addEventListener('touchstart',e=>{
+   if(!mobile()||e.touches.length!==1)return;
+   const t=e.touches[0];startX=lastX=t.clientX;startY=lastY=t.clientY;
+   tracking=(startX<=edge&&!sidebar.classList.contains('is-open'))||sidebar.classList.contains('is-open');
+ },{passive:true});
+ document.addEventListener('touchmove',e=>{
+   if(!tracking||e.touches.length!==1)return;
+   lastX=e.touches[0].clientX;lastY=e.touches[0].clientY;
+ },{passive:true});
+ document.addEventListener('touchend',()=>{
+   if(!tracking)return;tracking=false;
+   const dx=lastX-startX,dy=lastY-startY;
+   if(Math.abs(dy)>verticalLimit||Math.abs(dx)<threshold)return;
+   if(!sidebar.classList.contains('is-open')&&startX<=edge&&dx>0)openMenu();
+   else if(sidebar.classList.contains('is-open')&&dx<0)closeMenu();
+ },{passive:true});
+ window.addEventListener('resize',()=>{if(!mobile())closeMenu()});
 })();
 </script>
 
