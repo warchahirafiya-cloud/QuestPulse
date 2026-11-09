@@ -1,0 +1,67 @@
+{
+  "schemaVersion": 1,
+  "policy": "Informational review registry. A record may only be displayed as verified when its official HTTPS URL, at least one HTTPS verification source, and a valid review date are present. No record is a recommendation or proof of availability.",
+  "updatedAt": null,
+  "opportunities": [
+    {
+      "id": "airdrop-campaigns",
+      "type": "airdrop",
+      "status": "unverified",
+      "availability": "unknown",
+      "officialUrl": null,
+      "reviewedAt": null,
+      "verificationSources": [],
+      "paymentEvidence": [],
+      "riskLevel": "unrated",
+      "notes": "Placeholder category only. Do not publish an offer until legal review and independent source checks are complete."
+    },
+    {
+      "id": "telegram-bots",
+      "type": "telegram",
+      "status": "unverified",
+      "availability": "unknown",
+      "officialUrl": null,
+      "reviewedAt": null,
+      "verificationSources": [],
+      "paymentEvidence": [],
+      "riskLevel": "unrated",
+      "notes": "Placeholder category only. Do not publish bot links, deposits, or payment claims without review."
+    },
+    {
+      "id": "daily-click",
+      "type": "clicktime",
+      "status": "unverified",
+      "availability": "unknown",
+      "officialUrl": null,
+      "reviewedAt": null,
+      "verificationSources": [],
+      "paymentEvidence": [],
+      "riskLevel": "unrated",
+      "notes": "Placeholder category only. Do not imply mining or rewards are active."
+    },
+    {
+      "id": "task-rewards",
+      "type": "tasks",
+      "status": "unverified",
+      "availability": "unknown",
+      "officialUrl": null,
+      "reviewedAt": null,
+      "verificationSources": [],
+      "paymentEvidence": [],
+      "riskLevel": "unrated",
+      "notes": "Placeholder category only. Payment methods and withdrawal terms are unknown."
+    },
+    {
+      "id": "referral-programs",
+      "type": "referral",
+      "status": "unverified",
+      "availability": "unknown",
+      "officialUrl": null,
+      "reviewedAt": null,
+      "verificationSources": [],
+      "paymentEvidence": [],
+      "riskLevel": "unrated",
+      "notes": "Placeholder category only. Referral conditions and any required deposit are unknown."
+    }
+  ]
+}
