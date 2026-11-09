@@ -5,6 +5,9 @@ const requiredFiles = [
   "guide.html",
   "privacy.html",
   "terms.html",
+  "404.html",
+  "robots.txt",
+  "sitemap.xml",
   "admin/index.html",
   "admin/README.md",
   "data/opportunities.json",
@@ -18,11 +21,14 @@ for (const path of requiredFiles) {
   catch { errors.push("Required project file is missing: " + path); }
 }
 
-const [home, guide, privacy, terms, admin, registryText] = await Promise.all([
+const [home, guide, privacy, terms, notFound, robots, sitemap, admin, registryText] = await Promise.all([
   readFile(new URL("../index.html", import.meta.url), "utf8"),
   readFile(new URL("../guide.html", import.meta.url), "utf8"),
   readFile(new URL("../privacy.html", import.meta.url), "utf8"),
   readFile(new URL("../terms.html", import.meta.url), "utf8"),
+  readFile(new URL("../404.html", import.meta.url), "utf8"),
+  readFile(new URL("../robots.txt", import.meta.url), "utf8"),
+  readFile(new URL("../sitemap.xml", import.meta.url), "utf8"),
   readFile(new URL("../admin/index.html", import.meta.url), "utf8"),
   readFile(new URL("../data/opportunities.json", import.meta.url), "utf8")
 ]);
@@ -39,6 +45,10 @@ for (const key of ["navGuide"]) {
 for (const lang of ["ar", "en", "fr"]) {
   if (!guide.includes(lang + ":")) errors.push("Guide is missing language support: " + lang);
 }
+if (!notFound.includes("<title>404 | QuestPulse</title>")) errors.push("Custom 404 page is missing its title.");
+if (!robots.includes("Disallow: /admin/")) errors.push("robots.txt must exclude the editorial console from crawling.");
+if (!sitemap.includes("<urlset") || !sitemap.includes("guide.html") || !sitemap.includes("privacy.html") || !sitemap.includes("terms.html")) errors.push("sitemap.xml is missing public pages.");
+if (!home.includes('property="og:title"') || !home.includes('name="twitter:card"')) errors.push("Homepage social sharing metadata is incomplete.");
 if (!admin.includes('name="robots" content="noindex,nofollow"')) {
   errors.push("Editorial console must retain its noindex directive.");
 }
