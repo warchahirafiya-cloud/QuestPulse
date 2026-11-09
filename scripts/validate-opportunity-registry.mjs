@@ -67,7 +67,7 @@ if (!html.includes("const dynamicCardI18n={") || !html.includes('en:{unavailable
 if (!html.includes("function dynamicText()") || !html.includes("const t=dynamicText()")) fail("dynamic cards must resolve the language dictionary at render time");
   fail("homepage must pass registry records into the opportunity-card renderer");
 }
-if (!html.includes('card.dataset.registryStatus=status;const head=makeNode("div","opp-head")')) fail("dynamic card status must be initialized before use");
+if (!html.includes("const verified=validVerifiedRecord(item),status=") || !html.includes("card.dataset.registryStatus=status;")) fail("dynamic card status must be initialized before use");
 for (const field of ["network","rewardToken","taskTime","requiresKyc","referralRequired","expiryDate","contractAddress"]) {
   if (!html.includes("item."+field)) fail("dynamic card renderer is missing "+field);
 }
