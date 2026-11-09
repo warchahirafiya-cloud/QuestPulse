@@ -21,6 +21,8 @@ The site is an evolving project. Some sections are placeholders pending opportun
 - [Verification, glossary, wallet safety and FAQ](guide.html)
 - [Privacy notice — preliminary draft](privacy.html)
 - [Terms of use — preliminary draft](terms.html)
+- [Custom not-found page](404.html)
+- [Crawler rules](robots.txt) and [public sitemap](sitemap.xml)
 
 ## Documentation
 
