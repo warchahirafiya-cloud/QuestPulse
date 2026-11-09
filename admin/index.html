@@ -25,10 +25,12 @@
 <button class="btn" id="importBtn">استيراد JSON</button>
 <input id="importFile" type="file" accept="application/json,.json" hidden>
 <button class="btn primary" id="exportBtn">تنزيل JSON المحدّث</button>
+<button class="btn" id="restoreDraft">استعادة المسودة المحلية</button>
+<button class="btn danger" id="clearDraft">حذف المسودة المحلية</button>
 </div>
 <div class="stats" id="stats"></div>
 <div class="layout">
-<aside class="panel"><h2>السجلات</h2><div class="record-list" id="recordList"></div><div class="bottom"><button class="btn" id="addRecord">+ سجل جديد</button><button class="btn danger" id="deleteRecord">حذف السجل المحدد</button></div></aside>
+<aside class="panel"><h2>السجلات</h2><input id="recordSearch" type="search" placeholder="ابحث بالمعرّف أو النوع أو الحالة" aria-label="بحث في السجلات" style="margin-bottom:10px"><div class="record-list" id="recordList"></div><div class="bottom"><button class="btn" id="addRecord">+ سجل جديد</button><button class="btn danger" id="deleteRecord">حذف السجل المحدد</button></div></aside>
 <section class="panel">
 <h2 id="editorTitle">اختر سجلاً للبدء</h2>
 <div id="editor" hidden>
@@ -58,6 +60,7 @@
 <script>
 "use strict";
 const DATA_URL="../data/opportunities.json";
+const DRAFT_KEY="questpulse-editor-draft-v1";
 let registry=null,selectedId=null,working=null;
 const $=id=>document.getElementById(id);
 const allowedTypes=["airdrop","telegram","clicktime","tasks","referral"];
@@ -91,10 +94,14 @@ function validate(data){
 function notify(msg,kind=""){const el=$("message");el.textContent=msg;el.className="status "+kind}
 function render(){
  const list=$("recordList");list.innerHTML="";
- for(const r of registry.opportunities){const b=document.createElement("button");b.className="btn record"+(r.id===selectedId?" active":"");const name=document.createElement("span");name.textContent=r.id;const tag=document.createElement("span");tag.className="pill";tag.textContent=r.status;b.append(name,tag);b.onclick=()=>select(r.id);list.append(b)}
+ const query=$("recordSearch").value.trim().toLowerCase();
+ const visible=registry.opportunities.filter(r=>[r.id,r.type,r.status,r.availability].some(v=>String(v||"").toLowerCase().includes(query)));
+ for(const r of visible){const b=document.createElement("button");b.className="btn record"+(r.id===selectedId?" active":"");const name=document.createElement("span");name.textContent=r.id;const tag=document.createElement("span");tag.className="pill";tag.textContent=r.status;b.append(name,tag);b.onclick=()=>select(r.id);list.append(b)}
+ if(!visible.length){const empty=document.createElement("p");empty.className="muted";empty.textContent="لا توجد سجلات تطابق البحث." ;list.append(empty)}
  const all=registry.opportunities; $("stats").innerHTML="";
  [["إجمالي السجلات",all.length],["موثّق",all.filter(x=>x.status==="verified").length],["قيد المراجعة",all.filter(x=>x.status==="under_review").length],["غير موثّق",all.filter(x=>x.status==="unverified").length]].forEach(([k,v])=>{const s=document.createElement("span");s.textContent=k+": "+v;$("stats").append(s)});
 }
+function persistDraft(){try{localStorage.setItem(DRAFT_KEY,JSON.stringify(registry));return true}catch(e){notify("تعذر حفظ المسودة في هذا المتصفح: "+e.message,"err");return false}}
 function select(id){selectedId=id;working=clone(registry.opportunities.find(r=>r.id===id));$("editor").hidden=false;$("editorTitle").textContent="تحرير: "+id;fill();render();notify("تم تحميل السجل. احفظ التغييرات محلياً قبل التصدير.","ok")}
 function fill(){for(const f of fields){let v=working[f];if(f==="verificationSources"||f==="paymentEvidence")v=JSON.stringify(v||[],null,2);$(f).value=v??""}}
 function readForm(){
@@ -103,14 +110,17 @@ function readForm(){
  return out;
 }
 async function load(){try{const res=await fetch(DATA_URL,{cache:"no-store"});if(!res.ok)throw new Error("HTTP "+res.status);const data=await res.json();const errors=validate(data);if(errors.length)throw new Error(errors.join("؛ "));registry=data;selectedId=data.opportunities[0]?.id||null;render();if(selectedId)select(selectedId);notify("تم تحميل "+data.opportunities.length+" سجلات من المصدر.","ok")}catch(e){notify("تعذر تحميل السجل: "+e.message+" — يمكنك استيراد نسخة JSON يدوياً.","err")}}
-$("saveRecord").onclick=()=>{try{const updated=readForm();const errors=validate({...registry,opportunities:registry.opportunities.map(r=>r.id===selectedId?updated:r)});if(errors.length)throw new Error(errors.join("؛ "));const i=registry.opportunities.findIndex(r=>r.id===selectedId);registry.opportunities[i]=updated;working=clone(updated);selectedId=updated.id;registry.updatedAt=new Date().toISOString();render();$("editorTitle").textContent="تحرير: "+selectedId;notify("حُفظت التعديلات في ذاكرة هذه الصفحة. نزّل JSON لتصديرها.","ok")}catch(e){notify(e.message,"err")}};
+$("saveRecord").onclick=()=>{try{const updated=readForm();const errors=validate({...registry,opportunities:registry.opportunities.map(r=>r.id===selectedId?updated:r)});if(errors.length)throw new Error(errors.join("؛ "));const i=registry.opportunities.findIndex(r=>r.id===selectedId);registry.opportunities[i]=updated;working=clone(updated);selectedId=updated.id;registry.updatedAt=new Date().toISOString();persistDraft();render();$("editorTitle").textContent="تحرير: "+selectedId;notify("حُفظت التعديلات في ذاكرة هذه الصفحة. نزّل JSON لتصديرها.","ok")}catch(e){notify(e.message,"err")}};
 $("resetRecord").onclick=()=>select(selectedId);
-$("addRecord").onclick=()=>{const id="new-record-"+(registry.opportunities.length+1);if(registry.opportunities.some(r=>r.id===id)){notify("يوجد سجل بهذا المعرّف بالفعل.","err");return}const r={id,type:"tasks",status:"unverified",availability:"unknown",officialUrl:null,reviewedAt:null,verificationSources:[],paymentEvidence:[],withdrawalTerms:null,resetInterval:null,paymentEvidenceSummary:null,riskNotes:null,riskLevel:"unrated",notes:"سجل جديد — لا تنشر قبل اكتمال المراجعة القانونية والتحقق المستقل."};registry.opportunities.push(r);selectedId=id;select(id);notify("أُضيف سجل محلي جديد. عدّل معرّفه وبياناته ثم احفظ.","ok")};
-$("deleteRecord").onclick=()=>{if(!selectedId||!confirm("حذف السجل المحدد من النسخة المحلية؟"))return;registry.opportunities=registry.opportunities.filter(r=>r.id!==selectedId);selectedId=registry.opportunities[0]?.id||null;if(selectedId)select(selectedId);else{$("editor").hidden=true;$("editorTitle").textContent="لا توجد سجلات";render()}notify("حُذف السجل من النسخة المحلية فقط.","ok")};
+$("addRecord").onclick=()=>{const id="new-record-"+(registry.opportunities.length+1);if(registry.opportunities.some(r=>r.id===id)){notify("يوجد سجل بهذا المعرّف بالفعل.","err");return}const r={id,type:"tasks",status:"unverified",availability:"unknown",officialUrl:null,reviewedAt:null,verificationSources:[],paymentEvidence:[],withdrawalTerms:null,resetInterval:null,paymentEvidenceSummary:null,riskNotes:null,riskLevel:"unrated",notes:"سجل جديد — لا تنشر قبل اكتمال المراجعة القانونية والتحقق المستقل."};registry.opportunities.push(r);selectedId=id;persistDraft();select(id);notify("أُضيف سجل محلي جديد. عدّل معرّفه وبياناته ثم احفظ.","ok")};
+$("deleteRecord").onclick=()=>{if(!selectedId||!confirm("حذف السجل المحدد من النسخة المحلية؟"))return;registry.opportunities=registry.opportunities.filter(r=>r.id!==selectedId);persistDraft();selectedId=registry.opportunities[0]?.id||null;if(selectedId)select(selectedId);else{$("editor").hidden=true;$("editorTitle").textContent="لا توجد سجلات";render()}notify("حُذف السجل من النسخة المحلية فقط.","ok")};
 $("exportBtn").onclick=()=>{const errors=validate(registry);if(errors.length){notify("تعذر التصدير: "+errors.join("؛ "),"err");return}const blob=new Blob([JSON.stringify(registry,null,2)+"\n"],{type:"application/json"});const url=URL.createObjectURL(blob);const a=document.createElement("a");a.href=url;a.download="opportunities.json";a.click();URL.revokeObjectURL(url);notify("تم تجهيز ملف JSON للتنزيل. راجعه قبل استبدال ملف المستودع.","ok")};
 $("importBtn").onclick=()=>$("importFile").click();
-$("importFile").onchange=async e=>{const file=e.target.files[0];if(!file)return;try{const data=JSON.parse(await file.text());const errors=validate(data);if(errors.length)throw new Error(errors.join("؛ "));registry=data;selectedId=data.opportunities[0]?.id||null;render();if(selectedId)select(selectedId);notify("تم استيراد الملف إلى المحرر المحلي.","ok")}catch(err){notify("فشل الاستيراد: "+err.message,"err")}e.target.value=""};
+$("importFile").onchange=async e=>{const file=e.target.files[0];if(!file)return;try{const data=JSON.parse(await file.text());const errors=validate(data);if(errors.length)throw new Error(errors.join("؛ "));registry=data;selectedId=data.opportunities[0]?.id||null;persistDraft();render();if(selectedId)select(selectedId);notify("تم استيراد الملف إلى المحرر المحلي وحفظ نسخة احتياطية في هذا المتصفح.","ok")}catch(err){notify("فشل الاستيراد: "+err.message,"err")}e.target.value=""};
 $("reload").onclick=load;
+$("recordSearch").oninput=render;
+$("restoreDraft").onclick=()=>{try{const raw=localStorage.getItem(DRAFT_KEY);if(!raw)throw new Error("لا توجد مسودة محفوظة في هذا المتصفح.");const data=JSON.parse(raw);const errors=validate(data);if(errors.length)throw new Error(errors.join("؛ "));registry=data;selectedId=data.opportunities[0]?.id||null;render();if(selectedId)select(selectedId);notify("تمت استعادة المسودة المحلية. راجعها قبل التصدير.","ok")}catch(e){notify("تعذرت استعادة المسودة: "+e.message,"err")}};
+$("clearDraft").onclick=()=>{try{localStorage.removeItem(DRAFT_KEY);notify("حُذفت النسخة الاحتياطية المحلية فقط؛ لم يتغير ملف المستودع.","ok")}catch(e){notify("تعذر حذف النسخة المحلية: "+e.message,"err")}};
 load();
 </script>
 </body></html>
