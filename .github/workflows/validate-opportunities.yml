@@ -4,6 +4,8 @@ on:
   push:
     paths:
       - "data/opportunities.json"
+      - "research/**"
+      - "scripts/validate-research-candidates.mjs"
       - "scripts/validate-opportunities.mjs"
       - "scripts/validate-site.mjs"
       - "index.html"
@@ -48,5 +50,7 @@ jobs:
           node-version: 22
       - name: Validate opportunity registry
         run: node scripts/validate-opportunities.mjs
+      - name: Validate internal research catalogue
+        run: node scripts/validate-research-candidates.mjs
       - name: Validate site structure
         run: node scripts/validate-site.mjs
