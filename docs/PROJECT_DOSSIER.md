@@ -39,6 +39,8 @@ The current index.html contains:
 - Apps.
 - Safety guidance.
 - About the platform.
+- A multilingual public verification guide with glossary, wallet-safety checklist, evidence standards, and FAQ.
+- A local-only editorial console under admin/ that edits an in-memory copy and exports JSON; it has no login or direct publishing capability.
 - Arabic, English, and French language selector.
 - QP points display (currently a visual counter, not a verified reward ledger).
 - A multi-segment rising activity indicator (currently illustrative; live usage data is not connected).
@@ -110,12 +112,13 @@ Do not make payment until the final price, renewal fee, transfer procedure, regi
 ## 10. Roadmap
 
 1. Complete and review the project dossier and public-facing policies.
-2. Obtain written legal advice on the application of Law No. 25-10 to the proposed platform features and operating model.
-3. Perform trademark clearance and obtain advice on the correct applicant, classes, and service descriptions; do not assume trademark registration authorizes a prohibited activity.
-4. Decide whether to negotiate for questpulse.com or use an affordable alternative domain.
-4. If purchased, transfer the domain into an account controlled by the project owner.
-5. Configure DNS, HTTPS, canonical redirects, and GitHub Pages custom-domain settings.
-6. Complete real-browser testing and security review before describing the site as production-ready.
+2. Maintain the neutral educational guide and editorial workflow; keep opportunity records as unverified placeholders until all gates are cleared.
+3. Obtain written legal advice on the application of Law No. 25-10 to the proposed platform features and operating model.
+4. Perform trademark clearance and obtain advice on the correct applicant, classes, and service descriptions; do not assume trademark registration authorizes a prohibited activity.
+5. Decide whether to negotiate for questpulse.com or use an affordable alternative domain.
+6. If purchased, transfer the domain into an account controlled by the project owner.
+7. Configure DNS, HTTPS, canonical redirects, and GitHub Pages custom-domain settings.
+8. Complete real-browser testing and security review before describing the site as production-ready.
 
 ## 11. Disclaimer
 
