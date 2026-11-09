@@ -86,7 +86,7 @@ if (!editor.includes("../docs/SAFE_PUBLISHING.md")) fail("admin editor must link
 else pass("admin editor links to safe publishing instructions");
 if (!editor.includes('id="addRecord"') || !editor.includes('$("addRecord").onclick')) fail("admin editor must support creating new opportunity records");
 else pass("admin editor supports dynamic opportunity creation");
-for (const field of ["title","description","reward","depositRequired","minimumWithdrawal","eligibility","payoutMethod"]) {
+for (const field of ["title","description","reward","depositRequired","minimumWithdrawal","eligibility","payoutMethod","network","rewardToken","taskTime","requiresKyc","referralRequired","expiryDate","contractAddress"]) {
   if (!editor.includes(`id="${field}"`) || !editor.includes(`"${field}"`)) fail(`admin editor is missing dynamic card field: ${field}`);
 }
 
