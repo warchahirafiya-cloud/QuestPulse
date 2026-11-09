@@ -134,7 +134,13 @@ jobs:
             'Object.create(null)',
             'n.detail.slice(0,500)',
             './data/opportunities.json',
-            'serviceWorker.register'
+            'serviceWorker.register',
+            'function verifyRuntime()',
+            'Promise.allSettled',
+            'data-state="checking"',
+            'data-state==="ok"',
+            'actions/workflows/registry-validation.yml/badge.svg',
+            'registry HTTP '
           ];
           const missing = requiredHtml.filter(value => !html.includes(value));
           if (missing.length) {
