@@ -50,3 +50,18 @@ Never request or publish private keys, recovery phrases, passwords, authenticati
 
 ## Editorial independence
 No record may be marked verified because of a referral relationship, payment, sponsorship, or request from a project. Any future commercial relationship requires separate legal review and clear disclosure if legally permitted.
+
+
+## Reward availability is not an admission filter
+
+QuestPulse research may include a broad range of reward-bearing products even when direct cash or cryptocurrency withdrawal is not currently available. Examples include internal points, game currencies, gift cards, vouchers, airtime/data, products, prize draws, conditional redemptions, and announced future token or withdrawal mechanisms.
+
+For every candidate, distinguish:
+- what the user earns now;
+- what can be redeemed now, and by which method;
+- what is only announced, conditional, waitlisted, or planned for the future;
+- what has no verified external redemption route.
+
+Do not exclude a candidate only because withdrawal is future or unavailable. Instead, disclose that limitation prominently and let users decide whether the product is relevant to them. Never describe internal points as cash/crypto, a planned token as an issued token, a planned listing as a confirmed listing, a prize draw as guaranteed income, or a future withdrawal as currently available. If no official launch date exists, state that no confirmed date is published. Record thresholds, conversion rates, fees, expiry, KYC, subscriptions, deposits, geographic restrictions, and conditions only when supported by current sources.
+
+This broader discovery scope does not change the separate legal publication boundary above: research candidates remain internal until the required legal and editorial approvals are obtained.
