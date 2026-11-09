@@ -140,14 +140,14 @@ jobs:
             'data-state="checking"',
             'data-state==="ok"',
             'actions/workflows/registry-validation.yml/badge.svg',
-            'registry HTTP '
+            'Registry HTTP '
           ];
           const missing = requiredHtml.filter(value => !html.includes(value));
           if (missing.length) {
             console.error('Missing required dashboard/PWA hooks:', missing.join(', '));
             process.exit(1);
           }
-          const swRegistrations = (html.match(/serviceWorker\\.register\\s*\\(/g) || []).length;
+          const swRegistrations = (html.match(/serviceWorker\.register\s*\(/g) || []).length;
           if (swRegistrations !== 1) {
             console.error(`Expected exactly one Service Worker registration, found ${swRegistrations}.`);
             process.exit(1);
