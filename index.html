@@ -202,6 +202,30 @@ header .navtools{display:none!important}
 }
 @media(prefers-reduced-motion:reduce){.qp-sidebar{transition:none!important}}
 
+
+/* Central opportunity monitoring dashboard */
+#qpMonitor{margin:22px 0;padding:20px;border:1px solid #9b8cff3b;border-radius:20px;background:linear-gradient(145deg,#17233ae8,#10182af0);box-shadow:0 16px 42px #0002}
+.qp-monitor-head,.qp-monitor-queue-head{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap}
+.qp-monitor-head h2{margin:0;font-size:1.35rem}.qp-monitor-head p{margin:3px 0 0;color:var(--muted);font-size:.86rem}
+#qpMonitorUpdated{font-size:.75rem;color:var(--muted);border:1px solid var(--line);padding:5px 9px;border-radius:99px}
+.qp-monitor-metrics{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:9px;margin:16px 0}
+.qp-monitor-metric{min-width:0;padding:13px;border:1px solid var(--line);border-radius:13px;background:#ffffff06}
+.qp-monitor-metric span{display:block;color:var(--muted);font-size:.75rem}.qp-monitor-metric strong{display:block;font-size:1.45rem;line-height:1.4;margin-top:3px}
+.qp-monitor-metric[data-tone="danger"] strong{color:var(--bad)}.qp-monitor-metric[data-tone="warning"] strong{color:var(--warn)}.qp-monitor-metric[data-tone="good"] strong{color:var(--good)}
+.qp-monitor-lower{display:grid;grid-template-columns:minmax(190px,.75fr) minmax(0,1.7fr);gap:12px}
+.qp-monitor-risk,.qp-monitor-queue{min-width:0;padding:14px;border:1px solid var(--line);border-radius:14px;background:#ffffff04}
+.qp-monitor-risk>strong,.qp-monitor-queue-head strong{font-size:.9rem}
+.qp-risk-line{display:flex;justify-content:space-between;gap:10px;padding:8px 0;border-bottom:1px solid var(--line);font-size:.82rem}.qp-risk-line:last-child{border-bottom:0}
+.qp-risk-line b{font-variant-numeric:tabular-nums}
+#qpQueueCount{border-radius:99px;background:#f4bd6218;color:#f6d28f;padding:2px 9px;font-size:.78rem}
+.qp-review-item{display:flex;justify-content:space-between;align-items:center;gap:12px;padding:10px 0;border-top:1px solid var(--line)}
+.qp-review-item:first-child{margin-top:7px}.qp-review-copy{min-width:0}.qp-review-copy strong{display:block;font-size:.85rem;overflow-wrap:anywhere}.qp-review-copy small{display:block;color:var(--muted);font-size:.75rem}
+.qp-review-item button{flex:0 0 auto;border:1px solid #9b8cff55;border-radius:9px;padding:6px 10px;background:#9b8cff12;color:var(--text);font:inherit;font-size:.76rem;cursor:pointer}
+.qp-review-empty{color:var(--muted);font-size:.82rem;padding:12px 0}
+.qp-monitor-note{margin:12px 0 0;color:var(--muted);font-size:.75rem}
+@media(max-width:950px){.qp-monitor-metrics{grid-template-columns:repeat(3,minmax(0,1fr))}}
+@media(max-width:620px){#qpMonitor{padding:14px;border-radius:16px}.qp-monitor-metrics{grid-template-columns:repeat(2,minmax(0,1fr));gap:7px}.qp-monitor-metric{padding:10px}.qp-monitor-metric strong{font-size:1.25rem}.qp-monitor-lower{grid-template-columns:1fr}.qp-review-item{align-items:flex-start}}
+
 </style>
 </head>
 <body>
@@ -268,6 +292,12 @@ header .navtools{display:none!important}
 <button type="button" class="filter-clear" id="clearFilters" data-i18n="clearFilters">مسح الفلاتر</button>
 </div>
 <div class="filter-summary"><span id="resultCount" role="status" aria-live="polite">النتائج: 0</span><span data-i18n="filterHint">استخدم البحث أو الفلاتر لتضييق النتائج.</span></div>
+<section id="qpMonitor" aria-labelledby="qpMonitorTitle">
+<div class="qp-monitor-head"><div><h2 id="qpMonitorTitle">لوحة مراقبة الفرص</h2><p id="qpMonitorSub">ملخص حالة السجل، المخاطر، وحداثة المراجعة.</p></div><span id="qpMonitorUpdated">بانتظار تحميل السجل</span></div>
+<div class="qp-monitor-metrics" id="qpMonitorMetrics"></div>
+<div class="qp-monitor-lower"><div class="qp-monitor-risk"><strong id="qpRiskTitle">توزيع المخاطر</strong><div id="qpRiskBreakdown"></div></div><div class="qp-monitor-queue"><div class="qp-monitor-queue-head"><strong id="qpQueueTitle">تحتاج إلى مراجعة</strong><span id="qpQueueCount">0</span></div><div id="qpReviewQueue"></div></div></div>
+<p class="qp-monitor-note" id="qpMonitorNote">التصنيف آلي اعتماداً على بيانات السجل فقط؛ لا يمثل تدقيقاً أمنياً أو ضماناً للدفع.</p>
+</section>
 <section id="qpChangeAlerts" hidden aria-live="polite" aria-label="تنبيهات تغيّر الفرص"><div class="qp-alert-head"><strong id="qpAlertTitle">تنبيهات تغيّر الفرص</strong><div class="qp-alert-actions"><button type="button" id="qpEnableNotifications">تفعيل إشعارات المتصفح</button><button type="button" id="qpClearAlerts">تحديد الكل كمقروء</button></div></div><div id="qpAlertItems"></div><p class="qp-alert-note" id="qpAlertNote">تُكتشف التغييرات عند فتح الموقع وتحديث سجل الفرص. لا توجد مراقبة خلفية مستمرة.</p></section>
 <div id="opportunityList" class="grid">
 <article class="card opportunity" data-type="airdrop" data-opportunity-id="airdrop-campaigns">
@@ -426,8 +456,41 @@ function applyOpportunityRegistry(records){opportunityRegistry=records;syncDynam
 function sortVisibleCards(){const mode=sortFilter.value;const ordered=[...list.querySelectorAll(".opportunity")].sort((a,b)=>{if(mode==="name")return a.querySelector("h3").textContent.localeCompare(b.querySelector("h3").textContent,langNow());if(mode==="newest"){const date=c=>{const item=opportunityRegistry.find(x=>x.id===c.dataset.opportunityId);return Date.parse(item?.reviewedAt||"")||0};return date(b)-date(a)}const rank=c=>({verified:0,under_review:1,unverified:2,paused:3,expired:4}[c.dataset.registryStatus]??5);return rank(a)-rank(b)});ordered.forEach(card=>list.appendChild(card))}
 function filterOpportunities(){const q=searchInput.value.trim().toLocaleLowerCase(),type=typeFilter.value,status=statusFilter.value;let visible=0;[...list.querySelectorAll(".opportunity")].forEach(card=>{const textMatch=card.textContent.toLocaleLowerCase().includes(q),typeMatch=type==="all"||card.dataset.type===type,statusMatch=status==="all"||card.dataset.registryStatus===status,show=textMatch&&typeMatch&&statusMatch;card.hidden=!show;if(show)visible++});sortVisibleCards();noResults.hidden=visible!==0;const dict=translations[langNow()]||translations.ar;resultCount.textContent=(dict.resultsLabel||"Results")+": "+visible+" / "+cards.length}
 searchInput.addEventListener("input",filterOpportunities);typeFilter.addEventListener("change",filterOpportunities);statusFilter.addEventListener("change",filterOpportunities);sortFilter.addEventListener("change",filterOpportunities);function resetDiscoveryFilters(){searchInput.value="";typeFilter.value="all";statusFilter.value="all";sortFilter.value="recommended";filterOpportunities();searchInput.focus()}clearFilters.addEventListener("click",resetDiscoveryFilters);emptyClear.addEventListener("click",resetDiscoveryFilters);searchInput.addEventListener("keydown",e=>{if(e.key==="Escape"&&searchInput.value){searchInput.value="";filterOpportunities()}});filterOpportunities();
+Object.assign(translations.ar,{monitorTitle:"لوحة مراقبة الفرص",monitorSub:"ملخص حالة السجل، المخاطر، وحداثة المراجعة.",monitorWaiting:"بانتظار تحميل السجل",monitorTotal:"إجمالي السجلات",monitorVerified:"موثّق وفق الشروط",monitorUnverified:"غير موثّق / غير معلوم",monitorUrgent:"متوقف أو منتهٍ",monitorHigh:"مخاطر مرتفعة",monitorDue:"تحتاج مراجعة",monitorRisk:"توزيع المخاطر",monitorQueue:"تحتاج إلى مراجعة",monitorNote:"التصنيف آلي اعتماداً على بيانات السجل فقط؛ لا يمثل تدقيقاً أمنياً أو ضماناً للدفع.",riskLow:"منخفضة",riskMedium:"متوسطة",riskHigh:"مرتفعة",riskUnknown:"غير مصنّفة",reasonPaused:"الحالة أو التوفر متوقف/منتهٍ",reasonUnverified:"لم تستوفِ شروط التوثيق",reasonNoDate:"لا يوجد تاريخ مراجعة",reasonStale:"تجاوزت المراجعة 14 يوماً",reasonNoSource:"مصدر التحقق غير متوفر",reviewAction:"عرض السجل",reviewFresh:"مراجعة حديثة",reviewDueLabel:"مراجعة مطلوبة",monitorNoIssues:"لا توجد سجلات في قائمة المراجعة حالياً",monitorLastUpdated:"آخر تحديث للسجل"});
+Object.assign(translations.en,{monitorTitle:"Opportunity monitoring",monitorSub:"Registry health, risk levels and review freshness.",monitorWaiting:"Waiting for registry",monitorTotal:"Total records",monitorVerified:"Verified by rules",monitorUnverified:"Unverified / unknown",monitorUrgent:"Paused or expired",monitorHigh:"High risk",monitorDue:"Review due",monitorRisk:"Risk distribution",monitorQueue:"Needs review",monitorNote:"Automated classification based on registry fields only; not a security audit or payout guarantee.",riskLow:"Low",riskMedium:"Medium",riskHigh:"High",riskUnknown:"Unrated",reasonPaused:"Status or availability is paused/expired",reasonUnverified:"Verification requirements not met",reasonNoDate:"No review date",reasonStale:"Review is older than 14 days",reasonNoSource:"No verification source",reviewAction:"View record",reviewFresh:"Recently reviewed",reviewDueLabel:"Review required",monitorNoIssues:"No records currently need review",monitorLastUpdated:"Registry updated"});
+Object.assign(translations.fr,{monitorTitle:"Suivi des opportunités",monitorSub:"État du registre, niveaux de risque et fraîcheur des vérifications.",monitorWaiting:"En attente du registre",monitorTotal:"Total des fiches",monitorVerified:"Vérifiées selon les règles",monitorUnverified:"Non vérifiées / inconnues",monitorUrgent:"Suspendues ou expirées",monitorHigh:"Risque élevé",monitorDue:"À revoir",monitorRisk:"Répartition des risques",monitorQueue:"À vérifier",monitorNote:"Classement automatique basé uniquement sur le registre ; ce n'est ni un audit de sécurité ni une garantie de paiement.",riskLow:"Faible",riskMedium:"Moyen",riskHigh:"Élevé",riskUnknown:"Non évalué",reasonPaused:"Statut ou disponibilité suspendu/expiré",reasonUnverified:"Conditions de vérification non remplies",reasonNoDate:"Aucune date de vérification",reasonStale:"Vérification datant de plus de 14 jours",reasonNoSource:"Aucune source de vérification",reviewAction:"Voir la fiche",reviewFresh:"Vérification récente",reviewDueLabel:"Vérification requise",monitorNoIssues:"Aucune fiche à revoir actuellement",monitorLastUpdated:"Registre mis à jour"});
+
 const qpSnapshotKey="questpulse-opportunity-snapshot-v1",qpAlertsKey="questpulse-opportunity-alerts-v1";
 function qpText(key){return (translations[langNow()]||translations.ar)[key]||(translations.ar[key]||key)}
+function renderQpMonitor(records){
+ const metrics=document.getElementById("qpMonitorMetrics"),riskBox=document.getElementById("qpRiskBreakdown"),queue=document.getElementById("qpReviewQueue");if(!metrics||!riskBox||!queue)return;
+ const now=Date.now(),items=Array.isArray(records)?records:[];
+ const getRisk=r=>["low","medium","high"].includes(r.riskLevel)?r.riskLevel:"unrated";
+ const isVerified=r=>validVerifiedRecord(r);
+ const reviewed=r=>r.reviewedAt&&Number.isFinite(Date.parse(r.reviewedAt));
+ const age=r=>reviewed(r)?(now-Date.parse(r.reviewedAt))/86400000:Infinity;
+ const urgent=r=>["paused","expired"].includes(r.status)||["paused","expired"].includes(r.availability);
+ const missingSource=r=>!Array.isArray(r.verificationSources)||!r.verificationSources.some(x=>x&&typeof x.url==="string"&&/^https:\/\//i.test(x.url));
+ const due=r=>!isVerified(r)||!reviewed(r)||age(r)>14||missingSource(r);
+ const counts={low:0,medium:0,high:0,unrated:0};items.forEach(r=>counts[getRisk(r)]++);
+ const stats=[
+  ["monitorTotal",items.length,""],
+  ["monitorVerified",items.filter(isVerified).length,"good"],
+  ["monitorUnverified",items.filter(r=>!isVerified(r)).length,"warning"],
+  ["monitorUrgent",items.filter(urgent).length,items.some(urgent)?"danger":""],
+  ["monitorHigh",counts.high,counts.high?"danger":""],
+  ["monitorDue",items.filter(due).length,items.some(due)?"warning":""]
+ ];
+ metrics.replaceChildren();for(const [key,value,tone] of stats){const el=document.createElement("div");el.className="qp-monitor-metric";el.dataset.tone=tone;const label=document.createElement("span");label.textContent=qpText(key);const number=document.createElement("strong");number.textContent=String(value);el.append(label,number);metrics.append(el)}
+ riskBox.replaceChildren();for(const [key,value] of [["riskLow",counts.low],["riskMedium",counts.medium],["riskHigh",counts.high],["riskUnknown",counts.unrated]]){const line=document.createElement("div");line.className="qp-risk-line";const label=document.createElement("span");label.textContent=qpText(key);const number=document.createElement("b");number.textContent=String(value);line.append(label,number);riskBox.append(line)}
+ const reasons=r=>{const out=[];if(urgent(r))out.push(qpText("reasonPaused"));if(!isVerified(r))out.push(qpText("reasonUnverified"));if(!reviewed(r))out.push(qpText("reasonNoDate"));else if(age(r)>14)out.push(qpText("reasonStale"));if(missingSource(r))out.push(qpText("reasonNoSource"));return [...new Set(out)].slice(0,3).join(" · ")};
+ const pending=items.filter(due).sort((a,b)=>(Number(urgent(b))-Number(urgent(a)))||(Number(getRisk(b)==="high")-Number(getRisk(a)==="high"))||age(b)-age(a)).slice(0,7);
+ document.getElementById("qpQueueCount").textContent=String(items.filter(due).length);queue.replaceChildren();
+ if(!pending.length){const empty=document.createElement("div");empty.className="qp-review-empty";empty.textContent=qpText("monitorNoIssues");queue.append(empty)}
+ for(const r of pending){const row=document.createElement("div");row.className="qp-review-item";const copy=document.createElement("div");copy.className="qp-review-copy";const name=document.createElement("strong");name.textContent=r.title||r.id||"—";const reason=document.createElement("small");reason.textContent=reasons(r);copy.append(name,reason);const btn=document.createElement("button");btn.type="button";btn.textContent=qpText("reviewAction");btn.addEventListener("click",()=>{const card=document.querySelector('[data-opportunity-id="'+CSS.escape(String(r.id))+'"]');if(card){card.hidden=false;card.scrollIntoView({behavior:"smooth",block:"center"});card.style.outline="2px solid var(--cyan)";setTimeout(()=>card.style.outline="",1800)}else{document.getElementById("apps")?.scrollIntoView({behavior:"smooth",block:"start"})}});row.append(copy,btn);queue.append(row)}
+ const stamp=document.getElementById("qpMonitorUpdated");stamp.textContent=qpText("monitorLastUpdated")+": "+new Date().toLocaleString(langNow());
+ const t=translations[langNow()]||translations.ar;document.getElementById("qpMonitorTitle").textContent=t.monitorTitle;document.getElementById("qpMonitorSub").textContent=t.monitorSub;document.getElementById("qpRiskTitle").textContent=t.monitorRisk;document.getElementById("qpQueueTitle").textContent=t.monitorQueue;document.getElementById("qpMonitorNote").textContent=t.monitorNote;
+}
 function renderQpAlerts(){
  const panel=document.getElementById("qpChangeAlerts"),items=document.getElementById("qpAlertItems");if(!panel||!items)return;
  let notices=[];try{notices=JSON.parse(localStorage.getItem(qpAlertsKey)||"[]")}catch{}
@@ -450,7 +513,7 @@ function monitorOpportunityChanges(records){
 }
 document.getElementById("qpEnableNotifications")?.addEventListener("click",async()=>{if(!("Notification" in window)){alert("هذا المتصفح لا يدعم إشعارات الويب.");return}try{const permission=await Notification.requestPermission();if(permission==="granted"){new Notification("QuestPulse",{body:"تم تفعيل تنبيهات تغيّر الفرص أثناء زيارة الموقع."})}else{alert("لم يتم منح إذن الإشعارات. ستظل التنبيهات ظاهرة داخل الموقع.")}}catch{alert("تعذر تفعيل الإشعارات في هذا المتصفح.")}});
 document.getElementById("qpClearAlerts")?.addEventListener("click",()=>{try{localStorage.setItem(qpAlertsKey,"[]")}catch{}renderQpAlerts()});
-fetch("./data/opportunities.json",{cache:"no-store"}).then(r=>{if(!r.ok)throw new Error("Registry unavailable");return r.json()}).then(data=>{if(!Array.isArray(data.opportunities))throw new Error("Invalid registry");applyOpportunityRegistry(data.opportunities);monitorOpportunityChanges(data.opportunities)}).catch(()=>{const dict=translations[langNow()]||translations.ar;console.warn(dict.registryUnavailable);applyOpportunityRegistry([])});
+fetch("./data/opportunities.json",{cache:"no-store"}).then(r=>{if(!r.ok)throw new Error("Registry unavailable");return r.json()}).then(data=>{if(!Array.isArray(data.opportunities))throw new Error("Invalid registry");applyOpportunityRegistry(data.opportunities);renderQpMonitor(data.opportunities);monitorOpportunityChanges(data.opportunities)}).catch(()=>{const dict=translations[langNow()]||translations.ar;console.warn(dict.registryUnavailable);applyOpportunityRegistry([]);renderQpMonitor([])});
 
 document.getElementById("year").textContent=new Date().getFullYear();
 fetch("assets/questpulse-miner.webp.b64").then(r=>{if(!r.ok)throw new Error("Artwork unavailable");return r.text()}).then(data=>{const img=document.getElementById("minerCharacter");if(img)img.src="data:image/webp;base64,"+data.trim()}).catch(()=>{});
