@@ -1,4 +1,4 @@
-const CACHE_NAME = "questpulse-shell-v4";
+const CACHE_NAME = "questpulse-shell-v5";
 const APP_SHELL = [
   "./",
   "./index.html",
@@ -6,6 +6,7 @@ const APP_SHELL = [
   "./privacy.html",
   "./terms.html",
   "./404.html",
+  "./offline.html",
   "./manifest.webmanifest",
   "./assets/questpulse-icon.svg",
   "./assets/questpulse-miner.webp.b64"
@@ -22,42 +23,50 @@ self.addEventListener("install", event => {
 self.addEventListener("activate", event => {
   event.waitUntil(
     caches.keys()
-      .then(keys => Promise.all(keys.filter(key => key !== CACHE_NAME).map(key => caches.delete(key))))
+      .then(keys => Promise.all(keys.filter(key => key.startsWith("questpulse-shell-") && key !== CACHE_NAME).map(key => caches.delete(key))))
       .then(() => self.clients.claim())
   );
 });
 
+async function cacheResponse(request, response) {
+  if (response && response.ok && response.type !== "opaque") {
+    const cache = await caches.open(CACHE_NAME);
+    await cache.put(request, response.clone());
+  }
+  return response;
+}
+
 self.addEventListener("fetch", event => {
-  if (event.request.method !== "GET") return;
-  const url = new URL(event.request.url);
+  const request = event.request;
+  if (request.method !== "GET") return;
+  const url = new URL(request.url);
   if (url.origin !== self.location.origin) return;
 
   if (url.pathname.endsWith("/data/opportunities.json")) {
     event.respondWith(
-      fetch(event.request, { cache: "no-store" }).then(response => {
-        if (response && response.ok) {
-          const copy = response.clone();
-          caches.open(CACHE_NAME).then(cache => cache.put(event.request, copy));
-        }
-        return response;
-      }).catch(() => caches.match(event.request).then(cached => cached || new Response("", { status: 503, statusText: "Offline" })))
+      fetch(request, { cache: "no-store" })
+        .then(response => cacheResponse(request, response))
+        .catch(async () => (await caches.match(request)) || new Response(
+          JSON.stringify({ schemaVersion: 1, opportunities: [], offline: true }),
+          { status: 200, headers: { "Content-Type": "application/json; charset=utf-8" } }
+        ))
+    );
+    return;
+  }
+
+  if (request.mode === "navigate") {
+    event.respondWith(
+      fetch(request)
+        .then(response => cacheResponse(request, response))
+        .catch(async () => (await caches.match(request)) || (await caches.match("./index.html")) || (await caches.match("./offline.html")))
     );
     return;
   }
 
   event.respondWith(
-    caches.match(event.request).then(cached => {
-      if (cached) return cached;
-      return fetch(event.request).then(response => {
-        if (response && response.ok) {
-          const copy = response.clone();
-          caches.open(CACHE_NAME).then(cache => cache.put(event.request, copy));
-        }
-        return response;
-      }).catch(() => {
-        if (event.request.mode === "navigate") return caches.match("./index.html");
-        return new Response("", { status: 503, statusText: "Offline" });
-      });
+    caches.match(request).then(cached => {
+      const network = fetch(request).then(response => cacheResponse(request, response));
+      return cached || network.catch(() => new Response("", { status: 503, statusText: "Offline" }));
     })
   );
 });
