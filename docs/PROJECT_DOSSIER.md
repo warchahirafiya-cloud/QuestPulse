@@ -86,7 +86,7 @@ The current QP counter is a display element only. No on-chain token, cash value,
 - Current hosting target: GitHub Pages
 - Registered custom domain: getquestpulse.com
 
-The current repository files have been checked for basic syntax/structure. This is not a substitute for a complete browser, security, accessibility, or production-readiness audit.
+The repository includes an internal research-only candidate catalogue at `research/research-candidates.json`, separate from the public opportunity feed. `scripts/validate-research-candidates.mjs` checks its record shape, HTTPS source URLs, unique IDs, status values, and the explicit research-only publication boundary in CI. This catalogue is not a public list of active offers and does not establish eligibility, payout, or payment evidence.\n\nThe current repository files have been checked for basic syntax/structure. This is not a substitute for a complete browser, security, accessibility, or production-readiness audit.
 
 ## 8. Ownership and brand protection
 
