@@ -62,12 +62,11 @@ const html = await readFile("index.html", "utf8");
 if (!html.includes('fetch("./data/opportunities.json"')) {
   fail("homepage must load the canonical data/opportunities.json registry");
 }
-if (!html.includes("applyOpportunityRegistry(data.opportunities)")) {
+if (!html.includes("applyOpportunityRegistry(data.opportunities)") || !html.includes("function syncDynamicCards(records)") || !html.includes("function makeDynamicCard(item)")) {
   fail("homepage must pass registry records into the opportunity-card renderer");
 }
-const cardIds = new Set([...html.matchAll(/data-opportunity-id="([^"]+)"/g)].map((match) => match[1]));
 for (const item of registry.opportunities || []) {
-  if (!cardIds.has(item.id)) fail(`registry record "${item.id}" has no matching homepage card`);
+
 }
 const languageOptions = [...html.matchAll(/<option value="[^"]+">/g)].length;
 if (languageOptions < 20) fail(`homepage has only ${languageOptions} language options; expected at least 20`);
@@ -85,10 +84,10 @@ for (const path of ["guide.html", "privacy.html", "terms.html", "manifest.webman
 const editor = await readFile("admin/index.html", "utf8");
 if (!editor.includes("../docs/SAFE_PUBLISHING.md")) fail("admin editor must link to the safe publishing guide");
 else pass("admin editor links to safe publishing instructions");
-if (!editor.includes('id="addRecord" disabled') || editor.includes('$("addRecord").onclick')) fail("admin editor must block new records until matching homepage cards exist");
-else pass("admin editor prevents records without a homepage card");
-for (const id of ["airdrop-campaigns", "telegram-bots", "daily-click", "task-rewards", "referral-programs"]) {
-  if (!editor.includes(`"${id}"`)) fail(`admin editor is missing supported homepage card ID: ${id}`);
+if (!editor.includes('id="addRecord"') || !editor.includes('$("addRecord").onclick')) fail("admin editor must support creating new opportunity records");
+else pass("admin editor supports dynamic opportunity creation");
+for (const field of ["title","description","reward","depositRequired","minimumWithdrawal","eligibility","payoutMethod"]) {
+  if (!editor.includes(`id="${field}"`) || !editor.includes(`"${field}"`)) fail(`admin editor is missing dynamic card field: ${field}`);
 }
 
 const submitWorkflow = await readFile(".github/workflows/submit-opportunity-registry.yml", "utf8");
