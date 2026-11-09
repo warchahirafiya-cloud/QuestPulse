@@ -392,7 +392,7 @@ function makeDynamicCard(item){
  for(const source of (Array.isArray(item.verificationSources)?item.verificationSources:[])){if(safeHttps(source?.url)){const link=makeNode("a","",textOr(source.label,source.checkedFor||"مصدر التحقق"));link.href=source.url;link.target="_blank";link.rel="noopener noreferrer";sourceList.append(link)}}
  if(sourceList.children.length>1)grid.append(sourceList);
  const evidenceList=makeNode("div","opp-detail-item"),evidenceTitle=makeNode("span","","أدلة الدفع");evidenceList.append(evidenceTitle);
- for(const evidence of (Array.isArray(item.paymentEvidence)?item.paymentEvidence:[])){if(safeHttps(evidence?.url)){const link=makeNode("a","",textOr(evidence.label,evidence.description||"عرض الدليل"));link.href=evidence.url;link.target="_blank";link.rel="noopener noreferrer";sourceList.append(link)}}
+ for(const evidence of (Array.isArray(item.paymentEvidence)?item.paymentEvidence:[])){if(safeHttps(evidence?.url)){const link=makeNode("a","",textOr(evidence.label,evidence.description||"عرض الدليل"));link.href=evidence.url;link.target="_blank";link.rel="noopener noreferrer";evidenceList.append(link)}}
  if(evidenceList.children.length>1)grid.append(evidenceList);
  details.append(makeNode("p","opp-disclaimer","المعلومات غير المتاحة لا تُفترض. التوثيق لا يضمن العائد أو استمرار الخدمة."));card.append(details);
  return card;
