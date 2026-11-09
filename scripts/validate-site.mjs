@@ -70,6 +70,13 @@ if (!admin.includes('name="robots" content="noindex,nofollow"')) {
 if (admin.includes("github_pat_") || admin.includes("ghp_")) {
   errors.push("A possible GitHub token pattern was found in the admin page.");
 }
+for (const field of ["withdrawalTerms","resetInterval","paymentEvidenceSummary","riskNotes"]) {
+  if (!admin.includes('id="' + field + '"')) errors.push("Editorial console is missing opportunity field: " + field);
+}
+if (!admin.includes("local-only") && !admin.includes("local only")) errors.push("Editorial console must remain local-only.");
+if (!admin.includes("preview") && !admin.includes("معاينة")) {
+  // Preview is intentionally optional; the exported JSON remains the review artifact.
+}
 
 let registry;
 try { registry = JSON.parse(registryText); }
