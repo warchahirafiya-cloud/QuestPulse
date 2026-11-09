@@ -2,4 +2,4 @@ User-agent: *
 Allow: /
 Disallow: /admin/
 
-Sitemap: https://warchahirafiya-cloud.github.io/QuestPulse/sitemap.xml
+Sitemap: https://getquestpulse.com/sitemap.xml
