@@ -491,6 +491,7 @@ function renderQpMonitor(records){
  const stamp=document.getElementById("qpMonitorUpdated");stamp.textContent=qpText("monitorLastUpdated")+": "+new Date().toLocaleString(langNow());
  const t=translations[langNow()]||translations.ar;document.getElementById("qpMonitorTitle").textContent=t.monitorTitle;document.getElementById("qpMonitorSub").textContent=t.monitorSub;document.getElementById("qpRiskTitle").textContent=t.monitorRisk;document.getElementById("qpQueueTitle").textContent=t.monitorQueue;document.getElementById("qpMonitorNote").textContent=t.monitorNote;
 }
+document.getElementById("language")?.addEventListener("change",()=>{if(Array.isArray(opportunityRegistry))renderQpMonitor(opportunityRegistry);renderQpAlerts()});
 function renderQpAlerts(){
  const panel=document.getElementById("qpChangeAlerts"),items=document.getElementById("qpAlertItems");if(!panel||!items)return;
  let notices=[];try{notices=JSON.parse(localStorage.getItem(qpAlertsKey)||"[]")}catch{}
