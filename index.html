@@ -500,14 +500,30 @@ function renderQpMonitor(records){
 document.getElementById("language")?.addEventListener("change",()=>{if(Array.isArray(opportunityRegistry))renderQpMonitor(opportunityRegistry);renderQpAlerts()});
 function renderQpAlerts(){
  const panel=document.getElementById("qpChangeAlerts"),items=document.getElementById("qpAlertItems");if(!panel||!items)return;
- let notices=[];try{notices=JSON.parse(localStorage.getItem(qpAlertsKey)||"[]")}catch{}
- items.replaceChildren();for(const n of notices.slice(0,30)){const row=document.createElement("div");row.className="qp-alert-item";const title=document.createElement("strong");title.textContent=n.title;const detail=document.createElement("div");detail.textContent=n.detail;const time=document.createElement("small");time.textContent=new Date(n.at).toLocaleString(langNow());row.append(title,detail,time);items.append(row)}
+ let notices=[];
+ try{
+  const stored=JSON.parse(localStorage.getItem(qpAlertsKey)||"[]");
+  if(Array.isArray(stored))notices=stored.filter(n=>n&&typeof n==="object"&&!Array.isArray(n)&&typeof n.title==="string"&&typeof n.detail==="string"&&Number.isFinite(Date.parse(n.at))).slice(0,30);
+ }catch{}
+ items.replaceChildren();
+ for(const n of notices){
+  const row=document.createElement("div");row.className="qp-alert-item";
+  const title=document.createElement("strong");title.textContent=n.title.slice(0,160);
+  const detail=document.createElement("div");detail.textContent=n.detail.slice(0,500);
+  const time=document.createElement("small");time.textContent=new Date(n.at).toLocaleString(langNow());
+  row.append(title,detail,time);items.append(row);
+ }
  panel.hidden=notices.length===0;
- const t=translations[langNow()]||translations.ar;document.getElementById("qpAlertTitle").textContent=t.alertsTitle;document.getElementById("qpEnableNotifications").textContent=t.enableAlerts;document.getElementById("qpClearAlerts").textContent=t.clearAlerts;document.getElementById("qpAlertNote").textContent=t.alertsNote;
+ const t=translations[langNow()]||translations.ar;
+ const titleNode=document.getElementById("qpAlertTitle"),enableNode=document.getElementById("qpEnableNotifications"),clearNode=document.getElementById("qpClearAlerts"),noteNode=document.getElementById("qpAlertNote");
+ if(titleNode)titleNode.textContent=t.alertsTitle;
+ if(enableNode)enableNode.textContent=t.enableAlerts;
+ if(clearNode)clearNode.textContent=t.clearAlerts;
+ if(noteNode)noteNode.textContent=t.alertsNote;
 }
 function monitorOpportunityChanges(records){
  const fields=[["status","alertStatus"],["availability","alertAvailability"],["withdrawalFee","alertFee"],["withdrawalNetwork","alertNetwork"],["minimumWithdrawal","alertMinimum"],["withdrawalTerms","alertTerms"],["resetInterval","alertCadence"]];
- const current={};
+ const current=Object.create(null);
  for(const r of Array.isArray(records)?records:[]){
   if(!r||typeof r.id!=="string"||!r.id.trim())continue;
   current[r.id]=Object.fromEntries(fields.map(([k])=>[k,r[k]??null]).concat([["title",r.title||r.id]]));
