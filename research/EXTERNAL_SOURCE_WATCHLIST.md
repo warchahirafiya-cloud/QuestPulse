@@ -126,3 +126,20 @@ The entries below were found through public first-party pages or official platfo
 For each app/game, capture: operator/legal entity; official app-store listing; countries supported; minimum age; phone/KYC requirements; task type; free vs paid path; points/token distinction; minimum redemption; reward asset; payout method/network; fees; time-to-payout; reset interval; expiry; privacy permissions; wallet signature/approval risks; token contract, FDV, liquidity, vesting/unlocks if applicable; dated evidence and reviewer.
 
 **Publication gate remains unchanged:** this scan is kept in the private editorial research branch. It does not authorize live participation links, referrals, bot invitations, deposits or promotional public cards.
+
+
+## Expanded catalogue policy — broad rewards, not withdrawal-only
+
+**Scope decision (2026-11-09):** QuestPulse research should maximize the breadth and variety of legitimate reward-bearing products. Do not reject a candidate solely because direct cash or crypto withdrawal is unavailable today. Include websites, Android/iOS apps, browser platforms, Telegram Mini Apps/bots, games, learning products, survey panels, offerwalls, loyalty programs, walking/receipt apps, testing platforms, creator/community campaigns, points systems, gift-card programs, prize campaigns, and token-linked ecosystems when there is a credible first-party source describing a reward mechanic.
+
+Every candidate must be labelled by its actual reward state:
+- **Withdrawable now:** current documented cash, bank, e-wallet, or crypto withdrawal.
+- **Redeemable now — non-cash:** gift cards, vouchers, airtime, data, products, or services.
+- **Future / conditional withdrawal:** withdrawal, token generation, listing, conversion, or redemption is announced or conditional but is not currently enabled. Record the exact condition, expected date only if officially stated, and uncertainty.
+- **Internal points / game currency:** points, coins, gems, stars, MB, or credits with no verified external redemption. Include as an internal reward product, not as cash or crypto.
+- **Prize draw / chance-based:** entry into a draw, lottery, sweepstake, or competition; clearly state that a reward is not guaranteed.
+- **Expired / historical:** retain for research context only; never show as currently active.
+
+For each product, distinguish **what users earn** from **what they can actually redeem today**. Capture redemption status, minimum threshold, conversion ratio, payout method, fees, expiry, region restrictions, KYC, subscription/deposit requirements, and any announced future conversion separately. If a future payout has no firm official date, say “no confirmed launch date”; do not estimate one.
+
+A platform may be catalogued as a research candidate even when payout is unavailable, but it must not be described as paying, withdrawable, verified for payment, or active for earning unless current evidence supports that exact claim. A large catalogue is a discovery goal, not a reason to lower evidence standards or suppress risk labels.
