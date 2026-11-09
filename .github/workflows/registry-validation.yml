@@ -1,0 +1,96 @@
+name: QuestPulse registry validation
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - "data/opportunities.json"
+      - ".github/workflows/registry-validation.yml"
+  pull_request:
+    branches: [main]
+    paths:
+      - "data/opportunities.json"
+      - ".github/workflows/registry-validation.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  validate-registry:
+    name: Validate opportunity registry
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      - name: Validate JSON structure and safety rules
+        run: |
+          node --input-type=module <<'NODE'
+          import fs from 'node:fs';
+
+          const file = 'data/opportunities.json';
+          const data = JSON.parse(fs.readFileSync(file, 'utf8'));
+          const fail = (message) => {
+            console.error('Registry validation failed: ' + message);
+            process.exitCode = 1;
+          };
+          const allowed = {
+            status: new Set(['verified', 'under_review', 'unverified', 'paused', 'expired']),
+            availability: new Set(['available', 'limited', 'unknown', 'paused', 'expired']),
+            riskLevel: new Set(['low', 'medium', 'high', 'unrated'])
+          };
+          const https = (value) => {
+            try { return new URL(value).protocol === 'https:'; }
+            catch { return false; }
+          };
+          const validDate = (value) =>
+            typeof value === 'string' && value.trim() !== '' && !Number.isNaN(Date.parse(value));
+
+          if (data.schemaVersion !== 1) fail('schemaVersion must equal 1');
+          if (!Array.isArray(data.opportunities)) fail('opportunities must be an array');
+          if (!validDate(data.updatedAt)) fail('updatedAt must be a valid date');
+
+          const seen = new Set();
+          for (const [index, item] of (data.opportunities || []).entries()) {
+            const label = item?.id || `record #${index + 1}`;
+            if (!item || typeof item !== 'object' || Array.isArray(item)) {
+              fail(`${label} must be an object`);
+              continue;
+            }
+            if (typeof item.id !== 'string' || !item.id.trim()) fail(`${label}: missing id`);
+            if (seen.has(item.id)) fail(`${label}: duplicate id`);
+            seen.add(item.id);
+
+            for (const field of ['status', 'availability', 'riskLevel']) {
+              if (!allowed[field].has(item[field])) fail(`${label}: invalid ${field}`);
+            }
+            if (item.officialUrl != null && !https(item.officialUrl)) {
+              fail(`${label}: officialUrl must use HTTPS`);
+            }
+            if (item.verificationSources != null && !Array.isArray(item.verificationSources)) {
+              fail(`${label}: verificationSources must be an array`);
+            }
+            for (const source of item.verificationSources || []) {
+              if (!source || !https(source.url)) fail(`${label}: every verification source must use HTTPS`);
+            }
+
+            if (item.status === 'verified') {
+              if (!https(item.officialUrl)) fail(`${label}: verified record needs an HTTPS officialUrl`);
+              if (!validDate(item.reviewedAt)) fail(`${label}: verified record needs a valid reviewedAt date`);
+              const validSource = (item.verificationSources || []).some(
+                source => https(source?.url) &&
+                  typeof source.checkedFor === 'string' && source.checkedFor.trim()
+              );
+              if (!validSource) fail(`${label}: verified record needs an HTTPS source with checkedFor`);
+            }
+          }
+
+          if (process.exitCode) process.exit(process.exitCode);
+          console.log(`Registry valid: ${seen.size} records checked.`);
+          NODE
