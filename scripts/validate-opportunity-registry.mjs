@@ -11,6 +11,7 @@ if (registry.schemaVersion !== 1) fail("Unsupported registry schemaVersion");
 if (!Array.isArray(registry.opportunities)) fail("opportunities must be an array");
 else {
   const ids = new Set();
+  const types = new Set(["airdrop", "telegram", "clicktime", "tasks", "referral"]);
   const statuses = new Set(["unverified", "under_review", "verified", "paused", "expired"]);
   const availability = new Set(["active", "paused", "expired", "unknown"]);
   const riskLevels = new Set(["low", "medium", "high", "unrated"]);
@@ -21,6 +22,7 @@ else {
     else if (ids.has(item.id)) fail(`${label}: duplicate id`);
     else ids.add(item.id);
 
+    if (!types.has(item.type)) fail(`${label}: invalid type`);
     if (!statuses.has(item.status)) fail(`${label}: invalid status`);
     if (!availability.has(item.availability)) fail(`${label}: invalid availability`);
     if (!riskLevels.has(item.riskLevel)) fail(`${label}: invalid riskLevel`);
@@ -32,6 +34,10 @@ else {
       catch { return false; }
     };
     if (item.officialUrl !== null && !https(item.officialUrl)) fail(`${label}: officialUrl must be HTTPS or null`);
+    for (const evidence of item.paymentEvidence || []) {
+      if (!evidence || typeof evidence !== "object" || Array.isArray(evidence)) fail(`${label}: payment evidence entries must be objects`);
+      else if (evidence.url !== undefined && !https(evidence.url)) fail(`${label}: payment evidence URL must be HTTPS`);
+    }
     for (const source of item.verificationSources || []) {
       if (!source || !https(source.url)) fail(`${label}: each verification source needs an HTTPS URL`);
       if (typeof source?.checkedFor !== "string" || !source.checkedFor.trim()) {
@@ -75,6 +81,17 @@ for (const path of ["guide.html", "privacy.html", "terms.html", "manifest.webman
   try { await readFile(path); pass(`${path} exists`); }
   catch { fail(`${path} is missing`); }
 }
+
+const editor = await readFile("admin/index.html", "utf8");
+if (!editor.includes("../docs/SAFE_PUBLISHING.md")) fail("admin editor must link to the safe publishing guide");
+else pass("admin editor links to safe publishing instructions");
+
+const submitWorkflow = await readFile(".github/workflows/submit-opportunity-registry.yml", "utf8");
+for (const required of ["workflow_dispatch:", "permissions:", "contents: write", "pull-requests: write", "node scripts/validate-opportunity-registry.mjs", "node scripts/validate-site.mjs", "github.rest.pulls.create", "refs/heads/"]) {
+  if (!submitWorkflow.includes(required)) fail(`submission workflow is missing required safeguard: ${required}`);
+}
+if (submitWorkflow.includes("secrets.GH_PAT") || submitWorkflow.includes("PERSONAL_ACCESS_TOKEN")) fail("submission workflow must not require a personal access token");
+else pass("submission workflow uses no personal access token");
 
 if (process.exitCode) process.exit(process.exitCode);
 console.log("QuestPulse quality checks completed.");
