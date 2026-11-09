@@ -31,7 +31,7 @@
 </div>
 <div class="stats" id="stats"></div>
 <div class="layout">
-<aside class="panel"><h2>السجلات</h2><input id="recordSearch" type="search" placeholder="ابحث بالمعرّف أو النوع أو الحالة" aria-label="بحث في السجلات" style="margin-bottom:10px"><div class="record-list" id="recordList"></div><div class="bottom"><button class="btn" id="addRecord" type="button">＋ إضافة فرصة جديدة</button><button class="btn danger" id="deleteRecord">حذف السجل المحدد</button></div></aside>
+<aside class="panel"><h2>السجلات</h2><input id="recordSearch" type="search" placeholder="ابحث بالاسم أو المعرّف أو التصنيف أو المكافأة أو الشبكة" aria-label="بحث في السجلات" style="margin-bottom:10px"><div class="record-list" id="recordList"></div><div class="bottom"><button class="btn" id="addRecord" type="button">＋ إضافة فرصة جديدة</button><button class="btn danger" id="deleteRecord">حذف السجل المحدد</button></div></aside>
 <section class="panel">
 <h2 id="editorTitle">اختر سجلاً للبدء</h2>
 <div id="editor" hidden>
@@ -96,11 +96,11 @@ function notify(msg,kind=""){const el=$("message");el.textContent=msg;el.classNa
 function render(){
  const list=$("recordList");list.innerHTML="";
  const query=$("recordSearch").value.trim().toLowerCase();
- const visible=registry.opportunities.filter(r=>[r.id,r.type,r.status,r.availability].some(v=>String(v||"").toLowerCase().includes(query)));
+ const visible=registry.opportunities.filter(r=>[r.id,r.title,r.type,r.status,r.availability,r.categoryLabel,r.reward,r.officialUrl,r.network,r.rewardToken].some(v=>String(v||"").toLowerCase().includes(query)));
  for(const r of visible){const b=document.createElement("button");b.className="btn record"+(r.id===selectedId?" active":"");const name=document.createElement("span");name.textContent=r.id;const tag=document.createElement("span");tag.className="pill";tag.textContent=r.status;b.append(name,tag);b.onclick=()=>select(r.id);list.append(b)}
  if(!visible.length){const empty=document.createElement("p");empty.className="muted";empty.textContent="لا توجد سجلات تطابق البحث." ;list.append(empty)}
  const all=registry.opportunities; $("stats").innerHTML="";
- [["إجمالي السجلات",all.length],["موثّق",all.filter(x=>x.status==="verified").length],["قيد المراجعة",all.filter(x=>x.status==="under_review").length],["غير موثّق",all.filter(x=>x.status==="unverified").length]].forEach(([k,v])=>{const s=document.createElement("span");s.textContent=k+": "+v;$("stats").append(s)});
+ [["إجمالي السجلات",all.length],["موثّق",all.filter(x=>x.status==="verified").length],["قيد المراجعة",all.filter(x=>x.status==="under_review").length],["غير موثّق",all.filter(x=>x.status==="unverified").length],["متوقف",all.filter(x=>x.status==="paused"||x.availability==="paused").length],["منتهٍ",all.filter(x=>x.status==="expired"||x.availability==="expired").length]].forEach(([k,v])=>{const s=document.createElement("span");s.textContent=k+": "+v;$("stats").append(s)});
 }
 function persistDraft(){try{localStorage.setItem(DRAFT_KEY,JSON.stringify(registry));return true}catch(e){notify("تعذر حفظ المسودة في هذا المتصفح: "+e.message,"err");return false}}
 function select(id){selectedId=id;working=clone(registry.opportunities.find(r=>r.id===id));$("editor").hidden=false;$("editorTitle").textContent="تحرير: "+id;fill();render();notify("تم تحميل السجل. احفظ التغييرات محلياً قبل التصدير.","ok")}
