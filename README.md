@@ -37,3 +37,4 @@ QuestPulse does not guarantee rewards or returns. Never share a seed phrase or p
 ## Disclaimer
 
 QuestPulse is an informational discovery platform, not an exchange, wallet, investment manager, or provider of financial, legal, or tax advice.
+\n## Safe registry publishing\n\nThe editor is local-only. Submit exported registry JSON through the [review workflow](.github/workflows/submit-opportunity-registry.yml); it runs validation and opens a pull request instead of writing directly to `main`. See [safe publishing instructions](docs/SAFE_PUBLISHING.md).\n
