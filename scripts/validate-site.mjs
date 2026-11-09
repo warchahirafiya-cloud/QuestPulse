@@ -48,6 +48,16 @@ for (const lang of ["ar", "en", "fr"]) {
 if (!notFound.includes("<title>404 | QuestPulse</title>")) errors.push("Custom 404 page is missing its title.");
 if (!robots.includes("Disallow: /admin/")) errors.push("robots.txt must exclude the editorial console from crawling.");
 if (!sitemap.includes("<urlset") || !sitemap.includes("guide.html") || !sitemap.includes("privacy.html") || !sitemap.includes("terms.html")) errors.push("sitemap.xml is missing public pages.");
+if (!sitemap.includes("https://getquestpulse.com/") || sitemap.includes("warchahirafiya-cloud.github.io")) errors.push("sitemap.xml must use the configured custom domain.");
+if (!robots.includes("Sitemap: https://getquestpulse.com/sitemap.xml")) errors.push("robots.txt must advertise the custom-domain sitemap.");
+for (const [path, page, canonical] of [
+  ["homepage", home, "https://getquestpulse.com/"],
+  ["guide", guide, "https://getquestpulse.com/guide.html"],
+  ["privacy", privacy, "https://getquestpulse.com/privacy.html"],
+  ["terms", terms, "https://getquestpulse.com/terms.html"]
+]) {
+  if (!page.includes('<link rel="canonical" href="' + canonical + '">')) errors.push(path + " page is missing its custom-domain canonical URL.");
+}
 if (!home.includes('property="og:title"') || !home.includes('name="twitter:card"')) errors.push("Homepage social sharing metadata is incomplete.");
 for (const id of ["searchInput", "typeFilter", "statusFilter", "sortFilter", "clearFilters", "emptyClear", "resultCount"]) {
   if (!home.includes('id="' + id + '"')) errors.push("Homepage is missing the mobile discovery control: " + id);
