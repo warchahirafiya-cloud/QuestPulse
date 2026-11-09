@@ -55,6 +55,9 @@ for (const id of ["searchInput", "typeFilter", "statusFilter", "sortFilter", "cl
 for (const key of ["allStatuses", "sortRecommended", "sortNewest", "sortName", "clearFilters", "resultsLabel"]) {
   if (!home.includes(key)) errors.push("Homepage is missing a discovery filter translation: " + key);
 }
+for (const key of ["withdrawalTermsLabel", "resetIntervalLabel", "paymentEvidenceLabel", "riskNotesLabel", "detailDisclaimer"]) { if (!home.includes(key)) errors.push("Opportunity detail presentation is missing translation: " + key); }
+if ((home.match(/class="opp-detail-grid"/g) || []).length !== 5) errors.push("Each opportunity category must include a structured detail grid.");
+for (const key of ["withdrawalTerms", "resetInterval", "paymentEvidenceSummary", "riskNotes"]) if (!home.includes('data-detail="' + key + '"')) errors.push("Opportunity detail field is missing: " + key);
 if (!admin.includes('name="robots" content="noindex,nofollow"')) {
   errors.push("Editorial console must retain its noindex directive.");
 }
