@@ -1,6 +1,7 @@
 import { readFile } from "node:fs/promises";
 
 const file = new URL("../data/opportunities.json", import.meta.url);
+const allowedType = new Set(["airdrop", "telegram", "clicktime", "tasks", "referral"]);
 const allowedStatus = new Set(["unverified", "under_review", "verified", "paused", "expired"]);
 const allowedAvailability = new Set(["unknown", "active", "paused", "expired"]);
 const allowedRisk = new Set(["low", "medium", "high", "unrated"]);
@@ -46,12 +47,25 @@ for (const [index, item] of (Array.isArray(registry?.opportunities) ? registry.o
   else if (seen.has(item.id)) errors.push(`Duplicate opportunity id: ${item.id}`);
   else seen.add(item.id);
 
+  if (!allowedType.has(item.type)) errors.push(`${label}.type is invalid.`);
   if (!allowedStatus.has(item.status)) errors.push(`${label}.status is invalid.`);
   if (!allowedAvailability.has(item.availability)) errors.push(`${label}.availability is invalid.`);
   if (!allowedRisk.has(item.riskLevel)) errors.push(`${label}.riskLevel is invalid.`);
   if (typeof item.notes !== "string") errors.push(`${label}.notes must be a string.`);
   if (!Array.isArray(item.verificationSources)) errors.push(`${label}.verificationSources must be an array.`);
   if (!Array.isArray(item.paymentEvidence)) errors.push(`${label}.paymentEvidence must be an array.`);
+  for (const key of ["withdrawalTerms", "resetInterval", "paymentEvidenceSummary", "riskNotes"]) {
+    if (item[key] !== null && item[key] !== undefined && typeof item[key] !== "string") {
+      errors.push(`${label}.${key} must be a string or null.`);
+    }
+  }
+  for (const [evidenceIndex, evidence] of (Array.isArray(item.paymentEvidence) ? item.paymentEvidence : []).entries()) {
+    if (!evidence || typeof evidence !== "object" || Array.isArray(evidence)) {
+      errors.push(`${label}.paymentEvidence[${evidenceIndex}] must be an object.`);
+    } else if (evidence.url && !isHttps(evidence.url)) {
+      errors.push(`${label}.paymentEvidence[${evidenceIndex}].url must be HTTPS.`);
+    }
+  }
 
   if (item.officialUrl !== null && item.officialUrl !== undefined && !isHttps(item.officialUrl)) {
     errors.push(`${label}.officialUrl must be null or a valid HTTPS URL.`);
@@ -68,7 +82,7 @@ for (const [index, item] of (Array.isArray(registry?.opportunities) ? registry.o
     if (!isHttps(item.officialUrl)) errors.push(`${label} cannot be verified without an official HTTPS URL.`);
     if (!isDate(item.reviewedAt)) errors.push(`${label} cannot be verified without a valid reviewedAt date.`);
     if (!Array.isArray(item.verificationSources) || item.verificationSources.length === 0 ||
-        !item.verificationSources.some(source => isHttps(source?.url))) {
+        !item.verificationSources.some(source => isHttps(source?.url) && typeof source?.checkedFor === "string" && source.checkedFor.trim())) {
       errors.push(`${label} cannot be verified without at least one HTTPS verification source.`);
     }
   }
