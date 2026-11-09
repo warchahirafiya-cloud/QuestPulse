@@ -148,6 +148,19 @@ footer{padding-bottom:35px}
 }
 @media(prefers-reduced-motion:reduce){*,*::before,*::after{scroll-behavior:auto!important;transition:none!important;animation:none!important}}
 
+/* QuestPulse navigation correction: keep the desktop index on the physical left. */
+@media(min-width:701px){
+  .qp-sidebar{left:0;right:auto;inset-inline-start:auto;border-right:1px solid var(--line);border-left:0}
+  main.wrap{margin-left:calc(var(--qp-sidebar) + 26px);margin-right:26px}
+}
+@media(min-width:701px) and (max-width:1050px){
+  main.wrap{margin-left:calc(var(--qp-sidebar) + 18px);margin-right:18px}
+}
+/* On phones, use the compact bottom navigation only. */
+@media(max-width:700px){
+  .navlinks{display:none!important}
+}
+
 </style>
 </head>
 <body>
