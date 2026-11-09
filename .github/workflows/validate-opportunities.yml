@@ -23,6 +23,8 @@ on:
   pull_request:
     paths:
       - "data/opportunities.json"
+      - "research/**"
+      - "scripts/validate-research-candidates.mjs"
       - "scripts/validate-opportunities.mjs"
       - "scripts/validate-site.mjs"
       - "index.html"
