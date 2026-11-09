@@ -19,6 +19,8 @@ The site is an evolving project. Some sections are placeholders pending opportun
 ## Public guide
 
 - [Verification, glossary, wallet safety and FAQ](guide.html)
+- [Privacy notice — preliminary draft](privacy.html)
+- [Terms of use — preliminary draft](terms.html)
 
 ## Documentation
 
