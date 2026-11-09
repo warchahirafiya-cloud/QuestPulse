@@ -109,10 +109,7 @@ if (!homepage.includes('fetch("./data/opportunities.json"')) {
 if (!homepage.includes("applyOpportunityRegistry(data.opportunities)")) {
   errors.push("Homepage must pass loaded registry records into the opportunity-card renderer.");
 }
-const cardIds = new Set([...homepage.matchAll(/data-opportunity-id="([^"]+)"/g)].map((match) => match[1]));
-for (const item of registry.opportunities) {
-  if (!cardIds.has(item.id)) errors.push(`Registry record "${item.id}" has no matching homepage card.`);
-}
+if (!homepage.includes("function syncDynamicCards(records)") || !homepage.includes("function makeDynamicCard(item)")) errors.push("Homepage must generate cards dynamically for registry records.");
 if (!homepage.includes('typeof s?.checkedFor==="string"&&s.checkedFor.trim()')) {
   errors.push("Homepage verification gate must require a described HTTPS verification source.");
 }
