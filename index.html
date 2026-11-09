@@ -82,7 +82,7 @@ footer{margin-top:35px;border-top:1px solid var(--line);padding:26px 0;color:var
 <header><div class="wrap"><nav>
 <a class="brand" href="#home">Quest<span>Pulse</span></a>
 <div class="navlinks">
-<a href="#home" data-i18n="navHome">الرئيسية</a><a href="#discover" data-i18n="navDiscover">اكتشف الفرص</a><a href="#telegram" data-i18n="navTelegram">بوتات تيليغرام</a><a href="#apps" data-i18n="navApps">التطبيقات</a><a href="#safety" data-i18n="navSafety">الأمان</a><a href="#about" data-i18n="navAbout">عن المنصة</a>
+<a href="#home" data-i18n="navHome">الرئيسية</a><a href="#discover" data-i18n="navDiscover">اكتشف الفرص</a><a href="#telegram" data-i18n="navTelegram">بوتات تيليغرام</a><a href="#apps" data-i18n="navApps">التطبيقات</a><a href="#safety" data-i18n="navSafety">الأمان</a><a href="#about" data-i18n="navAbout">عن المنصة</a><a href="./guide.html" data-i18n="navGuide">دليل التحقق</a>
 </div>
 <div class="navtools"><span class="qp" title="QuestPulse"><span class="candy">✦</span><span>Discover · Verify</span></span><select class="lang" id="language" aria-label="Language"><option value="ar">العربية</option><option value="en">English</option><option value="fr">Français</option></select></div>
 </nav></div></header>
@@ -210,7 +210,7 @@ Object.assign(translations.ar,{statusVerified:"موثّق",statusReview:"قيد 
 Object.assign(translations.en,{statusVerified:"Verified",statusReview:"Under review",statusUnverified:"Unverified",statusPaused:"Paused",statusExpired:"Expired",availabilityActive:"Active",availabilityPaused:"Paused",availabilityExpired:"Expired",availabilityUnknown:"Availability unknown",lastChecked:"Last checked",neverChecked:"Not checked yet",sortVerified:"Sorted by verification and recency",registryUnavailable:"Review registry unavailable; static cards remain unverified."});
 Object.assign(translations.fr,{statusVerified:"Vérifié",statusReview:"En cours de vérification",statusUnverified:"Non vérifié",statusPaused:"En pause",statusExpired:"Expiré",availabilityActive:"Actif",availabilityPaused:"En pause",availabilityExpired:"Expiré",availabilityUnknown:"Disponibilité inconnue",lastChecked:"Dernière vérification",neverChecked:"Pas encore vérifié",sortVerified:"Tri par vérification et date",registryUnavailable:"Registre indisponible ; les fiches restent non vérifiées."});
 
-let opportunityRegistry=[];
+Object.assign(translations.ar,{navGuide:"دليل التحقق"});\nObject.assign(translations.en,{navGuide:"Verification guide"});\nObject.assign(translations.fr,{navGuide:"Guide de vérification"});\n\nlet opportunityRegistry=[];
 function setLanguage(lang){const dict=translations[lang]||translations.ar;document.documentElement.lang=lang;document.documentElement.dir=lang==="ar"?"rtl":"ltr";document.querySelectorAll("[data-i18n]").forEach(el=>{const key=el.dataset.i18n;if(dict[key])el.textContent=dict[key]});document.querySelectorAll("[data-i18n-placeholder]").forEach(el=>{const key=el.dataset.i18nPlaceholder;if(dict[key])el.placeholder=dict[key]});if(opportunityRegistry.length)applyOpportunityRegistry(opportunityRegistry);}
 document.getElementById("language").addEventListener("change",e=>setLanguage(e.target.value));
 const searchInput=document.getElementById("searchInput"),typeFilter=document.getElementById("typeFilter"),list=document.getElementById("opportunityList"),cards=[...document.querySelectorAll(".opportunity")],noResults=document.getElementById("noResults");
