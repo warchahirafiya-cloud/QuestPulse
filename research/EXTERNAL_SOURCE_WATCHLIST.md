@@ -143,3 +143,57 @@ Every candidate must be labelled by its actual reward state:
 For each product, distinguish **what users earn** from **what they can actually redeem today**. Capture redemption status, minimum threshold, conversion ratio, payout method, fees, expiry, region restrictions, KYC, subscription/deposit requirements, and any announced future conversion separately. If a future payout has no firm official date, say “no confirmed launch date”; do not estimate one.
 
 A platform may be catalogued as a research candidate even when payout is unavailable, but it must not be described as paying, withdrawable, verified for payment, or active for earning unless current evidence supports that exact claim. A large catalogue is a discovery goal, not a reason to lower evidence standards or suppress risk labels.
+
+
+## Global and additional Asian reward catalogue scan — 2026-11-09
+
+This batch broadens discovery beyond crypto and beyond products with immediate cash-out. Each row is a **research candidate**, not a recommendation or a confirmed universal offer. Where the source is a platform FAQ, it supports the stated mechanics only; it does not prove that a particular reward is currently available to every account.
+
+### Global / multi-market survey, task, and loyalty platforms
+
+| Candidate | First-party source | Reward model described | Withdrawal / availability classification | Required next check |
+|---|---|---|---|---|
+| Microsoft Rewards | https://support.microsoft.com/en-us/accounts-billing/rewards/how-to-earn-microsoft-rewards-points | Bing searches, quizzes, trivia, selected Xbox quests and Microsoft activity earn points. | **Internal points / regional redemption.** Microsoft says points have no cash value; rewards and earning methods vary by country/region. | Confirm live dashboard catalogue, region, redemption threshold and phone verification. |
+| Toluna Influencers | https://www.toluna.com/faqs | Surveys, profile polls, games and community activity earn points; points may be redeemed for vouchers. | **Redeemable non-cash / regional.** FAQ is currently access-restricted to automated review; details must be checked manually. | Verify current catalogue, points conversion, minimum redemption and country-specific availability. |
+| PrizeRebel | https://support.prizerebel.com/support/solutions/articles/1000082282-what-are-points- | Surveys, offerwalls, referrals, daily/weekly challenges, contests and promo codes earn points. | **Cash / gift cards / crypto options described by platform**, subject to reward page and thresholds. | Verify available payout methods, minimums, fees, KYC, country access and current reward stock. |
+| TimeBucks | https://help.timebucks.com/en/articles/5384152-getting-started-on-timebucks | Videos, surveys, app installs and other tasks. | **Cash / gift cards / payment-provider options described.** Official help page states $3 minimum payout and payments on Sunday–Thursday. | Confirm payment rails available to each user, processing times, fees, offerwall geography and account restrictions. |
+| MicroTask | https://www.microtask.in/faq | App installs, sign-ups, surveys, social activities, testing and other microtasks. | **Cash payout after approval and minimum threshold**, according to FAQ; exact threshold/method not established in this scan. | Verify operator, live task volume, withdrawal minimum, payout rail, fees, dispute rules and independent payment evidence. |
+| PlayToEarn Rewards & Tasks | https://playtoearn.com/earn | Daily login streaks, tasks and game-related activity earn platform points. | **Points unlock a stated first-payout threshold** on the page; exact current reward menu and redemption terms require account-side verification. | Verify what the payout is, redemption methods, minimum, fees, geographic access and whether rewards are currently funded. |
+
+### Crypto learning, campaign, and token-reward products
+
+| Candidate | First-party source | Reward model described | Withdrawal / availability classification | Required next check |
+|---|---|---|---|---|
+| Binance Learn & Earn | https://www.binance.com/en/support/faq/detail/3819c21bd5fb493fa5057c727043cb14 | Learning materials and quizzes may award crypto or token vouchers. | **Crypto reward when a campaign is available.** Binance says campaigns may be targeted, limited, require identity verification and can run out. | Check the logged-in campaign page, eligible account, token voucher conditions, reward cap and campaign expiry. |
+| CoinMarketCap Learn & Earn | https://coinmarketcap.com/products/learn-and-earn/ | Campaigns may include lessons, quizzes, demos, trials, games, downloads and other tasks for token rewards. | **Campaign-based token reward; may close when time ends or reward pool is allocated.** | Verify campaign status, project source, eligibility, token delivery, wallet/network, unlocks and token liquidity. |
+| Bybit Read to Earn | https://www.jbybit.com/en/learn/read-to-earn/rules | Courses and quizzes may award token vouchers. | **Token voucher / KYC and course conditions.** Rules state registered users need at least Level 1 identity verification and campaign-specific eligibility. | Check current campaigns, voucher redemption terms, country restrictions, token asset and expiry. |
+| Phemex Learn & Earn | https://phemex.com/help-center/how-do-i-use-the-learn-earn-program | Lessons and quizzes can award crypto rewards. | **Region-restricted campaign.** The cited help page lists eligible markets and requires KYC; do not generalize access. | Re-check current eligible jurisdictions, campaign availability, KYC and payout terms before any user-facing claim. |
+| Revolut Crypto Learn & Earn | https://www.revolut.com/legal/cryptocurrency-terms/ | Short crypto lessons and quizzes may award small amounts of supported crypto. | **Country/customer eligibility restricted.** | Confirm country-specific terms, supported assets, campaign availability and any account conditions. |
+| Swyftx Learn & Earn | https://swyftx.com/articles/announcement/new-feature-learn-and-earn | Courses and quizzes may award crypto-denominated rewards credited to a Swyftx account. | **Account-credit reward; regional exchange access.** | Verify current program, supported regions, account/KYC conditions, reward availability and withdrawal/trading restrictions. |
+| Connect Learn2Earn | https://support.connectunited.com/hc/en-us/articles/50236151029908-What-is-Learn2Earn | Weekly learning steps in blockchain, AI and Web4 are described as earning blockchain-based rewards. | **Future / conditional / reward details pending per campaign.** The FAQ establishes the feature, not a universal payout or fixed reward amount. | Inspect each weekly campaign, exact reward asset, claim window, eligibility, distribution evidence and token liquidity. |
+
+### Additional Japan-first reward apps and games
+
+| Candidate | First-party source | Reward model described | Withdrawal / availability classification | Required next check |
+|---|---|---|---|---|
+| Sampo | https://www.sampo.cash/ja | Steps and recorded household tasks earn points; page lists PayPay, Rakuten, Amazon gift cards and other reward options from ¥300. | **Redeemable non-cash / Japan-focused.** The page says the app is free and has no subscription; household-video tasks raise privacy considerations. | Confirm supported countries, current redemption catalogue, exact point conversion, video retention/privacy and permissions. |
+| Knowns | https://app.knowns.jp/ | One-tap surveys, additional surveys and special missions earn coins exchangeable for Amazon, Apple and Google Play gift cards. | **Redeemable non-cash / Japan-focused.** Phone/SMS verification described. | Confirm country/phone restrictions, current gift-card stock, redemption threshold and privacy policy. |
+| Ataruma | https://ataruma.com/ | Walking, movement, games and missions earn entry points for product and digital-gift prize campaigns. | **Prize draw / non-guaranteed reward.** | Check official campaign rules, odds if disclosed, entry limits, prize delivery geography and campaign expiry. |
+| Atarukamo | https://atarukamo.com/ | Walking, movement and video bonuses earn points used to enter prize draws for electronics, gift cards and products. | **Prize draw / non-guaranteed reward.** | Verify legal operator, current prize terms, entry rules, delivery restrictions, privacy and whether any cash-out exists. |
+| Sampo household-task campaign | https://www.sampo.cash/ja | Filming ordinary household activities is described as an additional points route after review. | **Internal points / non-cash redemption.** This is a distinct data-contribution mechanic from passive step tracking. | Assess camera permissions, face/voice capture, household privacy, retention, review rejection and exact reward terms. |
+
+### Exclusions and lifecycle controls discovered in this scan
+
+- Yoshinoya's official “Arukuwari” page contains an explicit service/points termination notice. Keep it in a **closed / historical** archive, not in the active candidate pool: https://www.yoshinoya.com/service/arukuwari/
+- Cashwalk Japan's Google Play listing explicitly says cash conversion is not supported; classify it as gift-card / in-app reward redemption, not cash withdrawal: https://play.google.com/store/apps/details?hl=en&id=com.cashwalk.cashwalkjp
+- A prize-entry point is not a guaranteed prize, and must never be described as income.
+- A platform's statement that it supports crypto payouts does not establish a current token listing, liquid market, withdrawal availability or universal user eligibility.
+- A product can remain in the catalogue as “future / conditional” or “internal points” even when no external withdrawal is presently possible, provided the limitation is prominent.
+
+## Batch review outcome and next data pass
+
+- New candidates added in this scan: 18 rows across surveys, microtasks, loyalty, walking/receipt apps, prize draws, crypto learning and token-linked campaigns.
+- The existing Asia scan remains in place; this section adds leads rather than replacing them.
+- No candidate in this batch is promoted to verified or active by this scan.
+- Priority for the next research pass: first-party terms and app-store records; country eligibility; exact redemption catalogue and minimum; identity/phone requirements; task caps and reset intervals; deposit/subscription/activation conditions; privacy permissions; dated independent payout evidence; and, for tokens, contract, chain, FDV, liquidity, vesting and unlocks.
+- When a product has no present cash-out, record the best currently documented reward alternative and mark future conversion as unconfirmed unless the operator publishes exact conditions and a date.
