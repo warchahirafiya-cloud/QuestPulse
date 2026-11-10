@@ -138,8 +138,8 @@ jobs:
             'serviceWorker.register',
             'function verifyRuntime()',
             'Promise.allSettled',
-            'data-state="checking"',
-            'data-state==="ok"',
+            'health.dataset.state="checking"',
+            'health.dataset.state=failed?"error":"ok"',
             'actions/workflows/registry-validation.yml/badge.svg',
             'Registry HTTP '
           ];
