@@ -8,27 +8,26 @@ const ALLOWED_STATUSES = new Set(["verified", "under_review", "unverified", "pau
 const ALLOWED_TYPES = new Set(["airdrop", "telegram", "clicktime", "tasks", "referral", "project", "app", "website"]);
 
 function json(data, status = 200, origin = "*", extraHeaders = {}) {
-  return new Response(JSON.stringify(data), {
-    status,
-    headers: {
-      ...JSON_HEADERS,
-      "access-control-allow-origin": origin,
-      "vary": "Origin",
-      ...extraHeaders
-    }
-  });
+  const headers = {
+    ...JSON_HEADERS,
+    "vary": "Origin",
+    ...extraHeaders
+  };
+  if (origin) headers["access-control-allow-origin"] = origin;
+  return new Response(JSON.stringify(data), { status, headers });
 }
 
 function corsOrigin(request, env) {
   const configured = env.ALLOWED_ORIGIN;
   const requestOrigin = request.headers.get("Origin");
-  if (!configured) return "*";
-  return requestOrigin === configured ? configured : configured;
+  if (!configured || configured === "*") return "*";
+  return !requestOrigin || requestOrigin === configured ? configured : null;
 }
 
 function withCors(response, origin) {
   const headers = new Headers(response.headers);
-  headers.set("access-control-allow-origin", origin);
+  if (origin) headers.set("access-control-allow-origin", origin);
+  else headers.delete("access-control-allow-origin");
   headers.set("access-control-allow-methods", "GET, OPTIONS");
   headers.set("access-control-allow-headers", "content-type");
   headers.set("access-control-max-age", "86400");
