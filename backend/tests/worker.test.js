@@ -61,7 +61,25 @@ test("missing database returns 503", async () => {
   assert.equal(response.status, 503);
 });
 
-test("CORS is restricted to configured website origin", async () => {
-  const response = await handleRequest(new Request("https://api.test/api/health", { headers: { Origin: "https://other.example" } }), makeEnv());
+test("CORS allows the configured website origin", async () => {
+  const response = await handleRequest(new Request("https://api.test/api/health", { headers: { Origin: "https://getquestpulse.com" } }), makeEnv());
   assert.equal(response.headers.get("access-control-allow-origin"), "https://getquestpulse.com");
+});
+
+test("CORS omits allow-origin for an untrusted website origin", async () => {
+  const response = await handleRequest(new Request("https://api.test/api/health", { headers: { Origin: "https://other.example" } }), makeEnv());
+  assert.equal(response.headers.get("access-control-allow-origin"), null);
+});
+
+test("CORS preflight advertises only read-only methods", async () => {
+  const response = await handleRequest(new Request("https://api.test/api/opportunities", {
+    method: "OPTIONS",
+    headers: {
+      Origin: "https://getquestpulse.com",
+      "Access-Control-Request-Method": "GET"
+    }
+  }), makeEnv());
+  assert.equal(response.status, 204);
+  assert.equal(response.headers.get("access-control-allow-origin"), "https://getquestpulse.com");
+  assert.equal(response.headers.get("access-control-allow-methods"), "GET, OPTIONS");
 });
