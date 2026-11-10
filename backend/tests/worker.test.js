@@ -83,3 +83,17 @@ test("CORS preflight advertises only read-only methods", async () => {
   assert.equal(response.headers.get("access-control-allow-origin"), "https://getquestpulse.com");
   assert.equal(response.headers.get("access-control-allow-methods"), "GET, OPTIONS");
 });
+
+test("malformed limit and offset values return 400", async () => {
+  for (const query of ["?limit=20oops", "?limit=1.5", "?offset=-1", "?offset=3x", "?limit=9007199254740992"]) {
+    const response = await handleRequest(new Request(`https://api.test/api/opportunities${query}`), makeEnv());
+    assert.equal(response.status, 400, query);
+  }
+});
+
+test("pagination bounds valid limits and accepts integer offsets", async () => {
+  const response = await handleRequest(new Request("https://api.test/api/opportunities?limit=500&offset=12"), makeEnv());
+  const body = await response.json();
+  assert.equal(response.status, 200);
+  assert.deepEqual(body.pagination, { limit: 100, offset: 12, returned: 0 });
+});
