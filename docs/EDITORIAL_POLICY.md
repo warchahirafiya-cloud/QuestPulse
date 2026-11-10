@@ -3,9 +3,18 @@
 **Purpose:** Publish accurate, dated, source-backed informational records without implying endorsement, guaranteed rewards, or universal eligibility.
 
 ## Current publication boundary
-The project dossier records a legal operating constraint that requires qualified written legal advice before launching features that may promote, facilitate, or monetize virtual-asset activities. Until that review is complete, the public site must remain a neutral informational and educational prototype. Do not add live participation links, referral links, Telegram bot invitations, deposit instructions, paid activation paths, or monetized promotions.
+The project requires qualified written legal advice before launching features that may promote, facilitate, or monetize virtual-asset activities. Until that review is complete, the public site remains a neutral informational and educational prototype. Do not add live participation links, referral links, Telegram bot invitations, deposit instructions, paid activation paths, claim paths, or monetized promotions.
 
 This policy does not determine the legal status of any feature. Obtain advice from qualified counsel on the exact operating model and proposed content before expanding beyond neutral educational material.
+
+## Global website access and country-specific eligibility
+- The QuestPulse website and historical archive are intended to remain readable worldwide. Do not apply an IP-based country block to the website itself.
+- Website access, archive visibility, and eligibility to use an external service are separate concepts.
+- If a future record is lawfully approved for publication, record country eligibility separately as **supported**, **not supported**, or **unknown**.
+- A country must not be marked supported without a current, dated, authoritative source. Unknown eligibility must remain unknown; do not infer it from language, IP address, or a user's residence.
+- Where a country selector is introduced, it is a display preference only. It must not bypass external service restrictions or local law.
+- A country-specific restriction on an external activity must not be represented as a site-wide access restriction.
+- Keep the archive read-only. Historical records do not become active offers, and old participation, referral, deposit, activation, or claim links must not be restored to the live interface.
 
 ## Evidence hierarchy
 1. Official primary documentation or an official project announcement, checked against the authentic domain/account.
@@ -24,8 +33,8 @@ For any record that is eventually approved for publication, preserve:
 - Stable record ID and category.
 - Official source and independent verification sources.
 - Review timestamp and reviewer notes.
-- Eligibility and geographic restrictions, if lawfully publishable and verified.
-- Tasks, fees, deposits, withdrawal minimum, payout asset, network and fees, only where confirmed.
+- Country eligibility and geographic restrictions, only where verified and lawful to publish.
+- Tasks, fees, deposits, withdrawal minimum, payout asset, network and fees, only where confirmed and lawfully publishable.
 - Reset/check-in interval, only where confirmed.
 - Evidence limitations and unresolved concerns.
 - Risk level with a short rationale.
