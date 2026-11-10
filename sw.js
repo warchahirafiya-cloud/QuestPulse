@@ -1,8 +1,9 @@
-const CACHE_NAME = "questpulse-shell-v9";
+const CACHE_NAME = "questpulse-shell-v10";
 const APP_SHELL = [
   "./",
   "./index.html",
   "./guide.html",
+  "./archive.html",
   "./privacy.html",
   "./terms.html",
   "./404.html",
