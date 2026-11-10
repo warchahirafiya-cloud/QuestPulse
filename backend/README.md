@@ -43,7 +43,7 @@ The D1 binding is configured in `wrangler.toml`. The database ID must be filled 
 ```http
 GET /api/health
 GET /api/opportunities?limit=20&offset=0
-GET /api/opportunities?type=telegram&status=unverified
+GET /api/opportunities?type=telegram&status=paused
 GET /api/opportunities/telegram-bots
 ```
 
