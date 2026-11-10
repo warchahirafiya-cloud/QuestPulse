@@ -124,7 +124,7 @@ jobs:
               process.exit(1);
             }
           }
-          const linkCheckScripts = [...linkCheck.matchAll(/<script\\b[^>]*>([\\s\\S]*?)<\\/script>/gi)].map(match => match[1]).filter(source => source.trim());
+          const linkCheckScripts = [...linkCheck.matchAll(/<script\b[^>]*>([\s\S]*?)<\/script>/gi)].map(match => match[1]).filter(source => source.trim());
           for (const [index, source] of linkCheckScripts.entries()) {
             try { new (await import('node:vm')).Script(source, { filename: `link-check.html:inline-script-${index + 1}` }); }
             catch (error) { console.error('URL checker JavaScript syntax error:', error.message); process.exit(1); }
@@ -133,7 +133,7 @@ jobs:
             console.error('URL checker must remain local-only and disclose its privacy behavior.');
             process.exit(1);
           }
-          if (!html.includes('href="./link-check.html"') || !sw.includes('"./link-check.html"') || !/CACHE_NAME\\s*=\\s*"questpulse-shell-v\\d+"/.test(sw)) {
+          if (!html.includes('href="./link-check.html"') || !sw.includes('"./link-check.html"') || !/CACHE_NAME\s*=\s*"questpulse-shell-v\d+"/.test(sw)) {
             console.error('URL checker navigation or offline cache integration is missing.');
             process.exit(1);
           }
