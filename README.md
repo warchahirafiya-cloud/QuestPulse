@@ -13,14 +13,18 @@ QuestPulse is currently limited to neutral educational material about digital-se
 - Live preview: https://warchahirafiya-cloud.github.io/QuestPulse/
 - Source repository: https://github.com/warchahirafiya-cloud/QuestPulse
 - Custom domain: https://getquestpulse.com (registered; DNS and HTTPS setup in progress)
+- [Historical archive](archive.html) — worldwide read-only access to the project history and category index.
 
 ## Current status
 
-The site is an evolving project. Some sections are placeholders pending opportunity research and verification. The QP counter and activity indicator are currently interface elements; they do not represent a live points ledger or connected usage analytics.
+The site is an evolving project. Some opportunity categories are placeholders pending opportunity research and qualified legal review. The QP counter and activity indicator are currently interface elements; they do not represent a live points ledger or connected usage analytics.
+
+The website and historical archive remain readable worldwide. Country-specific service eligibility is separate from website access and must be supported by current authoritative evidence. No IP-based country block is applied to the website.
 
 ## Public guide
 
 - [Verification, glossary, wallet safety and FAQ](guide.html)
+- [Historical archive](archive.html)
 - [Privacy notice — preliminary draft](privacy.html)
 - [Terms of use — preliminary draft](terms.html)
 - [Custom not-found page](404.html)
@@ -28,7 +32,7 @@ The site is an evolving project. Some sections are placeholders pending opportun
 
 ## Documentation
 
-See [docs/EDITORIAL_POLICY.md](docs/EDITORIAL_POLICY.md) for evidence standards and publication boundaries.
+See [docs/EDITORIAL_POLICY.md](docs/EDITORIAL_POLICY.md) for evidence standards, global website access, country-specific eligibility, and publication boundaries.
 
 See [docs/PROJECT_DOSSIER.md](docs/PROJECT_DOSSIER.md) for the project overview, scope, current implementation, verification standards, safety principles, ownership guidance, domain status, and roadmap.
 
@@ -39,4 +43,7 @@ QuestPulse does not guarantee rewards or returns. Never share a seed phrase or p
 ## Disclaimer
 
 QuestPulse is an informational discovery platform, not an exchange, wallet, investment manager, or provider of financial, legal, or tax advice.
-\n## Safe registry publishing\n\nThe editor is local-only. Submit exported registry JSON through the [review workflow](.github/workflows/submit-opportunity-registry.yml); it runs validation and opens a pull request instead of writing directly to `main`. See [safe publishing instructions](docs/SAFE_PUBLISHING.md).\n
+
+## Safe registry publishing
+
+The editor is local-only. Submit exported registry JSON through the [review workflow](.github/workflows/submit-opportunity-registry.yml); it runs validation and opens a pull request instead of writing directly to `main`. See [safe publishing instructions](docs/SAFE_PUBLISHING.md).
