@@ -159,7 +159,7 @@ jobs:
             console.error('Service worker lifecycle handlers are incomplete.');
             process.exit(1);
           }
-          if (manifest.name !== 'QuestPulse — Web3 Discovery' ||
+          if (manifest.name !== 'QuestPulse — Digital Safety Learning' ||
               manifest.display !== 'standalone' ||
               manifest.start_url !== './' ||
               !Array.isArray(manifest.icons) || manifest.icons.length === 0) {
