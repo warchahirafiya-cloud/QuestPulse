@@ -1,10 +1,12 @@
 # QuestPulse
 
-**A Web3 discovery and rewards-information hub.**
+**A neutral educational information prototype.**
 
-QuestPulse helps users discover and evaluate Web3 opportunities such as airdrops, referral programs, Telegram bots, earning apps and websites, and emerging blockchain projects—with clear participation conditions, withdrawal details, evidence, and risk warnings.
+QuestPulse is currently limited to neutral educational material about digital-service verification, online safety, source evaluation, and risk awareness. Opportunity categories remain paused; the site must not publish participation links, referral links, Telegram bot invitations, deposit or activation instructions, claim paths, or monetized promotions while qualified written legal review of the exact operating model is pending.
 
-**Principle:** Discover. Verify. Understand the risks.
+**Principle:** Learn. Verify. Protect yourself.
+
+> **Temporary operating notice (10 November 2026):** All opportunity categories are paused as a precaution. This notice is not a legal determination. Do not treat category cards or placeholder records as available offers, recommendations, or invitations to participate.
 
 ## Project links
 
@@ -32,7 +34,7 @@ See [docs/PROJECT_DOSSIER.md](docs/PROJECT_DOSSIER.md) for the project overview,
 
 ## Safety
 
-QuestPulse does not guarantee rewards or returns. Never share a seed phrase or private key. Review deposits, fees, wallet permissions, withdrawal conditions, and official project sources before participating.
+QuestPulse does not guarantee rewards or returns. Never share a seed phrase or private key. The current prototype is educational only; no opportunity participation or promotion is active. Obtain qualified legal review before enabling any restricted or regulated feature.
 
 ## Disclaimer
 
