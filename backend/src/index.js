@@ -112,10 +112,10 @@ export async function handleRequest(request, env) {
     const offsetParam = url.searchParams.get("offset");
     // Accept decimal integers only; parseInt would silently accept values such as
     // "20oops" and "1.5", making malformed client input look valid.
-    if (limitParam !== null && !/^\\d+$/.test(limitParam)) {
+    if (limitParam !== null && !/^\d+$/.test(limitParam)) {
       return withCors(json({ error: "invalid_limit" }, 400, origin), origin);
     }
-    if (offsetParam !== null && !/^\\d+$/.test(offsetParam)) {
+    if (offsetParam !== null && !/^\d+$/.test(offsetParam)) {
       return withCors(json({ error: "invalid_offset" }, 400, origin), origin);
     }
     const requestedLimit = Number(limitParam ?? "50");
