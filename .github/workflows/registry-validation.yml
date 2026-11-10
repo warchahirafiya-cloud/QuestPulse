@@ -63,6 +63,9 @@ jobs:
           if (data.schemaVersion !== 1) fail('schemaVersion must equal 1');
           if (!Array.isArray(data.opportunities)) fail('opportunities must be an array');
           if (!validDate(data.updatedAt)) fail('updatedAt must be a valid date');
+          if (!(data.opportunities || []).every(item => item?.status === 'paused' && item?.availability === 'paused' && item?.officialUrl === null)) {
+            fail('all legacy opportunity records must remain paused with no public participation URL during the temporary hold');
+          }
 
           const seen = new Set();
           for (const [index, item] of (data.opportunities || []).entries()) {
@@ -113,6 +116,13 @@ jobs:
           const linkCheck = fs.readFileSync('link-check.html', 'utf8');
           const sw = fs.readFileSync('sw.js', 'utf8');
           const manifest = JSON.parse(fs.readFileSync('manifest.webmanifest', 'utf8'));
+          for (const page of ['archive.html', 'link-check.html']) {
+            if (!fs.existsSync(page)) { console.error('Required educational page missing:', page); process.exit(1); }
+          }
+          if (!sw.includes('./archive.html') || !sw.includes('./link-check.html')) {
+            console.error('Archive and URL checker must be included in the offline app shell.');
+            process.exit(1);
+          }
           const inlineScripts = [...html.matchAll(/<script\b[^>]*>([\s\S]*?)<\/script>/gi)]
             .map(match => match[1])
             .filter(source => source.trim());
@@ -143,6 +153,8 @@ jobs:
             'id="qpReviewQueue"',
             'id="qpChangeAlerts"',
             'id="qpSidebar"',
+            'href="./archive.html"',
+            'href="./link-check.html"',
             'id="qpMenuToggle"',
             'id="minerCharacter"',
             'function renderQpMonitor',
