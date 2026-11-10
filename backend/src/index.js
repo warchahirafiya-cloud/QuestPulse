@@ -108,10 +108,23 @@ export async function handleRequest(request, env) {
     if (type && !ALLOWED_TYPES.has(type)) return withCors(json({ error: "invalid_type" }, 400, origin), origin);
     if (status && !ALLOWED_STATUSES.has(status)) return withCors(json({ error: "invalid_status" }, 400, origin), origin);
 
-    const requestedLimit = Number.parseInt(url.searchParams.get("limit") || "50", 10);
-    const limit = Number.isFinite(requestedLimit) ? Math.min(100, Math.max(1, requestedLimit)) : 50;
-    const requestedOffset = Number.parseInt(url.searchParams.get("offset") || "0", 10);
-    const offset = Number.isFinite(requestedOffset) ? Math.max(0, requestedOffset) : 0;
+    const limitParam = url.searchParams.get("limit");
+    const offsetParam = url.searchParams.get("offset");
+    // Accept decimal integers only; parseInt would silently accept values such as
+    // "20oops" and "1.5", making malformed client input look valid.
+    if (limitParam !== null && !/^\\d+$/.test(limitParam)) {
+      return withCors(json({ error: "invalid_limit" }, 400, origin), origin);
+    }
+    if (offsetParam !== null && !/^\\d+$/.test(offsetParam)) {
+      return withCors(json({ error: "invalid_offset" }, 400, origin), origin);
+    }
+    const requestedLimit = Number(limitParam ?? "50");
+    const requestedOffset = Number(offsetParam ?? "0");
+    if (!Number.isSafeInteger(requestedLimit) || !Number.isSafeInteger(requestedOffset)) {
+      return withCors(json({ error: "invalid_pagination" }, 400, origin), origin);
+    }
+    const limit = Math.min(100, Math.max(1, requestedLimit));
+    const offset = requestedOffset;
 
     let sql = "SELECT payload FROM opportunities WHERE 1 = 1";
     const bindings = [];
