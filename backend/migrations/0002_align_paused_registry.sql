@@ -10,12 +10,10 @@ SET
     '$.officialUrl', NULL,
     '$.notes', 'TEMPORARILY PAUSED — placeholder category only. Neutral educational information only pending qualified written legal review. No participation links, referral links, bot invitations, deposits, activation fees, claim instructions, or payment promises.',
     '$.riskNotes', 'Legal and operational review pending. No assessment of legality, safety, availability, or payout is implied.',
-    '$.statusHistory', json_array(
-      json_object(
-        'status', 'paused',
-        'date', date('now'),
-        'reason', 'Temporary precautionary hold pending qualified written legal review.'
-      )
+    '$.statusHistory[#]', json_object(
+      'status', 'paused',
+      'date', date('now'),
+      'reason', 'Temporary precautionary hold pending qualified written legal review.'
     )
   ),
   updated_at = datetime('now')
