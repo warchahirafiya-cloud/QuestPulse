@@ -1,0 +1,37 @@
+name: Archive QuestPulse to Cloudflare R2
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  archive-and-upload:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 1
+
+      - name: Create ZIP archive
+        run: |
+          git archive --format=zip --output=QuestPulse-main.zip HEAD
+          ls -lh QuestPulse-main.zip
+
+      - name: Upload archive to Cloudflare R2
+        env:
+          AWS_ACCESS_KEY_ID: ${{ secrets.R2_ACCESS_KEY_ID }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.R2_SECRET_ACCESS_KEY }}
+          AWS_DEFAULT_REGION: auto
+          ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+        run: |
+          set -euo pipefail
+          if [ -z "${AWS_ACCESS_KEY_ID}" ] || [ -z "${AWS_SECRET_ACCESS_KEY}" ] || [ -z "${ACCOUNT_ID}" ]; then
+            echo "Missing one or more required GitHub Actions secrets."
+            exit 1
+          fi
+          ENDPOINT="https://${ACCOUNT_ID}.r2.cloudflarestorage.com"
+          aws s3 cp QuestPulse-main.zip s3://questpulse-archive/QuestPulse-main.zip --endpoint-url "$ENDPOINT"
+          aws s3api head-object --bucket questpulse-archive --key QuestPulse-main.zip --endpoint-url "$ENDPOINT"
