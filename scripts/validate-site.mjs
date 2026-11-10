@@ -2,6 +2,7 @@ import { access, readFile } from "node:fs/promises";
 
 const requiredFiles = [
   "index.html",
+  "archive.html",
   "guide.html",
   "privacy.html",
   "terms.html",
@@ -21,8 +22,9 @@ for (const path of requiredFiles) {
   catch { errors.push("Required project file is missing: " + path); }
 }
 
-const [home, guide, privacy, terms, notFound, robots, sitemap, admin, registryText] = await Promise.all([
+const [home, archive, guide, privacy, terms, notFound, robots, sitemap, admin, registryText] = await Promise.all([
   readFile(new URL("../index.html", import.meta.url), "utf8"),
+  readFile(new URL("../archive.html", import.meta.url), "utf8"),
   readFile(new URL("../guide.html", import.meta.url), "utf8"),
   readFile(new URL("../privacy.html", import.meta.url), "utf8"),
   readFile(new URL("../terms.html", import.meta.url), "utf8"),
@@ -33,6 +35,15 @@ const [home, guide, privacy, terms, notFound, robots, sitemap, admin, registryTe
   readFile(new URL("../data/opportunities.json", import.meta.url), "utf8")
 ]);
 
+if (!archive.includes("<h1>الأرشيف التاريخي للمشروع</h1>")) errors.push("Historical archive page is missing its title.");
+for (const category of ["Airdrop", "Telegram", "التطبيقات والنقر والتعدين", "المهام والمكافآت", "برامج الإحالة"]) {
+  if (!archive.includes(category)) errors.push("Historical archive is missing category: " + category);
+}
+for (const rule of ["لا يوجد حظر جغرافي", "غير معلوم", "قراءة", "لا تُستعاد روابط"]) {
+  if (!archive.includes(rule)) errors.push("Historical archive is missing global-access/read-only safeguard: " + rule);
+}
+if (!archive.includes("commits/main/data/opportunities.json")) errors.push("Historical archive must link to the version history of the opportunity registry.");
+if (!home.includes('href="./archive.html"')) errors.push("Homepage sidebar must link to the historical archive.");
 if (!home.includes('href="./guide.html"')) errors.push("Main navigation must link to guide.html.");
 if (!home.includes('<a class="brand" href="#home">Quest<span>Pulse</span></a>')) {
   errors.push("Homepage header must keep the QuestPulse logo as its brand link.");
