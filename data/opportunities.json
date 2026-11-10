@@ -1,92 +1,122 @@
 {
   "schemaVersion": 1,
-  "policy": "Informational review registry. A record may only be displayed as verified when its official HTTPS URL, at least one HTTPS verification source, and a valid review date are present. No record is a recommendation or proof of availability.",
-  "updatedAt": "2026-11-09T15:14:51.985Z",
+  "policy": "Temporary legal-risk hold: QuestPulse is a neutral educational prototype only. All opportunity categories are paused pending qualified written legal review of the exact operating model and content. Do not publish participation, referral, bot invitation, deposit, activation, claim, or monetized promotion links. Records are placeholders, not offers, recommendations, proof of availability, or invitations to participate.",
+  "updatedAt": "2026-11-10T09:12:00+01:00",
   "opportunities": [
     {
       "id": "airdrop-campaigns",
       "type": "airdrop",
-      "status": "unverified",
-      "availability": "unknown",
+      "status": "paused",
+      "availability": "paused",
       "officialUrl": null,
       "reviewedAt": null,
       "verificationSources": [],
       "paymentEvidence": [],
       "riskLevel": "unrated",
-      "notes": "Placeholder category only. Do not publish an offer until legal review and independent source checks are complete.",
+      "notes": "TEMPORARILY PAUSED — placeholder category only. QuestPulse is limited to neutral educational information pending qualified written legal review. Do not publish participation links, referral links, bot invitations, deposits, activation fees, claim instructions, or payment promises.",
       "withdrawalTerms": null,
       "resetInterval": null,
       "paymentEvidenceSummary": null,
-      "riskNotes": null,
-      "statusHistory": []
+      "riskNotes": "Legal and operational review pending. No assessment of legality, safety, availability, or payout is implied.",
+      "statusHistory": [
+        {
+          "status": "paused",
+          "date": "2026-11-10",
+          "reason": "Temporary precautionary hold pending qualified written legal review."
+        }
+      ]
     },
     {
       "id": "telegram-bots",
       "type": "telegram",
-      "status": "unverified",
-      "availability": "unknown",
+      "status": "paused",
+      "availability": "paused",
       "officialUrl": null,
       "reviewedAt": null,
       "verificationSources": [],
       "paymentEvidence": [],
       "riskLevel": "unrated",
-      "notes": "Placeholder category only. Do not publish bot links, deposits, or payment claims without review.",
+      "notes": "TEMPORARILY PAUSED — placeholder category only. QuestPulse is limited to neutral educational information pending qualified written legal review. Do not publish participation links, referral links, bot invitations, deposits, activation fees, claim instructions, or payment promises.",
       "withdrawalTerms": null,
       "resetInterval": null,
       "paymentEvidenceSummary": null,
-      "riskNotes": null,
-      "statusHistory": []
+      "riskNotes": "Legal and operational review pending. No assessment of legality, safety, availability, or payout is implied.",
+      "statusHistory": [
+        {
+          "status": "paused",
+          "date": "2026-11-10",
+          "reason": "Temporary precautionary hold pending qualified written legal review."
+        }
+      ]
     },
     {
       "id": "daily-click",
       "type": "clicktime",
-      "status": "unverified",
-      "availability": "unknown",
+      "status": "paused",
+      "availability": "paused",
       "officialUrl": null,
       "reviewedAt": null,
       "verificationSources": [],
       "paymentEvidence": [],
       "riskLevel": "unrated",
-      "notes": "Placeholder category only. Do not imply mining or rewards are active.",
+      "notes": "TEMPORARILY PAUSED — placeholder category only. QuestPulse is limited to neutral educational information pending qualified written legal review. Do not publish participation links, referral links, bot invitations, deposits, activation fees, claim instructions, or payment promises.",
       "withdrawalTerms": null,
       "resetInterval": null,
       "paymentEvidenceSummary": null,
-      "riskNotes": null,
-      "statusHistory": []
+      "riskNotes": "Legal and operational review pending. No assessment of legality, safety, availability, or payout is implied.",
+      "statusHistory": [
+        {
+          "status": "paused",
+          "date": "2026-11-10",
+          "reason": "Temporary precautionary hold pending qualified written legal review."
+        }
+      ]
     },
     {
       "id": "task-rewards",
       "type": "tasks",
-      "status": "unverified",
-      "availability": "unknown",
+      "status": "paused",
+      "availability": "paused",
       "officialUrl": null,
       "reviewedAt": null,
       "verificationSources": [],
       "paymentEvidence": [],
       "riskLevel": "unrated",
-      "notes": "Placeholder category only. Payment methods and withdrawal terms are unknown.",
+      "notes": "TEMPORARILY PAUSED — placeholder category only. QuestPulse is limited to neutral educational information pending qualified written legal review. Do not publish participation links, referral links, bot invitations, deposits, activation fees, claim instructions, or payment promises.",
       "withdrawalTerms": null,
       "resetInterval": null,
       "paymentEvidenceSummary": null,
-      "riskNotes": null,
-      "statusHistory": []
+      "riskNotes": "Legal and operational review pending. No assessment of legality, safety, availability, or payout is implied.",
+      "statusHistory": [
+        {
+          "status": "paused",
+          "date": "2026-11-10",
+          "reason": "Temporary precautionary hold pending qualified written legal review."
+        }
+      ]
     },
     {
       "id": "referral-programs",
       "type": "referral",
-      "status": "unverified",
-      "availability": "unknown",
+      "status": "paused",
+      "availability": "paused",
       "officialUrl": null,
       "reviewedAt": null,
       "verificationSources": [],
       "paymentEvidence": [],
       "riskLevel": "unrated",
-      "notes": "Placeholder category only. Referral conditions and any required deposit are unknown.",
+      "notes": "TEMPORARILY PAUSED — placeholder category only. QuestPulse is limited to neutral educational information pending qualified written legal review. Do not publish participation links, referral links, bot invitations, deposits, activation fees, claim instructions, or payment promises.",
       "withdrawalTerms": null,
       "resetInterval": null,
       "paymentEvidenceSummary": null,
-      "riskNotes": null,
-      "statusHistory": []
+      "riskNotes": "Legal and operational review pending. No assessment of legality, safety, availability, or payout is implied.",
+      "statusHistory": [
+        {
+          "status": "paused",
+          "date": "2026-11-10",
+          "reason": "Temporary precautionary hold pending qualified written legal review."
+        }
+      ]
     }
   ]
 }
