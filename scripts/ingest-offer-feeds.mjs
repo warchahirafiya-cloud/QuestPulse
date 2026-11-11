@@ -104,7 +104,7 @@ for (const source of activeFeeds) {
           source: publisher.url || new URL(feedUrl).origin,
           store: offer.store?.name || "",
           merchantWebsite: validHttps(offer.store?.website),
-          country: publisher.country,
+          country: source.countryName || publisher.country,
           currency: publisher.currency,
           publishedAt: offer.starts_at,
           lastCheckedAt: offer.last_checked_at,
