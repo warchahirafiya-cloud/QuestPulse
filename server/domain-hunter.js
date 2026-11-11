@@ -15,8 +15,8 @@ CREATE INDEX IF NOT EXISTS domain_candidates_score_idx ON domain_candidates(scor
 
 const now = () => new Date().toISOString();
 function normalizeDomain(input) {
- const domain = String(input || "").trim().toLowerCase().replace(/^https?:\\/\\//, "").replace(/\\/$/, "");
- if (domain.length > 253 || !/^(?=.{1,253}$)(?:[a-z0-9](?:[a-z0-9-]{0,61}[a-z0-9])?\\.)+[a-z]{2,63}$/.test(domain)) return null;
+ const domain = String(input || "").trim().toLowerCase().replace(/^https?:\/\//, "").replace(/\/$/, "");
+ if (domain.length > 253 || !/^(?=.{1,253}$)(?:[a-z0-9](?:[a-z0-9-]{0,61}[a-z0-9])?\.)+[a-z]{2,63}$/.test(domain)) return null;
  return domain;
 }
 function assess(domain, rdap, dns) {
