@@ -1,4 +1,4 @@
-const CACHE_NAME = "questpulse-shell-v12";
+const CACHE_NAME = "questpulse-shell-v13";
 const APP_SHELL = [
   "./",
   "./index.html",
@@ -11,8 +11,7 @@ const APP_SHELL = [
   "./404.html",
   "./offline.html",
   "./manifest.webmanifest",
-  "./assets/questpulse-icon.svg",
-  "./assets/questpulse-miner.webp.b64"
+  "./assets/questpulse-icon.svg"
 ];
 
 self.addEventListener("install", event => {
@@ -44,18 +43,6 @@ self.addEventListener("fetch", event => {
   if (request.method !== "GET") return;
   const url = new URL(request.url);
   if (url.origin !== self.location.origin) return;
-
-  if (url.pathname.endsWith("/data/opportunities.json")) {
-    event.respondWith(
-      fetch(request, { cache: "no-store" })
-        .then(response => cacheResponse(request, response))
-        .catch(async () => (await caches.match(request)) || new Response(
-          JSON.stringify({ schemaVersion: 1, opportunities: [], offline: true }),
-          { status: 200, headers: { "Content-Type": "application/json; charset=utf-8" } }
-        ))
-    );
-    return;
-  }
 
   if (request.mode === "navigate") {
     event.respondWith(
