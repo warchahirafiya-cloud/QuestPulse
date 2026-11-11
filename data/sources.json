@@ -1,0 +1,32 @@
+[
+  {
+    "id": "ebay-buy-feed",
+    "name": "eBay Buy Feed API",
+    "kind": "official-api",
+    "scope": "Discount and promotion feeds for supported marketplaces",
+    "documentation": "https://developer.ebay.com/api-docs/buy/api-feed.html",
+    "credentialsRequired": true,
+    "status": "planned",
+    "notes": "Requires an eligible eBay developer application, OAuth access, marketplace support, and compliance with API terms. Do not enable until credentials and permissions are approved."
+  },
+  {
+    "id": "flipkart-affiliate",
+    "name": "Flipkart Affiliate Offers API",
+    "kind": "official-affiliate-api",
+    "scope": "Flipkart offers and deals of the day",
+    "documentation": "https://affiliate.flipkart.com/api-docs/af_offer_ref.html",
+    "credentialsRequired": true,
+    "status": "planned",
+    "notes": "Regional coverage only. Requires affiliate registration, API access, affiliate ID, and token."
+  },
+  {
+    "id": "manual-official-review",
+    "name": "Official merchant and organizer pages",
+    "kind": "editorial",
+    "scope": "Rewards, competitions, loyalty programmes, store offers, and coupons",
+    "documentation": "",
+    "credentialsRequired": false,
+    "status": "active",
+    "notes": "An editor verifies the original merchant or organizer page, eligible countries, validity, fees, and redemption rules before publishing."
+  }
+]
