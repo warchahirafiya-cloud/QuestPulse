@@ -38,7 +38,7 @@
 <ul class="checklist">
 <li>افحص اسم النطاق حرفاً بحرف، ولا تعتمد على الشعار أو شكل الصفحة.</li>
 <li>افتح الموقع الرسمي بكتابته بنفسك أو من مصدر موثوق، لا من رسالة مفاجئة.</li>
-<li>لا تدخل كلمة مرور أو رمز تحقق أو عبارة استرداد بعد فتح رابط غير متوقع.</li>
+<li>لا تدخل كلمة مرور أو رمز تحقق أو بيانات دخول بعد فتح رابط غير متوقع.</li>
 <li>لا تربط محفظتك ولا توقّع معاملة لا تفهم تفاصيلها.</li>
 <li>وجود HTTPS أو القفل في المتصفح لا يثبت أن الجهة موثوقة.</li>
 </ul>
@@ -55,7 +55,7 @@ const levelNode=document.getElementById("resultLevel");
 const summary=document.getElementById("resultSummary");
 const findings=document.getElementById("findings");
 const shorteners=new Set(["bit.ly","t.co","tinyurl.com","is.gd","cutt.ly","rb.gy","ow.ly","shorturl.at","buff.ly","rebrand.ly"]);
-const sensitiveKeys=/^(seed|mnemonic|private.?key|password|passwd|secret|token|api.?key)$/i;
+const sensitiveKeys=/^(password|passwd|secret|token|api.?key|authorization|access.?key)$/i;
 function addFinding(items,level,title,detail){items.push({level,title,detail});}
 function isIPv4(host){return /^(?:\d{1,3}\.){3}\d{1,3}$/.test(host);}
 function inspect(value){
@@ -76,7 +76,7 @@ function inspect(value){
  const labels=host.split(".");
  if(labels.length>4)addFinding(items,"warn","نطاق فرعي طويل","تعدد مستويات النطاق قد يصعّب تمييز النطاق الأساسي الحقيقي.");
  if(labels.some(label=>label.length>35))addFinding(items,"warn","جزء طويل بشكل غير معتاد","افحص الاسم الكامل وتأكد أنه ليس تقليداً لاسم جهة معروفة.");
- if(/(^|[-.])(login|verify|wallet|claim|airdrop|bonus|support|secure)([-.]|$)/i.test(host))addFinding(items,"warn","كلمات شائعة في عناوين الطُعم","هذه الكلمات ليست دليلاً وحدها، لكنها تستدعي التأكد من الجهة المالكة للنطاق.");
+ if(/(^|[-.])(login|verify|bonus|support|secure)([-.]|$)/i.test(host))addFinding(items,"warn","كلمات شائعة في عناوين الطُعم","هذه الكلمات ليست دليلاً وحدها، لكنها تستدعي التأكد من الجهة المالكة للنطاق.");
  if(url.port&&!(url.protocol==="http:"&&url.port==="80")&&!(url.protocol==="https:"&&url.port==="443"))addFinding(items,"warn","منفذ اتصال غير معتاد","تحقق من سبب وجود منفذ مخصص قبل المتابعة.");
  const riskyParams=[...url.searchParams.keys()].filter(key=>sensitiveKeys.test(key));
  if(riskyParams.length)addFinding(items,"bad","معلمات حساسة في عنوان الرابط","يحتوي الرابط على أسماء معلمات قد تشير إلى أسرار أو رموز وصول. لا تشارك الرابط؛ لم تُقرأ قيم هذه المعلمات أو تُعرض.");
