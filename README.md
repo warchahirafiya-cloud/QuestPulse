@@ -15,6 +15,7 @@ The active project is focused on non-cryptocurrency rewards and digital earning 
 - `data/sources.json` is the approved source registry.
 - `scripts/ingest-offer-feeds.mjs` imports items from approved public feeds into `data/inbox.json`.
 - Feed imports are **discovery candidates only**. They are never published automatically.
+- `scripts/validate-inbox.mjs` checks candidate IDs, source attribution, HTTPS links, country scope, timestamps, and review status; it rejects any attempt to mark an inbox item as published.
 - An editor must verify the original source, eligible countries, current validity, fees, terms, and redemption method before manually adding an offer to `data/offers.json` with `status: "published"`.
 - The daily GitHub Actions job discovers feed candidates, expires ended offers, and validates the public catalogue.
 - Credentialed integrations such as eBay and Flipkart remain disabled until API access and usage terms are approved.
