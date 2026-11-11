@@ -1,0 +1,29 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://getquestpulse.com/schemas/publisher-submission.schema.json",
+  "title": "QuestPulse publisher submission",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["publisherType", "publisherName", "postType", "title", "description", "countries", "referralDisclosure"],
+  "properties": {
+    "publisherType": {"enum": ["individual", "legal_entity", "store", "company"]},
+    "publisherName": {"type": "string", "minLength": 2, "maxLength": 100},
+    "postType": {"enum": ["opportunity", "direct_reward", "new_product"]},
+    "title": {"type": "string", "minLength": 3, "maxLength": 140},
+    "description": {"type": "string", "minLength": 10, "maxLength": 3000},
+    "website": {"type": "string", "format": "uri"},
+    "offerUrl": {"type": "string", "format": "uri"},
+    "countries": {"type": "string", "minLength": 2},
+    "expiresAt": {"type": "string", "format": "date"},
+    "rewardValue": {"type": "string", "maxLength": 100},
+    "productPrice": {"type": "string", "maxLength": 80},
+    "referralDisclosure": {"enum": ["no", "referral", "sponsored"]},
+    "attachments": {
+      "type": "object",
+      "properties": {
+        "images": {"type": "array", "maxItems": 5, "items": {"type": "object", "required": ["name", "type", "size"], "properties": {"name": {"type": "string"}, "type": {"type": "string"}, "size": {"type": "integer", "maximum": 5242880}}}},
+        "video": {"type": ["object", "null"], "properties": {"name": {"type": "string"}, "type": {"enum": ["video/mp4", "video/webm", "video/ogg"]}, "size": {"type": "integer", "maximum": 20971520}}}
+      }
+    }
+  }
+}
