@@ -17,8 +17,8 @@ const port = Number(process.env.PORT || 3000);
 const sessionDays = Math.max(1, Math.min(30, Number(process.env.SESSION_DAYS || 7)));
 const uploadDir = path.resolve(process.env.UPLOAD_DIR || "./server/uploads");
 await mkdir(uploadDir, { recursive: true });
-if (isProduction && (!process.env.SESSION_SECRET || process.env.SESSION_SECRET.length < 32 || !process.env.APP_ORIGIN?.startsWith("https://"))) {
-  throw new Error("Production requires a 32+ character SESSION_SECRET and an HTTPS APP_ORIGIN.");
+if (isProduction && !process.env.APP_ORIGIN?.startsWith("https://")) {
+  throw new Error("Production requires an HTTPS APP_ORIGIN.");
 }
 app.disable("x-powered-by");
 app.use(helmet({ crossOriginResourcePolicy: { policy: "same-site" } }));
@@ -64,6 +64,7 @@ async function hasValidSignature(file){
  return false;
 }
 function postView(row){return {...row,media:db.prepare("SELECT id,mime_type AS mimeType,media_kind AS kind,original_name AS name,size_bytes AS size FROM media WHERE post_id=?").all(row.id).map(m=>({...m,url:"/api/media/"+m.id}))};}
+function publicPostView(row){return {id:row.id,publisherType:row.publisher_type,publisherName:row.publisher_name,postType:row.post_type,title:row.title,description:row.description,website:row.website,offerUrl:row.offer_url,countries:row.countries,expiresAt:row.expires_at,rewardValue:row.reward_value,productPrice:row.product_price,disclosure:row.disclosure,createdAt:row.created_at,media:postView(row).media};}
 app.get("/api/health",(_req,res)=>res.json({ok:true,service:"QuestPulse API",version:"0.2.0"}));
 
 app.post("/api/auth/register",authLimit,async(req,res)=>{
@@ -87,7 +88,7 @@ app.get("/api/auth/me",requireUser,(req,res)=>res.json({user:safeUser(req.user)}
 
 app.get("/api/posts",(_req,res)=>{
  const rows=db.prepare("SELECT * FROM posts WHERE status='published' AND (expires_at IS NULL OR expires_at='' OR expires_at>=date('now')) ORDER BY created_at DESC LIMIT 100").all();
- res.json({posts:rows.map(postView)});
+ res.json({posts:rows.map(publicPostView)});
 });
 app.post("/api/posts",requireUser,submitLimit,upload.array("media",6),async(req,res)=>{
  const files=req.files||[];
@@ -110,6 +111,12 @@ app.get("/api/media/:id",(req,res)=>{
  const m=db.prepare("SELECT m.*,p.status FROM media m JOIN posts p ON p.id=m.post_id WHERE m.id=?").get(req.params.id);
  if(!m||m.status!=="published")return res.status(404).end();
  res.type(m.mime_type).set("X-Content-Type-Options","nosniff").sendFile(path.join(uploadDir,m.storage_name));
+});
+app.get("/api/admin/users",requireUser,requireAdmin,(req,res)=>{
+ const status=String(req.query.status||"pending");
+ if(!["pending","active","suspended"].includes(status))return res.status(400).json({error:"Invalid account status filter."});
+ const users=db.prepare("SELECT id,display_name,account_type,email,role,status,created_at FROM users WHERE role='publisher' AND status=? ORDER BY created_at ASC LIMIT 200").all(status);
+ res.json({users:users.map(u=>({id:u.id,displayName:u.display_name,accountType:u.account_type,email:u.email,role:u.role,status:u.status,createdAt:u.created_at}))});
 });
 app.get("/api/admin/submissions",requireUser,requireAdmin,(req,res)=>{
  const status=String(req.query.status||"pending");
