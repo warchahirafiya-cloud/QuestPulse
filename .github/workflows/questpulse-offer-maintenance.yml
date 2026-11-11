@@ -1,0 +1,40 @@
+name: QuestPulse offer maintenance
+
+on:
+  schedule:
+    - cron: "17 3 * * *"
+  workflow_dispatch:
+  push:
+    paths:
+      - "data/offers.json"
+      - "scripts/refresh-offers.mjs"
+      - "scripts/validate-offers.mjs"
+      - ".github/workflows/questpulse-offer-maintenance.yml"
+
+permissions:
+  contents: write
+
+jobs:
+  maintain:
+    name: Expire stale offers and validate catalogue
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - name: Expire ended offers
+        run: node scripts/refresh-offers.mjs
+      - name: Validate published offers
+        run: node scripts/validate-offers.mjs
+      - name: Commit maintenance changes
+        run: |
+          if ! git diff --quiet -- data/offers.json; then
+            git config user.name "github-actions[bot]"
+            git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+            git add data/offers.json
+            git commit -m "chore: expire outdated offers"
+            git push
+          fi
