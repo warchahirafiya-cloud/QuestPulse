@@ -1,18 +1,1 @@
-[
-  {
-    "id": "example-record",
-    "title": "مثال توضيحي — لا يُعرض كفرصة حقيقية",
-    "category": "discount",
-    "rewardType": "discount",
-    "countries": [],
-    "global": false,
-    "store": "",
-    "value": "",
-    "expiresAt": "",
-    "url": "",
-    "source": "",
-    "verifiedAt": "",
-    "status": "draft",
-    "notes": "سجل تجريبي محذوف من العرض العام؛ أضف فقط فرصًا موثقة من مصادرها الرسمية."
-  }
-]
+[]
