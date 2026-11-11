@@ -64,7 +64,7 @@ footer{margin-top:30px;padding:25px 0;border-top:1px solid var(--line);color:var
 <div class="field"><label for="country">البلد المؤهل</label><input id="country" type="text" placeholder="اكتب اسم البلد"></div>
 <div class="field"><label for="category">الفئة</label><select id="category"><option value="">كل الفئات</option><option value="reward">مكافآت وهدايا</option><option value="store">متاجر إلكترونية</option><option value="discount">خصومات وكوبونات</option><option value="contest">مسابقات وسحوبات</option><option value="loyalty">برامج الولاء</option><option value="task">تطبيقات ومهام</option><option value="referral">إحالات وعروض خاصة</option></select></div>
 <div class="field"><label for="rewardType">نوع المكافأة</label><select id="rewardType"><option value="">الكل</option><option value="cash">نقدية</option><option value="gift">هدية أو منتج</option><option value="discount">خصم أو كوبون</option><option value="points">نقاط</option><option value="prize">جائزة</option><option value="other">أخرى</option></select></div>
-<div class="field"><label for="store">المتجر أو الجهة</label><input id="store" type="search" placeholder="اسم المتجر أو الشركة"></div>
+<div class="field"><label for="store">المتجر أو الشركة</label><select id="store"><option value="">الكل</option></select></div>
 <div class="field"><label for="availability">نطاق التوفر</label><select id="availability"><option value="">الكل</option><option value="global">عالمي</option><option value="regional">بلدان محددة</option></select></div>
 <div class="field"><label for="ending">حالة العرض</label><select id="ending"><option value="">الكل</option><option value="active">ساري الآن</option><option value="ending">ينتهي قريبًا</option></select></div>
 <div class="field"><label for="sort">ترتيب النتائج</label><select id="sort"><option value="newest">الأحدث مراجعة</option><option value="ending">الأقرب انتهاءً</option><option value="value">قيمة العرض</option></select></div>
@@ -137,7 +137,7 @@ footer{margin-top:30px;padding:25px 0;border-top:1px solid var(--line);color:var
  }
  form.addEventListener('submit',e=>{e.preventDefault();render();document.getElementById('discover').scrollIntoView({behavior:'smooth',block:'start'});});
  form.addEventListener('reset',()=>setTimeout(render,0));
- fetch('./data/offers.json',{cache:'no-store'}).then(r=>{if(!r.ok)throw Error('catalog unavailable');return r.json();}).then(data=>{offers=Array.isArray(data)?data.filter(o=>o&&o.status==='published'&&o.title&&o.url&&o.verifiedAt):[];render();}).catch(()=>{offers=[];render();count.textContent='تعذر تحميل الدليل';});
+ fetch('./data/offers.json',{cache:'no-store'}).then(r=>{if(!r.ok)throw Error('catalog unavailable');return r.json();}).then(data=>{offers=Array.isArray(data)?data.filter(o=>o&&o.status==='published'&&o.title&&o.url&&o.verifiedAt):[];const storeSelect=document.getElementById('store');const stores=[...new Set(offers.map(o=>String(o.store||'').trim()).filter(Boolean))].sort((a,b)=>a.localeCompare(b));storeSelect.innerHTML='<option value="">الكل</option>'+stores.map(s=>'<option value="'+safe(s)+'">'+safe(s)+'</option>').join('');render();}).catch(()=>{offers=[];render();count.textContent='تعذر تحميل الدليل';});
 })();
 </script>
 </body></html>
