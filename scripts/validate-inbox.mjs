@@ -9,6 +9,7 @@ if (!Array.isArray(sources)) throw new Error("Source registry must be a JSON arr
 
 const sourceById = new Map(sources.map(source => [source.id, source]));
 const ids = new Set();
+const offerUrls = new Set();
 const errors = [];
 
 function httpsUrl(value, label) {
@@ -52,17 +53,26 @@ for (const [index, item] of inbox.entries()) {
 
   const offerUrl = httpsUrl(item.url, label + ".url");
   const sourceUrl = httpsUrl(item.source, label + ".source");
-  if (source && offerUrl && source.feedUrl) {
-    const feedUrl = httpsUrl(source.feedUrl, "Source " + source.id + ".feedUrl");
-    if (feedUrl && offerUrl.hostname !== feedUrl.hostname) {
-      errors.push(label + " offer URL host does not match its approved feed host.");
+  const feedUrl = source?.feedUrl
+    ? httpsUrl(source.feedUrl, "Source " + source.id + ".feedUrl")
+    : null;
+
+  if (offerUrl) {
+    const canonicalUrl = offerUrl.origin + offerUrl.pathname.replace(/\\/+$/, "");
+    if (offerUrls.has(canonicalUrl)) {
+      errors.push(label + " duplicates another candidate offer URL.");
+    } else {
+      offerUrls.add(canonicalUrl);
     }
   }
-  if (sourceUrl && source && source.feedUrl) {
-    const feedUrl = new URL(source.feedUrl);
-    if (sourceUrl.hostname !== feedUrl.hostname) {
-      errors.push(label + " source attribution host does not match its approved feed host.");
-    }
+  if (source && !source.feedUrl) {
+    errors.push(label + " references a source without an approved feed URL.");
+  }
+  if (feedUrl && offerUrl && offerUrl.hostname !== feedUrl.hostname) {
+    errors.push(label + " offer URL host does not match its approved feed host.");
+  }
+  if (feedUrl && sourceUrl && sourceUrl.hostname !== feedUrl.hostname) {
+    errors.push(label + " source attribution host does not match its approved feed host.");
   }
 
   if (!Array.isArray(item.countries) || item.countries.length === 0 ||
