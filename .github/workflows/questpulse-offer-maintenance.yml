@@ -11,6 +11,7 @@ on:
       - "data/sources.json"
       - "scripts/refresh-offers.mjs"
       - "scripts/validate-offers.mjs"
+      - "scripts/validate-inbox.mjs"
       - "scripts/ingest-offer-feeds.mjs"
       - ".github/workflows/questpulse-offer-maintenance.yml"
 
@@ -23,7 +24,7 @@ permissions:
 
 jobs:
   maintain:
-    name: Discover candidates, expire offers, and validate catalogue
+    name: Discover candidates, expire offers, and validate catalogues
     runs-on: ubuntu-latest
     steps:
       - name: Check out repository
@@ -38,6 +39,8 @@ jobs:
         run: node scripts/refresh-offers.mjs
       - name: Validate published offers
         run: node scripts/validate-offers.mjs
+      - name: Validate candidate review inbox
+        run: node scripts/validate-inbox.mjs
       - name: Commit catalogue maintenance and review inbox
         run: |
           if ! git diff --quiet -- data/offers.json data/inbox.json; then
