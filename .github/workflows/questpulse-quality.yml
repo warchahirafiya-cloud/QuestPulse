@@ -23,5 +23,7 @@ jobs:
           node-version: 22
       - name: Validate website pages
         run: node scripts/validate-site.mjs
-      - name: Validate offers catalogue
+      - name: Validate published offers catalogue
         run: node scripts/validate-offers.mjs
+      - name: Validate candidate review inbox
+        run: node scripts/validate-inbox.mjs
