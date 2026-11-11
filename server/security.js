@@ -10,3 +10,12 @@ export function originGuard(req, res, next) {
 export function safeUser(user) {
   return { id: user.id, displayName: user.display_name, accountType: user.account_type, email: user.email, role: user.role, status: user.status };
 }
+
+export function readCookie(header, name) {
+  for (const part of (header || "").split(";")) {
+    const separator = part.indexOf("=");
+    if (separator < 0) continue;
+    if (part.slice(0, separator).trim() === name) return part.slice(separator + 1).trim();
+  }
+  return null;
+}
