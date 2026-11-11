@@ -16,7 +16,8 @@
     "currency": null,
     "lastCheckedAt": null,
     "expiresAt": null,
-    "merchantWebsite": null
+    "merchantWebsite": null,
+    "global": false
   },
   {
     "id": "e834b4f00eb8e2631247",
