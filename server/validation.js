@@ -14,7 +14,7 @@ export const postSchema = z.object({
   website: httpsUrl.optional().default(""),
   offerUrl: httpsUrl.optional().default(""),
   countries: z.string().trim().min(2).max(300),
-  expiresAt: z.string().optional().default("").refine(v => !v || /^\\d{4}-\\d{2}-\\d{2}$/.test(v), "Invalid expiry date."),
+  expiresAt: z.string().optional().default("").refine(v => !v || /^\d{4}-\d{2}-\d{2}$/.test(v), "Invalid expiry date."),
   rewardValue: z.string().trim().max(100).optional().default(""),
   productPrice: z.string().trim().max(80).optional().default(""),
   disclosure: z.enum(["no", "referral", "sponsored"])
