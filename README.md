@@ -1,8 +1,8 @@
 # QuestPulse
 
-**A platform for discovering carefully reviewed digital rewards and online tasks.**
+**A global directory for discovering carefully reviewed rewards, online stores, discounts, coupons, competitions, loyalty programmes, and digital tasks.**
 
-QuestPulse helps visitors compare reward programs, survey and microtask platforms, useful apps, referral programs, loyalty rewards, and special deals. The goal is to make eligibility, task requirements, reset intervals, withdrawal thresholds, fees, and payment evidence clear before a visitor chooses to participate.
+QuestPulse combines a public global offers feed with precise search by eligible country, category, reward type, merchant, availability, and expiry. It covers rewards and gifts, online stores, discounts and coupons, competitions, loyalty programmes, apps, tasks, and referral offers. The goal is to make eligibility, task requirements, reset intervals, withdrawal thresholds, fees, and payment evidence clear before a visitor chooses to participate.
 
 ## Live project
 - Website: https://getquestpulse.com
@@ -11,10 +11,12 @@ QuestPulse helps visitors compare reward programs, survey and microtask platform
 ## Current scope
 The active project is focused on non-cryptocurrency rewards and digital earning opportunities. Cryptocurrency, blockchain, token, mining, and wallet-related features are excluded from the active website and remain only in the historical archive.
 
-No opportunity should be presented as available, verified, or paying until its official source, current eligibility, reward mechanics, fees, withdrawal terms, privacy implications, and supporting evidence have been checked. A listing is not a guarantee of earnings or payment.
+No opportunity should be presented as available until its official source, current eligibility, validity dates, fees, terms, and redemption method have been checked. The public catalogue is data/offers.json; only records marked published are shown. An empty catalogue is intentional until real offers pass review. The daily GitHub Actions maintenance job expires ended offers and validates the catalogue. API source integrations are documented in data/sources.json; integrations requiring credentials remain disabled until access and usage terms are approved. A listing is not a guarantee of earnings or payment.
 
 ## Main pages
-- [Home](index.html)
+- [Home and global offers/search](index.html)
+- [Offer catalogue](data/offers.json)
+- [Source integration registry](data/sources.json)
 - [Evaluation guide](guide.html)
 - [Link checking](link-check.html)
 - [Account safety checklist](account-safety.html)
