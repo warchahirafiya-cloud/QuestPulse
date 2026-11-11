@@ -2,6 +2,7 @@ const CACHE_NAME = "questpulse-shell-v16";
 const APP_SHELL = [
   "./",
   "./index.html",
+  "./domain-hunter.html",
   "./guide.html",
   "./publish.html",
   "./publisher-account.html",
