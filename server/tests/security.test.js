@@ -1,6 +1,6 @@
 import test from "node:test";
 import assert from "node:assert/strict";
-import { originGuard, safeUser } from "../security.js";
+import { originGuard, safeUser, readCookie } from "../security.js";
 
 function responseRecorder() {
   return {
@@ -83,4 +83,13 @@ test("public user projection excludes password hashes and internal fields", () =
     status: "active"
   });
   assert.equal(JSON.stringify(user).includes("must-not-leak"), false);
+});
+
+
+test("cookie reader handles missing, unrelated, and malformed cookie values safely", () => {
+  assert.equal(readCookie(undefined, "qp_session"), null);
+  assert.equal(readCookie("other=value", "qp_session"), null);
+  assert.equal(readCookie("qp_session=abc_def-123; theme=dark", "qp_session"), "abc_def-123");
+  assert.equal(readCookie("qp_session=%E0%A4%A", "qp_session"), "%E0%A4%A");
+  assert.equal(readCookie("qp_session", "qp_session"), null);
 });
