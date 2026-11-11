@@ -13,7 +13,7 @@
     "create-admin": "node server/create-admin.js"
   },
   "dependencies": {
-    "better-sqlite3": "^12.2.0",
+    "better-sqlite3": "^13.0.3",
     "bcryptjs": "^3.0.2",
     "express": "^5.1.0",
     "express-rate-limit": "^8.0.1",
