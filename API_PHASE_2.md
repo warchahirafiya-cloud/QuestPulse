@@ -13,7 +13,7 @@ This is a self-hosted Node.js API scaffold for the multi-publisher workflow. It 
 
 ## Local setup
 1. Install Node.js 22 or later.
-2. Copy `.env.example` to `.env` and set a random `SESSION_SECRET` of at least 32 characters and the exact `APP_ORIGIN`.
+2. Copy `.env.example` to `.env` and set a random `exact `APP_ORIGIN`.
 3. Run `npm install`.
 4. Set `ADMIN_EMAIL`, `ADMIN_PASSWORD` (at least 16 characters), and optionally `ADMIN_DISPLAY_NAME`; run `npm run create-admin` once.
 5. Run `npm start`. Health check: `GET /api/health`.
@@ -23,6 +23,7 @@ This is a self-hosted Node.js API scaffold for the multi-publisher workflow. It 
 - `POST /api/auth/login`, `POST /api/auth/logout`, `GET /api/auth/me`.
 - `POST /api/posts` — authenticated multipart submission; field name for files is `media`.
 - `GET /api/posts` — published posts only.
+- `GET /api/admin/users?status=pending` — admin only, to review publisher accounts.
 - `GET /api/admin/submissions?status=pending` — admin only.
 - `PATCH /api/admin/posts/:id/review` — admin only; actions: `approve`, `reject`, `request_changes`, `pause`.
 - `PATCH /api/admin/users/:id/activate` — admin only; status: `active` or `suspended`.
