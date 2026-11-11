@@ -1,5 +1,33 @@
 [
   {
+    "id": "promo-magpie-us",
+    "name": "Promo Magpie curated offers feed (US)",
+    "kind": "third-party-curated-json-feed",
+    "scope": "US-only retailer discounts and promo codes; not globally eligible",
+    "feedUrl": "https://promomagpie.com/feeds/offers/latest.json",
+    "feedFormat": "json",
+    "publisherCountry": "United States",
+    "documentation": "https://promomagpie.com/feeds",
+    "credentialsRequired": false,
+    "status": "active",
+    "ingestionMode": "candidate-only",
+    "notes": "Independent directory states that offers originate from merchants and official affiliate programmes. Keep attribution and link visitors to the original Promo Magpie offer page. Candidate-only; verify merchant terms and country eligibility."
+  },
+  {
+    "id": "voucher-magpie-uk",
+    "name": "Voucher Magpie curated offers feed (UK)",
+    "kind": "third-party-curated-json-feed",
+    "scope": "UK-only retailer discounts and voucher codes; not globally eligible",
+    "feedUrl": "https://vouchermagpie.co.uk/feeds/offers/latest.json",
+    "feedFormat": "json",
+    "publisherCountry": "United Kingdom",
+    "documentation": "https://vouchermagpie.co.uk/feeds",
+    "credentialsRequired": false,
+    "status": "active",
+    "ingestionMode": "candidate-only",
+    "notes": "Independent directory states that offers originate from merchants and official affiliate programmes. Keep attribution and link visitors to the original Voucher Magpie offer page. Candidate-only; verify merchant terms and country eligibility."
+  },
+  {
     "id": "meh-daily-deal",
     "name": "Meh official daily deal RSS",
     "kind": "official-retailer-rss",
