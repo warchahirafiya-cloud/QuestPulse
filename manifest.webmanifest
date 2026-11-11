@@ -1,7 +1,7 @@
 {
-  "name": "QuestPulse — Digital Safety Learning",
+  "name": "QuestPulse — Rewards Discovery",
   "short_name": "QuestPulse",
-  "description": "Educational information about digital safety, source verification and risk awareness.",
+  "description": "Discover reviewed online rewards, tasks, surveys, apps and special offers.",
   "lang": "ar",
   "dir": "rtl",
   "start_url": "./",
