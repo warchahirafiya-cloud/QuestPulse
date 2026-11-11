@@ -1,4 +1,4 @@
-const CACHE_NAME = "questpulse-shell-v14";
+const CACHE_NAME = "questpulse-shell-v15";
 const APP_SHELL = [
   "./",
   "./index.html",
@@ -11,6 +11,7 @@ const APP_SHELL = [
   "./404.html",
   "./offline.html",
   "./manifest.webmanifest",
+  "./data/offers.json",
   "./assets/questpulse-icon.svg"
 ];
 
