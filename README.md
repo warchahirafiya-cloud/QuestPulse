@@ -45,6 +45,12 @@ An empty public catalogue is intentional until real offers pass review. A listin
 - A Node.js + SQLite API scaffold now exists under `server/`; see [API Phase 2 setup](API_PHASE_2.md). It has account activation, server-side sessions, pending submissions, media validation, and admin review endpoints.
 - A secure backend is required before activating shared accounts, public submissions, or media hosting. No paid service or new Cloudflare dependency is enabled.
 
+## Free repository maintenance
+- GitHub Dependabot checks npm packages and GitHub Actions for updates weekly and can open update pull requests.
+- The quality workflow runs `npm audit` against production dependencies and stops for high-severity advisories.
+- Native Node.js tests cover publisher validation and key security helpers; no extra paid scanner or subscription is required.
+- These checks do not replace a production security review, backups, or deployment monitoring. GitHub Actions usage remains subject to the repository's included usage limits and account billing settings.
+
 ## Editorial principles
 - Clearly distinguish verified, under review, paused, and expired opportunities.
 - Show country eligibility, reset interval, minimum withdrawal, fees, and payout methods where confirmed.
