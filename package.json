@@ -1,0 +1,21 @@
+{
+  "name": "questpulse",
+  "private": true,
+  "version": "0.2.0",
+  "type": "module",
+  "engines": { "node": ">=22" },
+  "scripts": {
+    "start": "node server/app.js",
+    "dev": "node --watch server/app.js",
+    "test:api": "node --test server/tests/*.test.js"
+  },
+  "dependencies": {
+    "better-sqlite3": "^12.2.0",
+    "bcryptjs": "^3.0.2",
+    "express": "^5.1.0",
+    "express-rate-limit": "^8.0.1",
+    "helmet": "^8.1.0",
+    "multer": "^2.0.2",
+    "zod": "^4.0.5"
+  }
+}
