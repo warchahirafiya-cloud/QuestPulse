@@ -11,47 +11,59 @@ function responseRecorder() {
   };
 }
 
-test("origin guard accepts the configured same-origin POST", () => {
+function withOrigin(value, callback) {
   const previous = process.env.APP_ORIGIN;
-  process.env.APP_ORIGIN = "https://questpulse.example";
-  const req = { method: "POST", get: name => name === "origin" ? "https://questpulse.example" : undefined };
-  const res = responseRecorder();
-  let continued = false;
-  originGuard(req, res, () => { continued = true; });
-  assert.equal(continued, true);
-  assert.equal(res.statusCode, 200);
-  if (previous === undefined) delete process.env.APP_ORIGIN;
-  else process.env.APP_ORIGIN = previous;
-});
+  if (value === undefined) delete process.env.APP_ORIGIN;
+  else process.env.APP_ORIGIN = value;
+  try { callback(); }
+  finally {
+    if (previous === undefined) delete process.env.APP_ORIGIN;
+    else process.env.APP_ORIGIN = previous;
+  }
+}
 
-test("origin guard rejects missing and mismatched origins for writes", () => {
-  const previous = process.env.APP_ORIGIN;
-  process.env.APP_ORIGIN = "https://questpulse.example";
-  for (const origin of [undefined, "https://attacker.example"]) {
-    const req = { method: "POST", get: name => name === "origin" ? origin : undefined };
+test("origin guard accepts an exact configured same-origin POST", () => {
+  withOrigin("https://questpulse.example", () => {
+    const req = { method: "POST", get: name => name === "origin" ? "https://questpulse.example" : undefined };
     const res = responseRecorder();
     let continued = false;
     originGuard(req, res, () => { continued = true; });
-    assert.equal(continued, false);
-    assert.equal(res.statusCode, 403);
-    assert.deepEqual(res.payload, { error: "Request origin rejected." });
+    assert.equal(continued, true);
+    assert.equal(res.statusCode, 200);
+  });
+});
+
+test("origin guard rejects missing configuration, missing origin, and foreign origins on writes", () => {
+  for (const [expected, origin] of [
+    [undefined, "https://questpulse.example"],
+    ["https://questpulse.example", undefined],
+    ["https://questpulse.example", "https://attacker.example"]
+  ]) {
+    withOrigin(expected, () => {
+      const req = { method: "POST", get: name => name === "origin" ? origin : undefined };
+      const res = responseRecorder();
+      let continued = false;
+      originGuard(req, res, () => { continued = true; });
+      assert.equal(continued, false);
+      assert.equal(res.statusCode, 403);
+      assert.deepEqual(res.payload, { error: "Request origin rejected." });
+    });
   }
-  if (previous === undefined) delete process.env.APP_ORIGIN;
-  else process.env.APP_ORIGIN = previous;
 });
 
-test("origin guard keeps safe read methods available without an origin", () => {
-  const previous = process.env.APP_ORIGIN;
-  delete process.env.APP_ORIGIN;
-  const req = { method: "GET", get: () => undefined };
-  const res = responseRecorder();
-  let continued = false;
-  originGuard(req, res, () => { continued = true; });
-  assert.equal(continued, true);
-  if (previous !== undefined) process.env.APP_ORIGIN = previous;
+test("origin guard allows safe read methods without an origin", () => {
+  withOrigin(undefined, () => {
+    for (const method of ["GET", "HEAD", "OPTIONS"]) {
+      const req = { method, get: () => undefined };
+      const res = responseRecorder();
+      let continued = false;
+      originGuard(req, res, () => { continued = true; });
+      assert.equal(continued, true, method);
+    }
+  });
 });
 
-test("public user projection never exposes password or internal fields", () => {
+test("public user projection excludes password hashes and internal fields", () => {
   const user = safeUser({
     id: "user-1",
     display_name: "Example",
