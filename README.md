@@ -19,7 +19,7 @@ The active project is focused on non-cryptocurrency rewards and digital earning 
 - The daily GitHub Actions job discovers feed candidates, expires ended offers, and validates the public catalogue.
 - Credentialed integrations such as eBay and Flipkart remain disabled until API access and usage terms are approved.
 
-The first active automated feed is Meh's official daily-deal RSS. Its coverage is US-focused and must not be treated as globally eligible. The source is explicitly labelled as a candidate-only discovery feed.
+The active discovery feeds currently include Meh's official daily-deal RSS, Promo Magpie's US offers feed, and Voucher Magpie's UK offers feed. The two curated directories state that their offers come from merchant sites or official affiliate programmes, and their feeds specify country and currency. All three feeds are candidate-only; none is treated as globally eligible or published automatically. Source attribution and links to the original feed listing are retained.
 
 An empty public catalogue is intentional until real offers pass review. A listing is not a guarantee of earnings, availability, or payment.
 
