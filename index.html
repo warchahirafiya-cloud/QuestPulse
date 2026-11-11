@@ -5,35 +5,48 @@
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <link rel="canonical" href="https://getquestpulse.com/">
 <meta name="theme-color" content="#0b1020">
-<meta name="description" content="QuestPulse مساحة مبسطة للتوعية بالأمان الرقمي والتحقق من المصادر وحماية الحسابات.">
-<meta property="og:title" content="QuestPulse | الأمان الرقمي بوعي">
-<meta property="og:description" content="تعلّم التحقق من الروابط، حماية الحسابات، والتعرّف على محاولات الاحتيال.">
-<title>QuestPulse | الأمان الرقمي بوعي</title>
+<meta name="description" content="QuestPulse يساعدك على اكتشاف منصات المكافآت والمهام الرقمية والعروض، مع توضيح الشروط وطرق السحب ومؤشرات الموثوقية.">
+<meta property="og:title" content="QuestPulse | اكتشف المكافآت بوعي">
+<meta property="og:description" content="منصات مكافآت ومهام رقمية وعروض مختارة، مع مراجعة الشروط والأهلية وطرق الدفع.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://getquestpulse.com/">
+<meta property="og:locale" content="ar_AR">
+<meta name="twitter:card" content="summary">
+<title>QuestPulse | اكتشف المكافآت بوعي</title>
 <style>
-:root{color-scheme:dark;--bg:#090e1b;--panel:#121d31;--line:#ffffff1c;--text:#f4f7ff;--muted:#a5b2c8;--violet:#a99bff;--cyan:#68d9d0}
+:root{color-scheme:dark;--bg:#090e1b;--panel:#121d31;--line:#ffffff1c;--text:#f4f7ff;--muted:#a5b2c8;--violet:#a99bff;--cyan:#68d9d0;--warn:#f4bd62}
 *{box-sizing:border-box}body{margin:0;background:radial-gradient(ellipse at 85% 0%,#34316b66,transparent 36%),radial-gradient(ellipse at 0 45%,#124e5b30,transparent 34%),var(--bg);color:var(--text);font:16px/1.8 system-ui,-apple-system,"Segoe UI",Tahoma,Arial,sans-serif}
-a{color:inherit;text-decoration:none}.wrap{width:min(1080px,92%);margin:auto}header{position:sticky;top:0;z-index:5;background:#090e1bee;border-bottom:1px solid var(--line);backdrop-filter:blur(14px)}nav{min-height:72px;display:flex;align-items:center;justify-content:space-between;gap:16px}.brand{font-size:1.5rem;font-weight:900}.brand span{color:var(--cyan)}.navlinks{display:flex;gap:18px;flex-wrap:wrap;color:var(--muted);font-size:.92rem}.navlinks a:hover{color:var(--cyan)}
-.hero{padding:76px 0 48px;display:grid;grid-template-columns:1.2fr .8fr;gap:32px;align-items:center}.eyebrow{display:inline-block;color:var(--cyan);border:1px solid #68d9d055;background:#68d9d012;padding:5px 12px;border-radius:99px;font-weight:750}.hero h1{font-size:clamp(2.4rem,6vw,4.5rem);line-height:1.15;margin:18px 0}.gradient{background:linear-gradient(95deg,#b2a6ff,#68e1d5);-webkit-background-clip:text;background-clip:text;color:transparent}.lead{color:var(--muted);font-size:1.08rem;max-width:650px}.actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:24px}.btn{display:inline-flex;justify-content:center;align-items:center;padding:11px 17px;border-radius:12px;background:linear-gradient(110deg,#a99bff,#68d9d0);color:#091020;font-weight:850}.btn.secondary{background:#ffffff08;border:1px solid var(--line);color:var(--text)}
+a{color:inherit;text-decoration:none}.wrap{width:min(1080px,92%);margin:auto}header{position:sticky;top:0;z-index:5;background:#090e1bee;border-bottom:1px solid var(--line);backdrop-filter:blur(14px)}nav{min-height:72px;display:flex;align-items:center;justify-content:space-between;gap:16px}.brand{font-size:1.5rem;font-weight:900}.brand span{color:var(--cyan)}.navlinks{display:flex;gap:16px;flex-wrap:wrap;color:var(--muted);font-size:.9rem}.navlinks a:hover{color:var(--cyan)}
+.hero{padding:68px 0 42px;display:grid;grid-template-columns:1.2fr .8fr;gap:32px;align-items:center}.eyebrow{display:inline-block;color:var(--cyan);border:1px solid #68d9d055;background:#68d9d012;padding:5px 12px;border-radius:99px;font-weight:750}.hero h1{font-size:clamp(2.3rem,6vw,4.4rem);line-height:1.16;margin:18px 0}.gradient{background:linear-gradient(95deg,#b2a6ff,#68e1d5);-webkit-background-clip:text;background-clip:text;color:transparent}.lead{color:var(--muted);font-size:1.08rem;max-width:650px}.actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:24px}.btn{display:inline-flex;justify-content:center;align-items:center;padding:11px 17px;border-radius:12px;background:linear-gradient(110deg,#a99bff,#68d9d0);color:#091020;font-weight:850}.btn.secondary{background:#ffffff08;border:1px solid var(--line);color:var(--text)}
 .art{min-height:260px;border:1px solid var(--line);border-radius:25px;background:radial-gradient(circle at 50% 40%,#8d7cff30,transparent 50%),linear-gradient(145deg,#1b2440,#10182b);display:grid;place-items:center;text-align:center}.art strong{font-size:5rem;display:block}.art span{color:var(--muted)}
-section{padding:30px 0}.section-head{margin-bottom:18px}.section-head h2{margin:0;font-size:1.7rem}.section-head p{color:var(--muted);margin:4px 0}.grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:15px}.card{padding:20px;border:1px solid var(--line);border-radius:17px;background:linear-gradient(145deg,#17233add,#10182add)}.icon{font-size:1.8rem}.card h3{margin:8px 0 5px}.card p{color:var(--muted);margin:5px 0 14px}.card a{color:var(--cyan);font-weight:750}.notice{padding:16px 18px;border:1px solid #68d9d055;border-radius:14px;background:#68d9d00b;color:#c9f4ee}
+section{padding:28px 0}.section-head{margin-bottom:18px}.section-head h2{margin:0;font-size:1.7rem}.section-head p{color:var(--muted);margin:4px 0}.grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:15px}.card{padding:20px;border:1px solid var(--line);border-radius:17px;background:linear-gradient(145deg,#17233add,#10182add)}.icon{font-size:1.8rem}.card h3{margin:8px 0 5px}.card p{color:var(--muted);margin:5px 0 0}.notice{padding:16px 18px;border:1px solid #f4bd6255;border-radius:14px;background:#f4bd620b;color:#f6e4c2}.notice strong{color:#ffe0a6}.steps{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px}.step{padding:17px;border:1px solid var(--line);border-radius:15px;background:#ffffff06}.step b{display:block;color:var(--cyan);margin-bottom:5px}.links{display:flex;gap:16px;flex-wrap:wrap;color:var(--cyan);font-weight:700}
 footer{margin-top:30px;padding:25px 0;border-top:1px solid var(--line);color:var(--muted);font-size:.9rem}
-@media(max-width:760px){.hero{grid-template-columns:1fr;padding:42px 0 28px}.art{min-height:170px}.grid{grid-template-columns:1fr}.navlinks{gap:10px;font-size:.82rem}nav{align-items:flex-start;flex-direction:column;padding:12px 0}.hero h1{font-size:2.6rem}}
+@media(max-width:760px){.hero{grid-template-columns:1fr;padding:40px 0 24px}.art{min-height:170px}.grid,.steps{grid-template-columns:1fr}.navlinks{gap:10px;font-size:.82rem}nav{align-items:flex-start;flex-direction:column;padding:12px 0}.hero h1{font-size:2.55rem}}
 </style>
 </head>
 <body>
-<header><div class="wrap"><nav><a class="brand" href="./index.html">Quest<span>Pulse</span></a><div class="navlinks"><a href="#home">الرئيسية</a><a href="#learn">مركز التوعية</a><a href="./link-check.html">فحص الروابط</a><a href="./account-safety.html">حماية الحسابات</a><a href="./guide.html">الدليل</a></div></nav></div></header>
+<header><div class="wrap"><nav><a class="brand" href="./index.html">Quest<span>Pulse</span></a><div class="navlinks"><a href="#home">الرئيسية</a><a href="#categories">الأقسام</a><a href="#method">منهجية المراجعة</a><a href="./guide.html">الدليل</a><a href="./link-check.html">فحص الروابط</a></div></nav></div></header>
 <main class="wrap">
 <section class="hero" id="home">
-<div><span class="eyebrow">تعلّم · تحقّق · احمِ نفسك</span><h1>الأمان الرقمي<br><span class="gradient">يبدأ بخطوة واعية.</span></h1><p class="lead">QuestPulse مساحة تعليمية تساعدك على التحقق من المواقع والروابط، حماية حساباتك، والتعرّف على أساليب التصيّد والاحتيال قبل مشاركة بياناتك.</p><div class="actions"><a class="btn" href="./guide.html">ابدأ دليل الأمان</a><a class="btn secondary" href="./link-check.html">افحص رابطاً</a></div></div>
-<div class="art" aria-hidden="true"><div><strong>🛡️</strong><span>خصوصيتك وأمانك أولاً</span></div></div>
+<div><span class="eyebrow">اكتشف · قارن · تحقّق</span><h1>فرص رقمية أوضح،<br><span class="gradient">وقرارات أكثر وعياً.</span></h1><p class="lead">QuestPulse دليل لاكتشاف منصات المكافآت والمهام المصغّرة والاستبيانات والتطبيقات وبرامج الإحالة والعروض. نركز على توضيح شروط المشاركة والأهلية وطرق السحب والرسوم قبل أن تقرر.</p><div class="actions"><a class="btn" href="#categories">استكشف الأقسام</a><a class="btn secondary" href="./guide.html">كيف نراجع الفرص؟</a></div></div>
+<div class="art" aria-hidden="true"><div><strong>✦</strong><span>المعلومة الواضحة قبل المشاركة</span></div></div>
 </section>
-<section id="learn"><div class="section-head"><h2>ماذا يمكنك أن تتعلّم؟</h2><p>أدوات ومعلومات عملية للاستخدام اليومي.</p></div>
+<section><div class="notice"><strong>تنبيه بشأن حالة الدليل:</strong> يجري إعداد فهرس الفرص ومراجعة بياناته. لا توجد في هذه الصفحة حالياً عروض مشاركة مباشرة؛ لن نعرض أي فرصة على أنها متاحة أو مدفوعة قبل التحقق من مصدرها وشروطها الحالية.</div></section>
+<section id="categories"><div class="section-head"><h2>أقسام QuestPulse</h2><p>فئات غير مرتبطة بالعملات المشفرة، وسيتم نشر الفرص بعد مراجعتها فقط.</p></div>
 <div class="grid">
-<article class="card"><div class="icon">🔎</div><h3>التحقق من الروابط</h3><p>تعرّف على النطاقات المقلدة، الروابط المختصرة، وعلامات الصفحات المشبوهة.</p><a href="./link-check.html">افتح أداة فحص الروابط ←</a></article>
-<article class="card"><div class="icon">🔐</div><h3>حماية الحسابات</h3><p>خطوات عملية لكلمات المرور القوية، المصادقة الثنائية، وأمان الأجهزة.</p><a href="./account-safety.html">افتح قائمة الحماية ←</a></article>
-<article class="card"><div class="icon">🧭</div><h3>تقييم المصادر</h3><p>كيف تميّز المصدر الأصلي من الحسابات المنتحلة والادعاءات غير المثبتة.</p><a href="./guide.html#sources">تعلّم طريقة التحقق ←</a></article>
+<article class="card"><div class="icon">📝</div><h3>الاستبيانات والمهام</h3><p>منصات الاستبيانات والمهام المصغّرة، مع توضيح متطلبات الإنجاز وحدود السحب.</p></article>
+<article class="card"><div class="icon">📱</div><h3>التطبيقات والمكافآت</h3><p>تطبيقات المكافآت والولاء والأنشطة اليومية، مع بيان طريقة احتساب النقاط وقيمتها.</p></article>
+<article class="card"><div class="icon">🎁</div><h3>برامج الإحالة والعروض</h3><p>مكافآت الإحالة والخصومات والعروض الخاصة، مع إظهار الشروط والقيود بوضوح.</p></article>
+<article class="card"><div class="icon">🤖</div><h3>خدمات وروبوتات المهام</h3><p>مراجعة الخدمات والروبوتات من حيث المصدر والرسوم وآلية المكافأة وإثباتات الدفع.</p></article>
+<article class="card"><div class="icon">🛍️</div><h3>الاسترداد والولاء</h3><p>برامج استرداد النقود والنقاط والمكافآت المرتبطة بالمشتريات، عند توفر شروط واضحة.</p></article>
+<article class="card"><div class="icon">🔎</div><h3>الدليل والتحقق</h3><p>إرشادات لفحص الروابط والمصادر وتقييم المخاطر قبل التسجيل أو مشاركة البيانات.</p></article>
 </div></section>
-<section><div class="notice"><strong>مبدأ QuestPulse:</strong> لا تشارك كلمة مرورك أو رموز التحقق، ولا تثق برسالة مستعجلة تطلب منك اتخاذ إجراء قبل التأكد من مصدرها.</div></section>
+<section id="method"><div class="section-head"><h2>كيف نراجع أي فرصة؟</h2><p>لا يكفي وجود إعلان أو رابط لإثبات أن العرض حقيقي أو متاح.</p></div><div class="steps">
+<div class="step"><b>01 · المصدر</b>مطابقة الموقع الرسمي والجهة المقدمة للخدمة.</div>
+<div class="step"><b>02 · الشروط</b>التحقق من الأهلية والمهام والمدة والرسوم والحد الأدنى للسحب.</div>
+<div class="step"><b>03 · الدليل</b>فحص وسائل الدفع والأدلة المتاحة وتاريخ آخر مراجعة.</div>
+</div></section>
+<section><div class="links"><a href="./link-check.html">فحص رابط قبل فتحه</a><a href="./account-safety.html">حماية حساباتك</a><a href="./guide.html">دليل تقييم الفرص</a></div></section>
 </main>
-<footer><div class="wrap">QuestPulse · محتوى توعوي عام للأمان الرقمي والتحقق من المصادر. <a href="./privacy.html">الخصوصية</a> · <a href="./terms.html">شروط الاستخدام</a> · <a href="./archive.html">أرشيف الإصدارات</a></div></footer>
+<footer><div class="wrap">QuestPulse · دليل معلوماتي مستقل. لا نضمن الدخل أو الدفع ولا نطلب كلمات المرور أو رموز التحقق. <a href="./privacy.html">الخصوصية</a> · <a href="./terms.html">شروط الاستخدام</a> · <a href="./archive.html">الأرشيف</a></div></footer>
 </body></html>
