@@ -1,8 +1,10 @@
-const CACHE_NAME = "questpulse-shell-v15";
+const CACHE_NAME = "questpulse-shell-v16";
 const APP_SHELL = [
   "./",
   "./index.html",
   "./guide.html",
+  "./publish.html",
+  "./publishing-policy.html",
   "./archive.html",
   "./link-check.html",
   "./account-safety.html",
