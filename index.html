@@ -110,7 +110,7 @@ footer{margin-top:30px;padding:25px 0;border-top:1px solid var(--line);color:var
   const country=text(f.country), countries=(o.countries||[]).map(text);
   const end=o.expiresAt?new Date(o.expiresAt):null,now=new Date();
   if(f.q&&!hay.includes(text(f.q)))return false;
-  if(country&&!countries.some(c=>c.includes(country))&&!(o.global&&/عالمي|global|worldwide/i.test(country)))return false;
+  if(country&&!o.global&&!countries.some(c=>c.includes(country)))return false;
   if(f.category&&o.category!==f.category)return false;
   if(f.rewardType&&o.rewardType!==f.rewardType)return false;
   if(f.store&&!text(o.store).includes(text(f.store)))return false;
