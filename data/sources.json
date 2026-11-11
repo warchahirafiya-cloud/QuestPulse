@@ -6,12 +6,13 @@
     "scope": "US-only retailer discounts and promo codes; not globally eligible",
     "feedUrl": "https://promomagpie.com/feeds/offers/latest.json",
     "feedFormat": "json",
-    "publisherCountry": "United States",
+    "publisherCountry": "US",
     "documentation": "https://promomagpie.com/feeds",
     "credentialsRequired": false,
     "status": "active",
     "ingestionMode": "candidate-only",
-    "notes": "Independent directory states that offers originate from merchants and official affiliate programmes. Keep attribution and link visitors to the original Promo Magpie offer page. Candidate-only; verify merchant terms and country eligibility."
+    "notes": "Independent directory states that offers originate from merchants and official affiliate programmes. Keep attribution and link visitors to the original Promo Magpie offer page. Candidate-only; verify merchant terms and country eligibility.",
+    "countryName": "United States"
   },
   {
     "id": "voucher-magpie-uk",
@@ -20,12 +21,13 @@
     "scope": "UK-only retailer discounts and voucher codes; not globally eligible",
     "feedUrl": "https://vouchermagpie.co.uk/feeds/offers/latest.json",
     "feedFormat": "json",
-    "publisherCountry": "United Kingdom",
+    "publisherCountry": "GB",
     "documentation": "https://vouchermagpie.co.uk/feeds",
     "credentialsRequired": false,
     "status": "active",
     "ingestionMode": "candidate-only",
-    "notes": "Independent directory states that offers originate from merchants and official affiliate programmes. Keep attribution and link visitors to the original Voucher Magpie offer page. Candidate-only; verify merchant terms and country eligibility."
+    "notes": "Independent directory states that offers originate from merchants and official affiliate programmes. Keep attribution and link visitors to the original Voucher Magpie offer page. Candidate-only; verify merchant terms and country eligibility.",
+    "countryName": "United Kingdom"
   },
   {
     "id": "meh-daily-deal",
