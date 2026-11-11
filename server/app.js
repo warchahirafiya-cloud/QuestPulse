@@ -43,7 +43,7 @@ function requireUser(req,res,next){
   req.user=user;req.sessionToken=token;next();
 }
 function requireAdmin(req,res,next){if(req.user?.role!=="admin")return res.status(403).json({error:"Administrator access required."});next();}
-function parseCookie(header,name){for(const part of (header||"").split(";")){const [key,...value]=part.trim().split("=");if(key===name)return decodeURIComponent(value.join("="));}return null;}
+function parseCookie(header,name){for(const part of (header||"").split(";")){const [key,...value]=part.trim().split("=");if(key===name)return value.join("=");}return null;}
 function setSession(res,userId){const token=makeToken();statements.insertSession.run(hashToken(token),userId,Date.now()+sessionDays*86400000,new Date().toISOString());res.cookie(cookieName,token,cookieOptions);}
 function cleanFiles(files=[]){return Promise.all(files.map(file=>unlink(file.path).catch(()=>{})));}
 const storage=multer.diskStorage({destination:(_req,_file,cb)=>cb(null,uploadDir),filename:(_req,file,cb)=>cb(null,randomUUID()+path.extname(file.originalname).toLowerCase())});
