@@ -23,6 +23,8 @@ jobs:
           node-version: 22
       - name: Install API dependencies
         run: npm install --no-audit --no-fund
+      - name: Check backend JavaScript syntax
+        run: node --check server/app.js && node --check server/create-admin.js
       - name: Test publisher API validation
         run: npm run test:api
       - name: Validate website pages
