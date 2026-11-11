@@ -7,8 +7,11 @@ on:
   push:
     paths:
       - "data/offers.json"
+      - "data/inbox.json"
+      - "data/sources.json"
       - "scripts/refresh-offers.mjs"
       - "scripts/validate-offers.mjs"
+      - "scripts/ingest-offer-feeds.mjs"
       - ".github/workflows/questpulse-offer-maintenance.yml"
 
 permissions:
@@ -16,7 +19,7 @@ permissions:
 
 jobs:
   maintain:
-    name: Expire stale offers and validate catalogue
+    name: Discover candidates, expire offers, and validate catalogue
     runs-on: ubuntu-latest
     steps:
       - name: Check out repository
@@ -25,16 +28,18 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: 22
+      - name: Discover candidates from approved feeds
+        run: node scripts/ingest-offer-feeds.mjs
       - name: Expire ended offers
         run: node scripts/refresh-offers.mjs
       - name: Validate published offers
         run: node scripts/validate-offers.mjs
-      - name: Commit maintenance changes
+      - name: Commit catalogue maintenance and review inbox
         run: |
-          if ! git diff --quiet -- data/offers.json; then
+          if ! git diff --quiet -- data/offers.json data/inbox.json; then
             git config user.name "github-actions[bot]"
             git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-            git add data/offers.json
-            git commit -m "chore: expire outdated offers"
+            git add data/offers.json data/inbox.json
+            git commit -m "chore: refresh offer candidates and expire outdated offers"
             git push
           fi
