@@ -14,6 +14,7 @@ const activeFeeds = sources.filter(source =>
   typeof source.feedUrl === "string"
 );
 const existing = new Set(inbox.map(item => item.id));
+const existingById = new Map(inbox.map(item => [item.id, item]));
 let added = 0;
 const failures = [];
 const allowedHosts = new Set(["meh.com", "promomagpie.com", "vouchermagpie.co.uk"]);
@@ -51,8 +52,18 @@ async function getText(url, accept) {
 function addCandidate(candidate) {
   if (!candidate.title || !candidate.url) return;
   const id = createHash("sha256").update(candidate.sourceId + "|" + candidate.externalId).digest("hex").slice(0, 20);
-  if (existing.has(id)) return;
-  inbox.push({
+  if (existing.has(id)) {
+    const previous = existingById.get(id);
+    if (previous) {
+      previous.countries = candidate.country ? [candidate.country] : [];
+      previous.currency = candidate.currency || null;
+      previous.lastCheckedAt = candidate.lastCheckedAt || previous.lastCheckedAt || null;
+      previous.expiresAt = candidate.expiresAt || previous.expiresAt || null;
+      previous.merchantWebsite = candidate.merchantWebsite || previous.merchantWebsite || null;
+    }
+    return;
+  }
+  const record = {
     id,
     title: clean(candidate.title, 240),
     description: clean(candidate.description),
@@ -70,8 +81,10 @@ function addCandidate(candidate) {
     expiresAt: candidate.expiresAt || null,
     status: "pending_review",
     reviewNote: "Discovery only. Verify current availability, merchant terms, eligible countries, fees, and redemption on the original merchant page before publication."
-  });
+  };
+  inbox.push(record);
   existing.add(id);
+  existingById.set(id, record);
   added++;
 }
 
