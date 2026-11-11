@@ -12,18 +12,14 @@ permissions:
 
 jobs:
   validate:
-    name: Validate registry and homepage
+    name: Validate digital-safety website
     runs-on: ubuntu-latest
     steps:
       - name: Check out repository
         uses: actions/checkout@v4
-
       - name: Set up Node.js
         uses: actions/setup-node@v4
         with:
           node-version: 22
-
-      - name: Validate opportunity registry and site structure
-        run: |
-          node scripts/validate-opportunity-registry.mjs
-          node scripts/validate-site.mjs
+      - name: Validate website pages
+        run: node scripts/validate-site.mjs
