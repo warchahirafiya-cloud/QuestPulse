@@ -36,6 +36,14 @@ An empty public catalogue is intentional until real offers pass review. A listin
 - [Terms](terms.html)
 - [Previous versions archive](archive.html)
 
+## Multi-publisher publishing (introductory phase)
+- Public post types are fixed to: **اغتنم فرصة**, **مكافأة مباشرة**, and **منتوج جديد**.
+- Publisher profiles are designed for individuals, legal entities, stores, and companies; administrator/developer access is reserved for project operators.
+- The publisher page supports local draft preparation, HTTPS link checks, image/video previews, and JSON metadata export.
+- Important: this static GitHub Pages release does not yet provide real user authentication, shared uploads, central submission, or live moderation. Drafts stay in the visitor's browser. Do not treat a local draft as a submitted or published post.
+- See [Publisher Center](publish.html), [Multi-Publisher Policy](publishing-policy.html), and [submission schema](schemas/publisher-submission.schema.json).
+- A secure backend is required before activating shared accounts, public submissions, or media hosting. No paid service or new Cloudflare dependency is enabled.
+
 ## Editorial principles
 - Clearly distinguish verified, under review, paused, and expired opportunities.
 - Show country eligibility, reset interval, minimum withdrawal, fees, and payout methods where confirmed.
