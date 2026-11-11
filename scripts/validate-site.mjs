@@ -1,6 +1,6 @@
 import { readFile, access } from "node:fs/promises";
 const root = new URL("../", import.meta.url);
-const required = ["index.html","guide.html","link-check.html","account-safety.html","privacy.html","terms.html","archive.html","404.html","robots.txt","sitemap.xml","manifest.webmanifest","sw.js","offline.html"];
+const required = ["index.html","guide.html","link-check.html","account-safety.html","privacy.html","terms.html","archive.html","404.html","robots.txt","sitemap.xml","manifest.webmanifest","sw.js","offline.html","data/offers.json","data/sources.json","scripts/validate-offers.mjs","scripts/refresh-offers.mjs"];
 const errors = [];
 for (const path of required) {
   try { await access(new URL(path, root)); } catch { errors.push("Missing required page: " + path); }
@@ -17,7 +17,7 @@ const home = await readFile(new URL("index.html", root), "utf8");
 for (const link of ["./guide.html","./link-check.html","./account-safety.html","./privacy.html","./terms.html","./archive.html"]) {
   if (!home.includes(link)) errors.push("Homepage is missing link: " + link);
 }
-for (const phrase of ["QuestPulse","الاستبيانات","المهام","منهجية المراجعة"]) {
+for (const phrase of ["QuestPulse","الاستبيانات","المهام","منهجية المراجعة","كل الفرص العالمية","البحث الدقيق"]) {
   if (!home.includes(phrase)) errors.push("Homepage is missing expected rewards content: " + phrase);
 }
 const manifest = JSON.parse(await readFile(new URL("manifest.webmanifest", root), "utf8"));
