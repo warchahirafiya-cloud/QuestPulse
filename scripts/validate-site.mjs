@@ -1,6 +1,6 @@
 import { readFile, access } from "node:fs/promises";
 const root = new URL("../", import.meta.url);
-const required = ["index.html","guide.html","publish.html","publishing-policy.html","link-check.html","account-safety.html","privacy.html","terms.html","archive.html","404.html","robots.txt","sitemap.xml","manifest.webmanifest","sw.js","offline.html","data/offers.json","data/inbox.json","data/sources.json","scripts/validate-offers.mjs","scripts/validate-inbox.mjs","scripts/refresh-offers.mjs","scripts/ingest-offer-feeds.mjs"];
+const required = ["index.html","guide.html","publish.html","publishing-policy.html","link-check.html","account-safety.html","privacy.html","terms.html","archive.html","404.html","robots.txt","sitemap.xml","manifest.webmanifest","sw.js","offline.html","schemas/publisher-submission.schema.json","data/offers.json","data/inbox.json","data/sources.json","scripts/validate-offers.mjs","scripts/validate-inbox.mjs","scripts/refresh-offers.mjs","scripts/ingest-offer-feeds.mjs"];
 const errors = [];
 for (const path of required) {
   try { await access(new URL(path, root)); } catch { errors.push("Missing required page or project file: " + path); }
@@ -27,6 +27,8 @@ if (errors.length) {
   for (const error of errors) console.error("- " + error);
   process.exit(1);
 }
+const submissionSchema = JSON.parse(await readFile(new URL("schemas/publisher-submission.schema.json", root), "utf8"));
+if (JSON.stringify(submissionSchema.properties.postType.enum) !== JSON.stringify(["opportunity","direct_reward","new_product"])) errors.push("Publisher schema post types do not match the approved taxonomy.");
 const publisher = await readFile(new URL("publish.html", root), "utf8");
 for (const phrase of ["individual","legal_entity","store","company","opportunity","direct_reward","new_product","image/","video/"]) {
   if (!publisher.includes(phrase)) errors.push("Publisher page is missing expected field or type: " + phrase);
