@@ -1,9 +1,9 @@
 import { readFile, access } from "node:fs/promises";
 const root = new URL("../", import.meta.url);
-const required = ["index.html","guide.html","link-check.html","account-safety.html","privacy.html","terms.html","archive.html","404.html","robots.txt","sitemap.xml","manifest.webmanifest","sw.js","offline.html","data/offers.json","data/sources.json","scripts/validate-offers.mjs","scripts/refresh-offers.mjs"];
+const required = ["index.html","guide.html","link-check.html","account-safety.html","privacy.html","terms.html","archive.html","404.html","robots.txt","sitemap.xml","manifest.webmanifest","sw.js","offline.html","data/offers.json","data/inbox.json","data/sources.json","scripts/validate-offers.mjs","scripts/validate-inbox.mjs","scripts/refresh-offers.mjs","scripts/ingest-offer-feeds.mjs"];
 const errors = [];
 for (const path of required) {
-  try { await access(new URL(path, root)); } catch { errors.push("Missing required page: " + path); }
+  try { await access(new URL(path, root)); } catch { errors.push("Missing required page or project file: " + path); }
 }
 const pages = ["index.html","guide.html","account-safety.html","terms.html"];
 for (const path of pages) {
