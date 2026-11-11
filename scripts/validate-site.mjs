@@ -1,11 +1,11 @@
 import { readFile, access } from "node:fs/promises";
 const root = new URL("../", import.meta.url);
-const required = ["index.html","guide.html","publish.html","publishing-policy.html","link-check.html","account-safety.html","privacy.html","terms.html","archive.html","404.html","robots.txt","sitemap.xml","manifest.webmanifest","sw.js","offline.html","schemas/publisher-submission.schema.json","data/offers.json","data/inbox.json","data/sources.json","scripts/validate-offers.mjs","scripts/validate-inbox.mjs","scripts/refresh-offers.mjs","scripts/ingest-offer-feeds.mjs"];
+const required = ["index.html","guide.html","publish.html","publishing-policy.html","publisher-account.html","admin-review.html","link-check.html","account-safety.html","privacy.html","terms.html","archive.html","404.html","robots.txt","sitemap.xml","manifest.webmanifest","sw.js","offline.html","schemas/publisher-submission.schema.json","data/offers.json","data/inbox.json","data/sources.json","scripts/validate-offers.mjs","scripts/validate-inbox.mjs","scripts/refresh-offers.mjs","scripts/ingest-offer-feeds.mjs"];
 const errors = [];
 for (const path of required) {
   try { await access(new URL(path, root)); } catch { errors.push("Missing required page or project file: " + path); }
 }
-const pages = ["index.html","guide.html","publish.html","publishing-policy.html","account-safety.html","terms.html"];
+const pages = ["index.html","guide.html","publish.html","publishing-policy.html","publisher-account.html","admin-review.html","account-safety.html","terms.html"];
 for (const path of pages) {
   try {
     const content = await readFile(new URL(path, root), "utf8");
@@ -14,7 +14,7 @@ for (const path of pages) {
   } catch {}
 }
 const home = await readFile(new URL("index.html", root), "utf8");
-for (const link of ["./guide.html","./publish.html","./publishing-policy.html","./link-check.html","./account-safety.html","./privacy.html","./terms.html","./archive.html"]) {
+for (const link of ["./guide.html","./publish.html","./publishing-policy.html","./publisher-account.html","./admin-review.html","./link-check.html","./account-safety.html","./privacy.html","./terms.html","./archive.html"]) {
   if (!home.includes(link)) errors.push("Homepage is missing link: " + link);
 }
 for (const phrase of ["QuestPulse","الاستبيانات","المهام","منهجية المراجعة","كل الفرص العالمية","البحث الدقيق","اغتنم فرصة","مكافأة مباشرة","منتوج جديد"]) {
