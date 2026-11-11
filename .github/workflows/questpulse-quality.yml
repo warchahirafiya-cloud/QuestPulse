@@ -12,7 +12,7 @@ permissions:
 
 jobs:
   validate:
-    name: Validate digital-safety website
+    name: Validate rewards website
     runs-on: ubuntu-latest
     steps:
       - name: Check out repository
