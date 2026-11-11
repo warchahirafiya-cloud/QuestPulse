@@ -3,11 +3,14 @@
   "private": true,
   "version": "0.2.0",
   "type": "module",
-  "engines": { "node": ">=22" },
+  "engines": {
+    "node": ">=22"
+  },
   "scripts": {
     "start": "node server/app.js",
     "dev": "node --watch server/app.js",
-    "test:api": "node --test server/tests/*.test.js"
+    "test:api": "node --test server/tests/*.test.js",
+    "create-admin": "node server/create-admin.js"
   },
   "dependencies": {
     "better-sqlite3": "^12.2.0",
@@ -16,6 +19,7 @@
     "express-rate-limit": "^8.0.1",
     "helmet": "^8.1.0",
     "multer": "^2.0.2",
-    "zod": "^4.0.5"
+    "zod": "^4.0.5",
+    "dotenv": "^16.6.1"
   }
 }
