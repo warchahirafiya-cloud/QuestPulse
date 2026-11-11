@@ -1,5 +1,17 @@
 [
   {
+    "id": "meh-daily-deal",
+    "name": "Meh official daily deal RSS",
+    "kind": "official-retailer-rss",
+    "scope": "One daily deal published by Meh; US-focused and not assumed to be globally eligible",
+    "feedUrl": "https://meh.com/deals.rss",
+    "documentation": "https://meh.com/faq",
+    "credentialsRequired": false,
+    "status": "active",
+    "ingestionMode": "candidate-only",
+    "notes": "Official retailer RSS feed. Imported items enter data/inbox.json as pending_review only. Editors must verify current terms, eligible countries, fees, stock, and redemption before publishing."
+  },
+  {
     "id": "ebay-buy-feed",
     "name": "eBay Buy Feed API",
     "kind": "official-api",
