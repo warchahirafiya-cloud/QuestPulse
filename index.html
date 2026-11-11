@@ -24,15 +24,19 @@ section{padding:28px 0}.section-head{margin-bottom:18px}.section-head h2{margin:
 footer{margin-top:30px;padding:25px 0;border-top:1px solid var(--line);color:var(--muted);font-size:.9rem}
 @media(max-width:760px){.hero{grid-template-columns:1fr;padding:40px 0 24px}.art{min-height:170px}.grid,.steps{grid-template-columns:1fr}.navlinks{display:none}nav{padding:10px 0}.hero h1{font-size:2.55rem}}
 @media(min-width:761px){.drawer{width:360px}}
+
+.offer-tools{display:grid;gap:16px}.search-panel{padding:20px;border:1px solid var(--line);border-radius:18px;background:linear-gradient(145deg,#17233add,#10182add)}.search-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px}.field{display:grid;gap:5px}.field label{font-size:.88rem;color:var(--muted)}.field input,.field select{width:100%;min-height:46px;border:1px solid var(--line);border-radius:10px;background:#0b1324;color:var(--text);padding:9px 11px;font:inherit}.field input:focus,.field select:focus{outline:2px solid #68d9d077;border-color:var(--cyan)}.search-actions{display:flex;gap:10px;align-items:center;flex-wrap:wrap;margin-top:14px}.search-actions button{cursor:pointer;border:0}.result-meta{display:flex;justify-content:space-between;gap:12px;align-items:center;flex-wrap:wrap;color:var(--muted);font-size:.9rem}.offer-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px}.offer-card{border:1px solid var(--line);border-radius:16px;background:#111c30;padding:17px;display:flex;flex-direction:column;gap:9px}.offer-card h3{font-size:1.08rem;line-height:1.5;margin:0}.offer-card p{color:var(--muted);margin:0;font-size:.92rem}.offer-tags{display:flex;gap:6px;flex-wrap:wrap}.offer-tags span{font-size:.76rem;border:1px solid var(--line);padding:3px 8px;border-radius:99px;color:var(--muted)}.offer-link{display:inline-flex;align-self:flex-start;color:var(--cyan);font-weight:800;margin-top:auto;padding-top:5px}.empty-state{padding:25px;border:1px dashed #ffffff38;border-radius:15px;text-align:center;color:var(--muted)}.empty-state strong{display:block;color:var(--text);font-size:1.1rem;margin-bottom:5px}
+@media(max-width:850px){.search-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.offer-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:560px){.search-grid,.offer-grid{grid-template-columns:1fr}.search-panel{padding:14px}}
 </style>
 </head>
 <body>
-<header><div class="wrap"><nav><a class="brand" href="./index.html">Quest<span>Pulse</span></a><div class="navright"><div class="navlinks"><a href="#home">الرئيسية</a><a href="#categories">الأقسام</a><a href="#world">حول العالم</a><a href="#method">منهجية المراجعة</a></div><button class="menu-btn" id="openMenu" type="button" aria-label="فتح القائمة الجانبية" aria-controls="sideMenu" aria-expanded="false">☰</button></div></nav></div></header>
+<header><div class="wrap"><nav><a class="brand" href="./index.html">Quest<span>Pulse</span></a><div class="navright"><div class="navlinks"><a href="#home">الرئيسية</a><a href="#discover">الفرص العالمية</a><a href="#precise-search">البحث الدقيق</a><a href="#categories">الأقسام</a><a href="#method">منهجية المراجعة</a></div><button class="menu-btn" id="openMenu" type="button" aria-label="فتح القائمة الجانبية" aria-controls="sideMenu" aria-expanded="false">☰</button></div></nav></div></header>
 <div class="drawer-shade" id="drawerShade" aria-hidden="true"></div>
 <aside class="drawer" id="sideMenu" aria-label="القائمة الجانبية" aria-hidden="true">
 <div class="drawer-top"><h2>قائمة QuestPulse</h2><button class="close-btn" id="closeMenu" type="button" aria-label="إغلاق القائمة">×</button></div>
 <div class="drawer-links">
-<a href="./index.html">🏠 الرئيسية</a><a href="#categories">🎁 جميع فئات الفرص</a><a href="#world">🌍 البحث حول العالم</a>
+<a href="./index.html">🏠 الرئيسية</a><a href="#discover">🌍 كل الفرص العالمية</a><a href="#precise-search">🔎 البحث الدقيق</a><a href="#categories">🎁 جميع فئات الفرص</a><a href="#world">🌐 التغطية العالمية</a>
 <div class="drawer-label">اكتشف المزيد</div>
 <a href="./guide.html">📘 دليل استخدام الموقع</a><a href="./link-check.html">🔎 فحص الروابط</a><a href="./account-safety.html">🛡️ حماية الحسابات</a>
 <div class="drawer-label">معلومات الموقع</div>
@@ -40,10 +44,34 @@ footer{margin-top:30px;padding:25px 0;border-top:1px solid var(--line);color:var
 </div></aside>
 <main class="wrap">
 <section class="hero" id="home">
-<div><span class="eyebrow">العالم كله · فرص أكثر · بحث أذكى</span><h1>اكتشف المكافآت،<br><span class="gradient">والعروض حول العالم.</span></h1><p class="lead">QuestPulse دليل عالمي يساعدك على العثور على المكافآت والهدايا والمسابقات والمتاجر الإلكترونية والخصومات وكوبونات التخفيض، إلى جانب تطبيقات وبرامج الولاء والمهام الرقمية. نوضح لك البلدان المؤهلة وشروط المشاركة ومصدر كل عرض قبل اتخاذ قرارك.</p><div class="actions"><a class="btn" href="#categories">استكشف الفئات</a><a class="btn secondary" href="#world">اكتشف الفرص العالمية</a></div></div>
+<div><span class="eyebrow">العالم كله · فرص أكثر · بحث أذكى</span><h1>اكتشف المكافآت،<br><span class="gradient">والعروض حول العالم.</span></h1><p class="lead">QuestPulse دليل عالمي يساعدك على العثور على المكافآت والهدايا والمسابقات والمتاجر الإلكترونية والخصومات وكوبونات التخفيض، إلى جانب تطبيقات وبرامج الولاء والمهام الرقمية. نوضح لك البلدان المؤهلة وشروط المشاركة ومصدر كل عرض قبل اتخاذ قرارك.</p><div class="actions"><a class="btn" href="#discover">اعرض كل الفرص</a><a class="btn secondary" href="#precise-search">ابدأ البحث الدقيق</a></div></div>
 <div class="art" aria-hidden="true"><div><strong>🌍</strong><span>فرص وعروض من مختلف أنحاء العالم</span></div></div>
 </section>
 <section><div class="notice"><strong>حالة الدليل:</strong> يجري إعداد فهرس عالمي للفرص. لن نعرض أي مكافأة أو خصم أو مسابقة على أنها متاحة قبل التحقق من المصدر وتاريخ الصلاحية والبلدان المؤهلة وشروط المشاركة.</div></section>
+
+<section id="discover">
+<div class="section-head"><h2>كل الفرص العالمية المتاحة</h2><p>تظهر هنا جميع العروض المنشورة بعد التحقق منها، من مختلف الفئات والأسواق. استخدم البحث لتضييق النتائج.</p></div>
+<div class="offer-tools">
+<div class="result-meta"><span>🌐 العرض العام — جميع البلدان والفئات</span><span id="offerCount" aria-live="polite">جارٍ تحميل الفرص…</span></div>
+<div class="offer-grid" id="offerList" aria-live="polite"><div class="empty-state"><strong>جارٍ تحميل الدليل</strong>لحظة من فضلك…</div></div>
+</div>
+</section>
+<section id="precise-search">
+<div class="section-head"><h2>البحث الدقيق عن فرصة</h2><p>حدّد البلد والفئة ونوع المكافأة أو اسم المتجر للوصول إلى النتائج المناسبة.</p></div>
+<form class="search-panel" id="offerSearch">
+<div class="search-grid">
+<div class="field"><label for="q">كلمات البحث</label><input id="q" type="search" placeholder="اسم العرض أو المتجر…"></div>
+<div class="field"><label for="country">البلد المؤهل</label><input id="country" type="text" placeholder="اكتب اسم البلد"></div>
+<div class="field"><label for="category">الفئة</label><select id="category"><option value="">كل الفئات</option><option value="reward">مكافآت وهدايا</option><option value="store">متاجر إلكترونية</option><option value="discount">خصومات وكوبونات</option><option value="contest">مسابقات وسحوبات</option><option value="loyalty">برامج الولاء</option><option value="task">تطبيقات ومهام</option><option value="referral">إحالات وعروض خاصة</option></select></div>
+<div class="field"><label for="rewardType">نوع المكافأة</label><select id="rewardType"><option value="">الكل</option><option value="cash">نقدية</option><option value="gift">هدية أو منتج</option><option value="discount">خصم أو كوبون</option><option value="points">نقاط</option><option value="prize">جائزة</option><option value="other">أخرى</option></select></div>
+<div class="field"><label for="store">المتجر أو الجهة</label><input id="store" type="search" placeholder="اسم المتجر أو الشركة"></div>
+<div class="field"><label for="availability">نطاق التوفر</label><select id="availability"><option value="">الكل</option><option value="global">عالمي</option><option value="regional">بلدان محددة</option></select></div>
+<div class="field"><label for="ending">حالة العرض</label><select id="ending"><option value="">الكل</option><option value="active">ساري الآن</option><option value="ending">ينتهي قريبًا</option></select></div>
+<div class="field"><label for="sort">ترتيب النتائج</label><select id="sort"><option value="newest">الأحدث مراجعة</option><option value="ending">الأقرب انتهاءً</option><option value="value">قيمة العرض</option></select></div>
+</div>
+<div class="search-actions"><button class="btn" type="submit">🔎 ابحث الآن</button><button class="btn secondary" type="reset" id="resetSearch">إعادة ضبط البحث</button></div>
+</form>
+</section>
 <section id="categories"><div class="section-head"><h2>ماذا يمكنك أن تكتشف في QuestPulse؟</h2><p>من المكافآت المجانية إلى أفضل عروض التسوق والمسابقات.</p></div>
 <div class="grid">
 <article class="card"><div class="icon">🎁</div><h3>المكافآت والهدايا</h3><p>هدايا مجانية ومكافآت التسجيل والعروض الترويجية والفرص محدودة المدة.</p></article>
@@ -67,5 +95,49 @@ footer{margin-top:30px;padding:25px 0;border-top:1px solid var(--line);color:var
 <footer><div class="wrap">QuestPulse · دليل معلوماتي عالمي مستقل. نوضح الشروط ولا نضمن توفر العروض أو الفوز بالجوائز أو الدفع. لا نطلب كلمات المرور أو رموز التحقق. <a href="./privacy.html">الخصوصية</a> · <a href="./terms.html">شروط الاستخدام</a> · <a href="./archive.html">الأرشيف</a></div></footer>
 <script>
 (()=>{const body=document.body,open=document.getElementById('openMenu'),close=document.getElementById('closeMenu'),shade=document.getElementById('drawerShade'),drawer=document.getElementById('sideMenu');function show(){body.classList.add('menu-open');open.setAttribute('aria-expanded','true');drawer.setAttribute('aria-hidden','false');close.focus()}function hide(){body.classList.remove('menu-open');open.setAttribute('aria-expanded','false');drawer.setAttribute('aria-hidden','true');open.focus()}open.addEventListener('click',show);close.addEventListener('click',hide);shade.addEventListener('click',hide);drawer.querySelectorAll('a').forEach(a=>a.addEventListener('click',()=>{body.classList.remove('menu-open');open.setAttribute('aria-expanded','false');drawer.setAttribute('aria-hidden','true')}));document.addEventListener('keydown',e=>{if(e.key==='Escape'&&body.classList.contains('menu-open'))hide()})})();
+</script>
+
+<script>
+(()=> {
+ const list=document.getElementById('offerList'),count=document.getElementById('offerCount'),form=document.getElementById('offerSearch');
+ if(!list||!form)return;
+ let offers=[];
+ const text=v=>String(v??'').toLocaleLowerCase().trim();
+ const categoryNames={reward:'مكافآت وهدايا',store:'متاجر إلكترونية',discount:'خصومات وكوبونات',contest:'مسابقات وسحوبات',loyalty:'برامج الولاء',task:'تطبيقات ومهام',referral:'إحالات وعروض خاصة'};
+ const safe=v=>String(v??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+ function matches(o,f){
+  const hay=text([o.title,o.store,o.description,o.notes,o.source].join(' '));
+  const country=text(f.country), countries=(o.countries||[]).map(text);
+  const end=o.expiresAt?new Date(o.expiresAt):null,now=new Date();
+  if(f.q&&!hay.includes(text(f.q)))return false;
+  if(country&&!countries.some(c=>c.includes(country))&&!(o.global&&/عالمي|global|worldwide/i.test(country)))return false;
+  if(f.category&&o.category!==f.category)return false;
+  if(f.rewardType&&o.rewardType!==f.rewardType)return false;
+  if(f.store&&!text(o.store).includes(text(f.store)))return false;
+  if(f.availability==='global'&&!o.global)return false;
+  if(f.availability==='regional'&&o.global)return false;
+  if(f.ending==='active'&&end&&end<now)return false;
+  if(f.ending==='ending'&&(!end||end<now||(end-now)>7*86400000))return false;
+  return true;
+ }
+ function card(o){
+  const place=o.global?'متاح عالميًا':(o.countries||[]).join('، ')||'راجع شروط البلد';
+  const expiry=o.expiresAt?'ينتهي: '+o.expiresAt:'تاريخ الانتهاء غير محدد';
+  const url=/^https:\/\//i.test(o.url||'')?o.url:'#';
+  return '<article class="offer-card"><div class="offer-tags"><span>'+safe(categoryNames[o.category]||'فرصة')+'</span><span>'+safe(o.rewardType||'نوع غير محدد')+'</span></div><h3>'+safe(o.title)+'</h3><p>'+safe(o.description||o.notes||'راجع الشروط الرسمية قبل المشاركة.')+'</p><p>🌍 '+safe(place)+'</p><p>🎁 '+safe(o.value||'القيمة حسب شروط الجهة')+'</p><p>📅 '+safe(expiry)+'</p><p>آخر مراجعة: '+safe(o.verifiedAt||'غير محدد')+'</p>'+(url!=='#'?'<a class="offer-link" href="'+safe(url)+'" target="_blank" rel="noopener noreferrer">المصدر الرسمي ↗</a>':'<span class="offer-link">الرابط قيد المراجعة</span>')+'</article>';
+ }
+ function render(){
+  const f={q:document.getElementById('q').value,country:document.getElementById('country').value,category:document.getElementById('category').value,rewardType:document.getElementById('rewardType').value,store:document.getElementById('store').value,availability:document.getElementById('availability').value,ending:document.getElementById('ending').value,sort:document.getElementById('sort').value};
+  let rows=offers.filter(o=>matches(o,f));
+  if(f.sort==='ending')rows.sort((a,b)=>(a.expiresAt||'9999').localeCompare(b.expiresAt||'9999'));
+  else if(f.sort==='newest')rows.sort((a,b)=>(b.verifiedAt||'').localeCompare(a.verifiedAt||''));
+  else rows.sort((a,b)=>String(b.value||'').localeCompare(String(a.value||'')));
+  count.textContent=rows.length+' فرصة موثقة';
+  list.innerHTML=rows.length?rows.map(card).join(''):'<div class="empty-state" style="grid-column:1/-1"><strong>لا توجد نتائج مطابقة حاليًا</strong>لم نضف عروضًا غير مؤكدة لمجرد ملء الصفحة. جرّب تغيير عوامل البحث أو عُد لاحقًا للاطلاع على الفرص الجديدة.</div>';
+ }
+ form.addEventListener('submit',e=>{e.preventDefault();render();document.getElementById('discover').scrollIntoView({behavior:'smooth',block:'start'});});
+ form.addEventListener('reset',()=>setTimeout(render,0));
+ fetch('./data/offers.json',{cache:'no-store'}).then(r=>{if(!r.ok)throw Error('catalog unavailable');return r.json();}).then(data=>{offers=Array.isArray(data)?data.filter(o=>o&&o.status==='published'&&o.title&&o.url&&o.verifiedAt):[];render();}).catch(()=>{offers=[];render();count.textContent='تعذر تحميل الدليل';});
+})();
 </script>
 </body></html>
