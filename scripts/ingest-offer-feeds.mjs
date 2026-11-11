@@ -16,7 +16,12 @@ const activeFeeds = sources.filter(source =>
 const existing = new Set(inbox.map(item => item.id));
 let added = 0;
 const failures = [];
+const allowedHosts = new Set(["meh.com", "promomagpie.com", "vouchermagpie.co.uk"]);
 
+function validHttps(value) {
+  try { const url = new URL(value); return url.protocol === "https:" && !url.username && !url.password ? url.href : ""; }
+  catch { return ""; }
+}
 function decodeXml(value = "") {
   return value
     .replace(/<!\[CDATA\[([\s\S]*?)\]\]>/g, "$1")
@@ -30,50 +35,107 @@ function tag(block, name) {
   const match = block.match(new RegExp("<" + name + "(?:\\s[^>]*)?>([\\s\\S]*?)</" + name + ">", "i"));
   return match ? decodeXml(match[1]) : "";
 }
-function validHttps(value) {
-  try { const url = new URL(value); return url.protocol === "https:" && !url.username && !url.password ? url.href : ""; }
-  catch { return ""; }
+function clean(value, max = 1200) {
+  return String(value ?? "").replace(/<[^>]*>/g, " ").replace(/\s+/g, " ").trim().slice(0, max);
+}
+async function getText(url, accept) {
+  const response = await fetch(url, {
+    headers: { "user-agent": "QuestPulseOfferIndexer/1.0 (+https://getquestpulse.com)", accept },
+    signal: AbortSignal.timeout(25000)
+  });
+  if (!response.ok) throw new Error("HTTP " + response.status);
+  const body = await response.text();
+  if (body.length > 4_000_000) throw new Error("Feed exceeded 4 MB safety limit.");
+  return body;
+}
+function addCandidate(candidate) {
+  if (!candidate.title || !candidate.url) return;
+  const id = createHash("sha256").update(candidate.sourceId + "|" + candidate.externalId).digest("hex").slice(0, 20);
+  if (existing.has(id)) return;
+  inbox.push({
+    id,
+    title: clean(candidate.title, 240),
+    description: clean(candidate.description),
+    url: candidate.url,
+    source: candidate.source,
+    sourceId: candidate.sourceId,
+    store: clean(candidate.store, 160),
+    merchantWebsite: candidate.merchantWebsite || null,
+    countries: candidate.country ? [candidate.country] : [],
+    global: false,
+    currency: candidate.currency || null,
+    discoveredAt: new Date().toISOString(),
+    publishedAt: candidate.publishedAt || null,
+    lastCheckedAt: candidate.lastCheckedAt || null,
+    expiresAt: candidate.expiresAt || null,
+    status: "pending_review",
+    reviewNote: "Discovery only. Verify current availability, merchant terms, eligible countries, fees, and redemption on the original merchant page before publication."
+  });
+  existing.add(id);
+  added++;
 }
 
 for (const source of activeFeeds) {
   const feedUrl = validHttps(source.feedUrl);
-  if (!feedUrl || new URL(feedUrl).hostname !== "meh.com") {
-    failures.push(source.id + ": feed URL is not on the approved meh.com host.");
+  if (!feedUrl || !allowedHosts.has(new URL(feedUrl).hostname)) {
+    failures.push(source.id + ": feed URL is not on an approved host.");
     continue;
   }
   try {
-    const response = await fetch(feedUrl, {
-      headers: { "user-agent": "QuestPulseOfferIndexer/1.0 (+https://getquestpulse.com)", "accept": "application/rss+xml, application/xml, text/xml" },
-      signal: AbortSignal.timeout(20000)
-    });
-    if (!response.ok) throw new Error("HTTP " + response.status);
-    const xml = await response.text();
-    if (xml.length > 2_000_000) throw new Error("Feed exceeded 2 MB safety limit.");
-    const items = [...xml.matchAll(/<item\b[^>]*>([\s\S]*?)<\/item>/gi)].map(match => match[1]);
-    for (const block of items.slice(0, 30)) {
-      const title = tag(block, "title");
-      const description = tag(block, "description");
-      const link = validHttps(tag(block, "link"));
-      const guid = tag(block, "guid") || link || title;
-      if (!title || !link) continue;
-      const id = createHash("sha256").update(source.id + "|" + guid).digest("hex").slice(0, 20);
-      if (existing.has(id)) continue;
-      const pubDate = tag(block, "pubDate");
-      const publishedAt = pubDate && Number.isFinite(Date.parse(pubDate)) ? new Date(pubDate).toISOString() : null;
-      inbox.push({
-        id,
-        title: title.slice(0, 240),
-        description: description.slice(0, 1200),
-        url: link,
-        source: "https://meh.com",
-        sourceId: source.id,
-        discoveredAt: new Date().toISOString(),
-        publishedAt,
-        status: "pending_review",
-        reviewNote: "Discovery only. Confirm current availability, country eligibility, fees, terms, and redemption on the original retailer page before publication."
-      });
-      existing.add(id);
-      added++;
+    if (source.feedFormat === "json") {
+      const data = JSON.parse(await getText(feedUrl, "application/json"));
+      const publisher = data.publisher || {};
+      if (publisher.country !== source.publisherCountry) throw new Error("Feed publisher country did not match the source registry.");
+      if (publisher.url && new URL(publisher.url).hostname !== new URL(feedUrl).hostname) throw new Error("Unexpected publisher domain.");
+      const records = Array.isArray(data.offers) ? data.offers : [];
+      for (const offer of records.slice(0, 250)) {
+        const url = validHttps(offer.url);
+        const expiry = offer.expires_at && Date.parse(offer.expires_at);
+        const checked = offer.last_checked_at && Date.parse(offer.last_checked_at);
+        if (expiry && expiry <= Date.now()) continue;
+        if (!Number.isFinite(checked) || Date.now() - checked > 30 * 86400000) continue;
+        if (!url || new URL(url).hostname !== new URL(feedUrl).hostname) continue;
+        addCandidate({
+          sourceId: source.id,
+          externalId: String(offer.id),
+          title: offer.title,
+          description: [offer.discount, offer.terms].filter(Boolean).join(" — "),
+          url,
+          source: publisher.url || new URL(feedUrl).origin,
+          store: offer.store?.name || "",
+          merchantWebsite: validHttps(offer.store?.website),
+          country: publisher.country,
+          currency: publisher.currency,
+          publishedAt: offer.starts_at,
+          lastCheckedAt: offer.last_checked_at,
+          expiresAt: offer.expires_at
+        });
+      }
+    } else {
+      if (source.feedFormat && source.feedFormat !== "rss") throw new Error("Unsupported feed format.");
+      if (new URL(feedUrl).hostname !== "meh.com") throw new Error("RSS feed host is not approved.");
+      const xml = await getText(feedUrl, "application/rss+xml, application/xml, text/xml");
+      const items = [...xml.matchAll(/<item\b[^>]*>([\s\S]*?)<\/item>/gi)].map(match => match[1]);
+      for (const block of items.slice(0, 30)) {
+        const title = tag(block, "title");
+        const description = tag(block, "description");
+        const link = validHttps(tag(block, "link"));
+        const guid = tag(block, "guid") || link || title;
+        if (!title || !link) continue;
+        const pubDate = tag(block, "pubDate");
+        const publishedAt = pubDate && Number.isFinite(Date.parse(pubDate)) ? new Date(pubDate).toISOString() : null;
+        addCandidate({
+          sourceId: source.id,
+          externalId: guid,
+          title,
+          description,
+          url: link,
+          source: "https://meh.com",
+          store: "Meh",
+          country: "United States",
+          publishedAt
+        });
+      }
     }
   } catch (error) {
     failures.push(source.id + ": " + error.message);
