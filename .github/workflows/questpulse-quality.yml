@@ -25,8 +25,11 @@ jobs:
         run: npm install --no-audit --no-fund
       - name: Audit production dependencies
         run: npm audit --omit=dev --audit-level=high
-      - name: Check backend JavaScript syntax
-        run: node --check server/app.js && node --check server/create-admin.js
+      - name: Check all backend and test JavaScript syntax
+        run: |
+          for file in server/*.js server/tests/*.js; do
+            node --check "$file"
+          done
       - name: Test publisher API validation and security helpers
         run: npm run test:api
       - name: Validate website pages
