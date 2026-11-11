@@ -21,6 +21,10 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: 22
+      - name: Install API dependencies
+        run: npm install --no-audit --no-fund
+      - name: Test publisher API validation
+        run: npm run test:api
       - name: Validate website pages
         run: node scripts/validate-site.mjs
       - name: Validate published offers catalogue
