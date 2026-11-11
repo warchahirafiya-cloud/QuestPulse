@@ -58,7 +58,7 @@ for (const [index, item] of inbox.entries()) {
     : null;
 
   if (offerUrl) {
-    const canonicalUrl = offerUrl.origin + (offerUrl.pathname.endsWith("/") ? offerUrl.pathname.slice(0, -1) : offerUrl.pathname);
+    const canonicalUrl = offerUrl.origin + (offerUrl.pathname.endsWith("/") ? offerUrl.pathname.slice(0, -1) : offerUrl.pathname) + offerUrl.hash;
     if (offerUrls.has(canonicalUrl)) {
       errors.push(label + " duplicates another candidate offer URL.");
     } else {
