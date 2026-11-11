@@ -9,7 +9,7 @@ import { randomUUID } from "node:crypto";
 import { db } from "./db.js";
 import { hashPassword, verifyPassword, hashToken, makeToken, newId } from "./auth.js";
 import { accountSchema, postSchema } from "./validation.js";
-import { originGuard, safeUser } from "./security.js";
+import { originGuard, safeUser, readCookie } from "./security.js";
 
 const app = express();
 const isProduction = process.env.NODE_ENV === "production";
@@ -36,14 +36,13 @@ const statements = {
   deleteSession: db.prepare("DELETE FROM sessions WHERE token_hash=?")
 };
 function requireUser(req,res,next){
-  const token=req.cookies?.[cookieName] || parseCookie(req.headers.cookie,cookieName);
+  const token=req.cookies?.[cookieName] || readCookie(req.headers.cookie,cookieName);
   if(!token)return res.status(401).json({error:"Authentication required."});
   const user=statements.sessionUser.get(hashToken(token),Date.now());
   if(!user || user.status!=="active")return res.status(401).json({error:"Session is invalid or account is not active."});
   req.user=user;req.sessionToken=token;next();
 }
 function requireAdmin(req,res,next){if(req.user?.role!=="admin")return res.status(403).json({error:"Administrator access required."});next();}
-function parseCookie(header,name){for(const part of (header||"").split(";")){const [key,...value]=part.trim().split("=");if(key===name)return value.join("=");}return null;}
 function setSession(res,userId){const token=makeToken();statements.insertSession.run(hashToken(token),userId,Date.now()+sessionDays*86400000,new Date().toISOString());res.cookie(cookieName,token,cookieOptions);}
 function cleanFiles(files=[]){return Promise.all(files.map(file=>unlink(file.path).catch(()=>{})));}
 const storage=multer.diskStorage({destination:(_req,_file,cb)=>cb(null,uploadDir),filename:(_req,file,cb)=>cb(null,randomUUID()+path.extname(file.originalname).toLowerCase())});
@@ -83,7 +82,7 @@ app.post("/api/auth/login",authLimit,async(req,res)=>{
  if(user.status!=="active")return res.status(403).json({error:"Account is awaiting activation or is suspended.",status:user.status});
  setSession(res,user.id);res.json({user:safeUser(user)});
 });
-app.post("/api/auth/logout",(req,res)=>{const token=parseCookie(req.headers.cookie,cookieName);if(token)statements.deleteSession.run(hashToken(token));res.clearCookie(cookieName,{...cookieOptions,maxAge:undefined});res.status(204).end()});
+app.post("/api/auth/logout",(req,res)=>{const token=readCookie(req.headers.cookie,cookieName);if(token)statements.deleteSession.run(hashToken(token));res.clearCookie(cookieName,{...cookieOptions,maxAge:undefined});res.status(204).end()});
 app.get("/api/auth/me",requireUser,(req,res)=>res.json({user:safeUser(req.user)}));
 
 app.get("/api/posts",(_req,res)=>{
