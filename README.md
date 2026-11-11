@@ -1,49 +1,26 @@
 # QuestPulse
 
-**A neutral educational information prototype.**
+**A digital-safety and source-verification learning site.**
 
-QuestPulse is currently limited to neutral educational material about digital-service verification, online safety, source evaluation, and risk awareness. Opportunity categories remain paused; the site must not publish participation links, referral links, Telegram bot invitations, deposit or activation instructions, claim paths, or monetized promotions while qualified written legal review of the exact operating model is pending.
+QuestPulse helps visitors learn how to check website links, recognize phishing, protect online accounts, and evaluate information sources.
 
-**Principle:** Learn. Verify. Protect yourself.
+## Live project
+- Website: https://getquestpulse.com
+- Repository: https://github.com/warchahirafiya-cloud/QuestPulse
 
-> **Temporary operating notice (10 November 2026):** All opportunity categories are paused as a precaution. This notice is not a legal determination. Do not treat category cards or placeholder records as available offers, recommendations, or invitations to participate.
+## Current scope
+The active website is limited to digital safety education, link and domain awareness, phishing prevention, account and device protection, privacy, and source verification.
 
-## Project links
+Earlier modules outside this scope have been separated from the active website and preserved in the project archive for reference. They are not active services and are not linked as offers. Any future feature outside the current scope will be developed separately and reviewed before publication.
 
-- Live preview: https://warchahirafiya-cloud.github.io/QuestPulse/
-- Source repository: https://github.com/warchahirafiya-cloud/QuestPulse
-- Custom domain: https://getquestpulse.com (registered; DNS and HTTPS setup in progress)
-- [Historical archive](archive.html) — worldwide read-only access to the project history and category index.
+## Main pages
+- [Home](index.html)
+- [Digital safety guide](guide.html)
+- [Link checking](link-check.html)
+- [Account safety checklist](account-safety.html)
+- [Privacy](privacy.html)
+- [Terms](terms.html)
+- [Previous versions archive](archive.html)
 
-## Current status
-
-The site is an evolving project. Some opportunity categories are placeholders pending opportunity research and qualified legal review. The QP counter and activity indicator are currently interface elements; they do not represent a live points ledger or connected usage analytics.
-
-The website and historical archive remain readable worldwide. Country-specific service eligibility is separate from website access and must be supported by current authoritative evidence. No IP-based country block is applied to the website.
-
-## Public guide
-
-- [Verification, glossary, wallet safety and FAQ](guide.html)
-- [Historical archive](archive.html)
-- [Privacy notice — preliminary draft](privacy.html)
-- [Terms of use — preliminary draft](terms.html)
-- [Custom not-found page](404.html)
-- [Crawler rules](robots.txt) and [public sitemap](sitemap.xml)
-
-## Documentation
-
-See [docs/EDITORIAL_POLICY.md](docs/EDITORIAL_POLICY.md) for evidence standards, global website access, country-specific eligibility, and publication boundaries.
-
-See [docs/PROJECT_DOSSIER.md](docs/PROJECT_DOSSIER.md) for the project overview, scope, current implementation, verification standards, safety principles, ownership guidance, domain status, and roadmap.
-
-## Safety
-
-QuestPulse does not guarantee rewards or returns. Never share a seed phrase or private key. The current prototype is educational only; no opportunity participation or promotion is active. Obtain qualified legal review before enabling any restricted or regulated feature.
-
-## Disclaimer
-
-QuestPulse is an informational discovery platform, not an exchange, wallet, investment manager, or provider of financial, legal, or tax advice.
-
-## Safe registry publishing
-
-The editor is local-only. Submit exported registry JSON through the [review workflow](.github/workflows/submit-opportunity-registry.yml); it runs validation and opens a pull request instead of writing directly to `main`. See [safe publishing instructions](docs/SAFE_PUBLISHING.md).
+## Principle
+Learn. Verify. Protect yourself.
