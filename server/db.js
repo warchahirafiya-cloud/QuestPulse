@@ -60,4 +60,23 @@ CREATE TABLE IF NOT EXISTS media (
   created_at TEXT NOT NULL
 );
 CREATE INDEX IF NOT EXISTS media_post_idx ON media(post_id);
+CREATE TABLE IF NOT EXISTS video_jobs (
+  id TEXT PRIMARY KEY,
+  source_post_id TEXT NOT NULL REFERENCES posts(id),
+  title TEXT NOT NULL,
+  source_snapshot TEXT NOT NULL,
+  language TEXT NOT NULL CHECK(language IN ('ar','en')),
+  aspect_ratio TEXT NOT NULL CHECK(aspect_ratio IN ('9:16','16:9')),
+  status TEXT NOT NULL DEFAULT 'queued' CHECK(status IN ('queued','processing','completed','failed','cancelled')),
+  created_by TEXT NOT NULL REFERENCES users(id),
+  artifact_key TEXT,
+  error_message TEXT,
+  started_at TEXT,
+  completed_at TEXT,
+  created_at TEXT NOT NULL,
+  updated_at TEXT NOT NULL
+);
+CREATE INDEX IF NOT EXISTS video_jobs_queue_idx ON video_jobs(status, created_at);
+CREATE INDEX IF NOT EXISTS video_jobs_source_idx ON video_jobs(source_post_id, created_at DESC);
+
 `);
