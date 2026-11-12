@@ -11,6 +11,7 @@ import { hashPassword, verifyPassword, hashToken, makeToken, newId } from "./aut
 import { accountSchema, postSchema } from "./validation.js";
 import { originGuard, safeUser, readCookie } from "./security.js";
 import { domainHunter } from "./domain-hunter.js";
+import { createVideoJobsRouter } from "./video-jobs.js";
 
 const app = express();
 const isProduction = process.env.NODE_ENV === "production";
@@ -46,6 +47,7 @@ function requireUser(req,res,next){
 function requireAdmin(req,res,next){if(req.user?.role!=="admin")return res.status(403).json({error:"Administrator access required."});next();}
 function setSession(res,userId){const token=makeToken();statements.insertSession.run(hashToken(token),userId,Date.now()+sessionDays*86400000,new Date().toISOString());res.cookie(cookieName,token,cookieOptions);}
 function cleanFiles(files=[]){return Promise.all(files.map(file=>unlink(file.path).catch(()=>{})));}
+app.use("/api/admin/video-jobs", createVideoJobsRouter({ db, requireUser, requireAdmin, submitLimit }));
 const storage=multer.diskStorage({destination:(_req,_file,cb)=>cb(null,uploadDir),filename:(_req,file,cb)=>cb(null,randomUUID()+path.extname(file.originalname).toLowerCase())});
 const upload=multer({storage,limits:{files:6,fileSize:Number(process.env.MAX_VIDEO_BYTES||20971520)},fileFilter:(_req,file,cb)=>{
  const images=["image/jpeg","image/png","image/webp","image/gif"],videos=["video/mp4","video/webm","video/ogg"];
