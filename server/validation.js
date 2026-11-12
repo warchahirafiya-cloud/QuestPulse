@@ -37,3 +37,22 @@ export const accountSchema = z.object({
   email: z.string().trim().email().max(254),
   password: z.string().min(12).max(128)
 });
+
+export const videoJobCreateSchema = z.object({
+  sourcePostId: z.string().uuid(),
+  language: z.enum(["ar", "en"]).default("ar"),
+  aspectRatio: z.enum(["9:16", "16:9"]).default("9:16")
+}).strict();
+
+export const videoJobResultSchema = z.discriminatedUnion("status", [
+  z.object({
+    jobId: z.string().uuid(),
+    status: z.literal("completed"),
+    artifactKey: z.string().regex(/^[a-f0-9-]{36}\/[a-f0-9-]{36}\.mp4$/)
+  }).strict(),
+  z.object({
+    jobId: z.string().uuid(),
+    status: z.literal("failed"),
+    error: z.string().trim().min(1).max(500)
+  }).strict()
+]);
