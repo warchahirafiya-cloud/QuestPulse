@@ -1,0 +1,12 @@
+.git
+.github
+node_modules
+.env
+.env.*
+!.env.example
+server/data
+server/uploads
+server/private-video-artifacts
+worker/.venv
+worker/__pycache__
+*.log
