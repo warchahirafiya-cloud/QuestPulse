@@ -23,6 +23,20 @@ function validHttps(value) {
   try { const url = new URL(value); return url.protocol === "https:" && !url.username && !url.password ? url.href : ""; }
   catch { return ""; }
 }
+function canonicalOfferUrl(value) {
+  const url = new URL(value);
+  const pathname = url.pathname.endsWith("/") ? url.pathname.slice(0, -1) : url.pathname;
+  return url.origin + pathname + url.search + url.hash;
+}
+
+// Prevent duplicates already in the inbox and duplicates discovered across
+// different feed records during this run. Keep query strings and fragments,
+// since they can identify distinct voucher/deal records on the same page.
+const existingOfferUrls = new Set();
+for (const item of inbox) {
+  if (typeof item?.url !== "string") continue;
+  try { existingOfferUrls.add(canonicalOfferUrl(item.url)); } catch {}
+}
 function decodeXml(value = "") {
   return value
     .replace(/<!\[CDATA\[([\s\S]*?)\]\]>/g, "$1")
@@ -63,6 +77,10 @@ function addCandidate(candidate) {
     }
     return;
   }
+
+  const canonicalUrl = canonicalOfferUrl(candidate.url);
+  if (existingOfferUrls.has(canonicalUrl)) return;
+
   const record = {
     id,
     title: clean(candidate.title, 240),
@@ -85,6 +103,7 @@ function addCandidate(candidate) {
   inbox.push(record);
   existing.add(id);
   existingById.set(id, record);
+  existingOfferUrls.add(canonicalUrl);
   added++;
 }
 
