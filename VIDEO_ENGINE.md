@@ -51,12 +51,12 @@ QuestPulse is currently a static GitHub Pages site with a separate Node.js 22 + 
 - [x] Add administrator-only job creation/list/detail/cancel/retry endpoints.
 - [x] Add authenticated worker claim and completion/failure endpoints.
 - [x] Add validation and state-transition tests.
-- [ ] Confirm CI passes on the feature branch.
+- [x] Confirm CI passes on the feature branch.
 
 ### M2 — Worker adapter
-- [ ] Add a Python worker adapter for MoneyPrinterTurbo.
-- [ ] Document local setup and environment variables without committing secrets.
-- [ ] Confirm a full local test render using free/local components.
+- [x] Add a Python worker adapter for MoneyPrinterTurbo.
+- [x] Document local setup and environment variables without committing secrets.
+- [ ] Confirm a full end-to-end render using configured free/local components.
 
 ### M3 — Studio interface
 - [ ] Add administrator-only job creation and status UI.
@@ -84,6 +84,22 @@ Worker requests require a server-side `VIDEO_WORKER_TOKEN` of at least 32 charac
 
 The API supports Arabic/English output metadata and 9:16 / 16:9 formats. The current work creates and manages jobs; it does not yet render a video. MoneyPrinterTurbo worker execution remains M2.
 
+
+## M2 implementation notes
+
+The feature branch now contains a Python 3.11 worker under `worker/`:
+
+- Claims jobs from the QuestPulse internal worker API using a server-side bearer token.
+- Builds a short Arabic or English narration only from the reviewed post title and description; no reward or eligibility facts are invented.
+- Supplies script and search terms to MoneyPrinterTurbo, selects Edge TTS voices, and sets background music volume to zero.
+- Polls MoneyPrinterTurbo task state, downloads the completed MP4 through its task download endpoint, and streams the file with a 120 MB limit.
+- Uploads the MP4 through a worker-authenticated endpoint. The Node API stores it in a private, Git-ignored artifact directory; authenticated administrators can download completed output from `GET /api/admin/video-jobs/:id/artifact`.
+- Does not call any social publishing endpoint.
+
+The worker requires a reachable QuestPulse Node API and a separate MoneyPrinterTurbo API runtime. The default footage source is Pexels; its key must be configured in MoneyPrinterTurbo itself. The worker does not require an LLM key for script/terms because it constructs those from the approved source snapshot, and Edge TTS needs no key. Provider free-tier limits and licensing still apply.
+
+Python adapter unit tests were added to GitHub Actions and passed. This validates adapter logic and syntax, not a real video render. The end-to-end render remains pending until both services are configured and running.
+
 ## Current limitations
 
-A GitHub repository connection permits repository changes; it does not itself provide a running Python host, FFmpeg runtime, persistent worker, or video storage. Therefore, this branch is groundwork only: no live video generation or public publishing is claimed until M1–M4 are implemented and tested.
+A GitHub repository connection permits repository changes; it does not itself provide a running Python host, FFmpeg runtime, persistent worker, or video storage. Therefore, the worker code and private artifact path are implemented, but no live video generation is claimed until the Node API and MoneyPrinterTurbo runtime are configured and an end-to-end render is verified. No public publishing is enabled.
