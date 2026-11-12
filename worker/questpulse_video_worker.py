@@ -161,17 +161,17 @@ def download_video(mpt: httpx.Client, mpt_base: str, task: dict[str, Any], desti
     if not isinstance(candidates, list) or not candidates:
         raise RuntimeError("MoneyPrinterTurbo completed without returning a video file")
     relative = output_relative_path(mpt_base, str(candidates[0]))
-    response = mpt.get("/download/" + quote(relative, safe="/"), timeout=300.0)
-    response.raise_for_status()
     total = 0
-    with destination.open("wb") as output:
-        for chunk in response.iter_bytes(1024 * 1024):
-            if STOP:
-                raise RuntimeError("Worker shutdown requested during download")
-            total += len(chunk)
-            if total > 120 * 1024 * 1024:
-                raise RuntimeError("Generated video exceeds the 120 MB upload limit")
-            output.write(chunk)
+    with mpt.stream("GET", "/download/" + quote(relative, safe="/"), timeout=300.0) as response:
+        response.raise_for_status()
+        with destination.open("wb") as output:
+            for chunk in response.iter_bytes(1024 * 1024):
+                if STOP:
+                    raise RuntimeError("Worker shutdown requested during download")
+                total += len(chunk)
+                if total > 120 * 1024 * 1024:
+                    raise RuntimeError("Generated video exceeds the 120 MB upload limit")
+                output.write(chunk)
     if total < 12:
         raise RuntimeError("Downloaded video is empty or invalid")
     with destination.open("rb") as video:
