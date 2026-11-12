@@ -2,7 +2,7 @@ name: QuestPulse quality checks
 
 on:
   push:
-    branches: [main]
+    branches: [main, 'feature/questpulse-video-engine']
   pull_request:
     branches: [main]
   workflow_dispatch:
