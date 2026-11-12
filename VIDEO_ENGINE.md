@@ -47,10 +47,11 @@ QuestPulse is currently a static GitHub Pages site with a separate Node.js 22 + 
 - [x] Record architecture, scope, cost, security, and approval constraints.
 
 ### M1 — Secure job queue
-- [ ] Add SQLite job schema and migration-safe initialization.
-- [ ] Add administrator-only job creation/list/detail/cancel/retry endpoints.
-- [ ] Add authenticated worker claim and completion/failure endpoints.
-- [ ] Add validation and state-transition tests.
+- [x] Add SQLite job schema and migration-safe initialization.
+- [x] Add administrator-only job creation/list/detail/cancel/retry endpoints.
+- [x] Add authenticated worker claim and completion/failure endpoints.
+- [x] Add validation and state-transition tests.
+- [ ] Confirm CI passes on the feature branch.
 
 ### M2 — Worker adapter
 - [ ] Add a Python worker adapter for MoneyPrinterTurbo.
@@ -67,6 +68,21 @@ QuestPulse is currently a static GitHub Pages site with a separate Node.js 22 + 
 - [ ] Verify storage quota and retention before enabling uploads.
 - [ ] Obtain explicit approval before any service that can incur charges is enabled.
 - [ ] Deploy only after security checks and end-to-end tests pass.
+
+
+## M1 implementation notes
+
+The feature branch now includes a persistent SQLite `video_jobs` queue and the API routes below:
+
+- `POST /api/admin/video-jobs` — admin creates a job from a published QuestPulse post only.
+- `GET /api/admin/video-jobs` and `GET /api/admin/video-jobs/:id` — admin list/detail.
+- `POST /api/admin/video-jobs/:id/cancel` and `POST /api/admin/video-jobs/:id/retry` — controlled state changes.
+- `POST /api/admin/video-jobs/worker/claim` — worker claims the oldest queued job.
+- `POST /api/admin/video-jobs/worker/result` — worker reports completion/failure.
+
+Worker requests require a server-side `VIDEO_WORKER_TOKEN` of at least 32 characters, sent as a Bearer token. No token is stored in the repository. Completed results accept only a job-scoped UUID artifact key; arbitrary filesystem paths are rejected. Artifact delivery and preview are intentionally not exposed until storage is implemented.
+
+The API supports Arabic/English output metadata and 9:16 / 16:9 formats. The current work creates and manages jobs; it does not yet render a video. MoneyPrinterTurbo worker execution remains M2.
 
 ## Current limitations
 
