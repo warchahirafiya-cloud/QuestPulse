@@ -1,0 +1,54 @@
+services:
+  api:
+    build:
+      context: .
+      dockerfile: Dockerfile.api
+    restart: unless-stopped
+    env_file:
+      - .env
+    environment:
+      NODE_ENV: development
+      PORT: 3000
+      DATABASE_PATH: /var/lib/questpulse/questpulse.sqlite
+      UPLOAD_DIR: /var/lib/questpulse/uploads
+      VIDEO_ARTIFACT_DIR: /var/lib/questpulse/video-artifacts
+      APP_ORIGIN: http://localhost:3000
+    ports:
+      - "127.0.0.1:3000:3000"
+    volumes:
+      - questpulse-data:/var/lib/questpulse
+    healthcheck:
+      test: ["CMD", "node", "-e", "fetch('http://127.0.0.1:3000/api/health').then(r => process.exit(r.ok ? 0 : 1)).catch(() => process.exit(1))"]
+      interval: 15s
+      timeout: 5s
+      retries: 10
+      start_period: 20s
+    security_opt:
+      - no-new-privileges:true
+
+  video-worker:
+    build:
+      context: ./worker
+    restart: unless-stopped
+    env_file:
+      - .env
+    environment:
+      QUESTPULSE_API_URL: http://api:3000
+      MPT_BASE_URL: ${MPT_BASE_URL:-http://host.docker.internal:8080}
+      MPT_VIDEO_SOURCE: ${MPT_VIDEO_SOURCE:-pexels}
+      WORKER_POLL_SECONDS: ${WORKER_POLL_SECONDS:-10}
+      MPT_POLL_SECONDS: ${MPT_POLL_SECONDS:-8}
+      MPT_TASK_TIMEOUT_SECONDS: ${MPT_TASK_TIMEOUT_SECONDS:-2400}
+      LOG_LEVEL: ${LOG_LEVEL:-INFO}
+    depends_on:
+      api:
+        condition: service_healthy
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+    init: true
+    security_opt:
+      - no-new-privileges:true
+
+volumes:
+  questpulse-data:
+    name: questpulse-video-data
