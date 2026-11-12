@@ -26,7 +26,8 @@ function validHttps(value) {
 function canonicalOfferUrl(value) {
   const url = new URL(value);
   const pathname = url.pathname.endsWith("/") ? url.pathname.slice(0, -1) : url.pathname;
-  return url.origin + pathname + url.search + url.hash;
+  // Match validate-inbox.mjs: tracking/query parameters do not make a new offer.
+  return url.origin + pathname + url.hash;
 }
 
 // Prevent duplicates already in the inbox and duplicates discovered across
