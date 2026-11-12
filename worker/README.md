@@ -93,3 +93,19 @@ python -m unittest discover -s worker -p 'test_*.py'
 ```
 
 The worker cannot run until the Node API and MoneyPrinterTurbo endpoints are reachable and the required provider settings are valid. A successful GitHub build is not proof of a completed video render.
+
+## Docker runtime (API + worker)
+
+A root-level Compose setup is available for local operation:
+
+```sh
+cp .env.example .env
+# Set VIDEO_WORKER_TOKEN to a fresh secret (at least 32 characters).
+docker compose -f docker-compose.video.yml up -d --build
+docker compose -f docker-compose.video.yml ps
+docker compose -f docker-compose.video.yml logs -f api video-worker
+```
+
+This starts the QuestPulse Node API and worker. MoneyPrinterTurbo is intentionally managed separately; start its official Docker runtime and set `MPT_BASE_URL` in `.env` (default: `http://host.docker.internal:8080`). Full instructions, persistent volume notes, and shutdown/backup guidance are in `VIDEO_RUNTIME.md`.
+
+The API is bound to localhost only. The Compose setup is a local runtime baseline, not a public production deployment. It does not provision hosting, cloud storage, Pexels credentials, or paid services.
