@@ -6,3 +6,7 @@ server/data/
 server/uploads/
 coverage/
 .DS_Store
+server/private-video-artifacts/
+worker/.venv/
+worker/__pycache__/
+worker/*.pyc
