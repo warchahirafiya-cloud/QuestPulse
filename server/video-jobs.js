@@ -1,4 +1,7 @@
-import { timingSafeEqual } from "node:crypto";
+import { timingSafeEqual, randomUUID } from "node:crypto";
+import { mkdir, writeFile } from "node:fs/promises";
+import path from "node:path";
+import multer from "multer";
 import { Router } from "express";
 import { videoJobCreateSchema, videoJobResultSchema } from "./validation.js";
 import { newId } from "./auth.js";
@@ -41,9 +44,10 @@ function publicJob(row) {
   };
 }
 
-export function createVideoJobsRouter({ db, requireUser, requireAdmin, submitLimit }) {
+export function createVideoJobsRouter({ db, requireUser, requireAdmin, submitLimit, artifactDir }) {
   const router = Router();
   const getJob = db.prepare("SELECT * FROM video_jobs WHERE id=?");
+  const artifactUpload = multer({ storage: multer.memoryStorage(), limits: { files: 1, fileSize: 120 * 1024 * 1024 } });
 
   router.post("/", requireUser, requireAdmin, submitLimit, (req, res) => {
     const parsed = videoJobCreateSchema.safeParse(req.body);
@@ -89,6 +93,33 @@ export function createVideoJobsRouter({ db, requireUser, requireAdmin, submitLim
     const now = new Date().toISOString();
     db.prepare("UPDATE video_jobs SET status='queued',error_message=NULL,artifact_key=NULL,started_at=NULL,completed_at=NULL,updated_at=? WHERE id=? AND status='failed'").run(now, row.id);
     res.json({ job: publicJob(getJob.get(row.id)) });
+  });
+
+  router.post("/worker/artifact/:id", requireWorker, artifactUpload.single("file"), async (req, res) => {
+    const row = getJob.get(req.params.id);
+    if (!row || row.status !== "processing") return res.status(409).json({ error: "Job is missing or no longer processing." });
+    const file = req.file;
+    if (!file || file.mimetype !== "video/mp4" || file.size < 12 || file.buffer.subarray(4, 8).toString() !== "ftyp") {
+      return res.status(400).json({ error: "A valid MP4 video file is required." });
+    }
+    const artifactId = randomUUID();
+    const artifactKey = row.id + "/" + artifactId + ".mp4";
+    const directory = path.join(artifactDir, row.id);
+    await mkdir(directory, { recursive: true });
+    await writeFile(path.join(directory, artifactId + ".mp4"), file.buffer, { flag: "wx", mode: 0o600 });
+    res.status(201).json({ artifactKey, size: file.size });
+  });
+
+  router.get("/:id/artifact", requireUser, requireAdmin, (req, res) => {
+    const row = getJob.get(req.params.id);
+    if (!row || row.status !== "completed" || !isValidArtifactKey(row.id, row.artifact_key)) {
+      return res.status(404).json({ error: "Video artifact not found." });
+    }
+    const fileName = row.artifact_key.split("/")[1];
+    res.set({ "Cache-Control": "private, no-store", "X-Content-Type-Options": "nosniff" });
+    res.type("video/mp4").sendFile(path.join(artifactDir, row.id, fileName), error => {
+      if (error && !res.headersSent) res.status(error.statusCode === 404 ? 404 : 500).end();
+    });
   });
 
   router.post("/worker/claim", requireWorker, (req, res) => {
