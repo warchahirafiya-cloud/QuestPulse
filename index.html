@@ -28,10 +28,106 @@ footer{margin-top:30px;padding:25px 0;border-top:1px solid var(--line);color:var
 .offer-tools{display:grid;gap:16px}.search-panel{padding:20px;border:1px solid var(--line);border-radius:18px;background:linear-gradient(145deg,#17233add,#10182add)}.search-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px}.field{display:grid;gap:5px}.field label{font-size:.88rem;color:var(--muted)}.field input,.field select{width:100%;min-height:46px;border:1px solid var(--line);border-radius:10px;background:#0b1324;color:var(--text);padding:9px 11px;font:inherit}.field input:focus,.field select:focus{outline:2px solid #68d9d077;border-color:var(--cyan)}.search-actions{display:flex;gap:10px;align-items:center;flex-wrap:wrap;margin-top:14px}.search-actions button{cursor:pointer;border:0}.result-meta{display:flex;justify-content:space-between;gap:12px;align-items:center;flex-wrap:wrap;color:var(--muted);font-size:.9rem}.offer-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px}.offer-card{border:1px solid var(--line);border-radius:16px;background:#111c30;padding:17px;display:flex;flex-direction:column;gap:9px}.offer-card h3{font-size:1.08rem;line-height:1.5;margin:0}.offer-card p{color:var(--muted);margin:0;font-size:.92rem}.offer-tags{display:flex;gap:6px;flex-wrap:wrap}.offer-tags span{font-size:.76rem;border:1px solid var(--line);padding:3px 8px;border-radius:99px;color:var(--muted)}.offer-link{display:inline-flex;align-self:flex-start;color:var(--cyan);font-weight:800;margin-top:auto;padding-top:5px}.empty-state{padding:25px;border:1px dashed #ffffff38;border-radius:15px;text-align:center;color:var(--muted)}.empty-state strong{display:block;color:var(--text);font-size:1.1rem;margin-bottom:5px}
 @media(max-width:850px){.search-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.offer-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
 @media(max-width:560px){.search-grid,.offer-grid{grid-template-columns:1fr}.search-panel{padding:14px}}
+
+/* QuestPulse social-style redesign: Facebook-inspired, original branding */
+:root{
+ color-scheme:light;
+ --bg:#f0f2f5;--panel:#ffffff;--panel2:#f7f8fa;--line:#dce0e5;
+ --text:#1c1e21;--muted:#65676b;--violet:#1877f2;--cyan:#1877f2;
+ --warn:#b7791f;--shadow:0 1px 3px #00000012;
+}
+html[data-theme="dark"]{
+ color-scheme:dark;
+ --bg:#18191a;--panel:#242526;--panel2:#3a3b3c;--line:#3e4042;
+ --text:#e4e6eb;--muted:#b0b3b8;--violet:#4599ff;--cyan:#4599ff;
+ --warn:#f4bd62;--shadow:0 1px 3px #0005;
+}
+html[data-theme="auto"]{color-scheme:light}
+@media(prefers-color-scheme:dark){
+ html[data-theme="auto"]{
+  color-scheme:dark;--bg:#18191a;--panel:#242526;--panel2:#3a3b3c;
+  --line:#3e4042;--text:#e4e6eb;--muted:#b0b3b8;
+  --violet:#4599ff;--cyan:#4599ff;--warn:#f4bd62;--shadow:0 1px 3px #0005;
+ }
+}
+body{background:var(--bg);color:var(--text);line-height:1.65}
+.wrap{width:min(1180px,94%)}
+header{background:var(--panel);border-bottom:1px solid var(--line);box-shadow:var(--shadow)}
+nav{min-height:66px}
+.brand{color:var(--text);letter-spacing:-.5px}
+.brand span{color:#1877f2}
+.navlinks{color:var(--muted)}
+.navlinks a:hover,.drawer a:hover{color:var(--violet)}
+.menu-btn,.close-btn{background:var(--panel2);border-color:var(--line);color:var(--text)}
+.drawer{background:var(--panel);border-color:var(--line)}
+.drawer-links a{color:var(--muted)}
+.drawer-links a:hover{background:var(--panel2)}
+.hero{padding:35px 0 24px;gap:22px}
+.hero h1{font-size:clamp(2.1rem,5vw,3.45rem);letter-spacing:-1px}
+.eyebrow{color:#1877f2;border-color:#1877f244;background:#1877f210}
+.gradient{background:none;color:#1877f2;-webkit-text-fill-color:#1877f2}
+.lead{color:var(--muted)}
+.art{min-height:225px;border:1px solid var(--line);border-radius:18px;background:linear-gradient(145deg,#e7f3ff,#f7f8fa);color:#1877f2}
+.art span{color:#4b5563}
+.btn{background:#1877f2;color:#fff;box-shadow:none;border-radius:9px}
+.btn:hover{background:#166fe5}
+.btn.secondary{background:var(--panel);border:1px solid var(--line);color:var(--text)}
+section{padding:20px 0}
+.section-head h2{font-size:1.45rem;letter-spacing:-.3px}
+.section-head p{color:var(--muted)}
+.grid{gap:12px}
+.card,.step,.search-panel,.offer-card{
+ background:var(--panel);border:1px solid var(--line);border-radius:14px;
+ box-shadow:var(--shadow);color:var(--text);
+}
+.card{padding:17px}
+.card p,.offer-card p{color:var(--muted)}
+.icon{color:#1877f2}
+.notice{background:#e7f3ff;border-color:#cfe3ff;color:#344054}
+.notice strong{color:#1756a9}
+.search-panel{padding:17px}
+.field label{color:var(--muted)}
+.field input,.field select{background:var(--panel);border-color:var(--line);color:var(--text)}
+.offer-card{padding:16px}
+.offer-tags span,.world-tags span{background:var(--panel2);border-color:var(--line);color:var(--muted)}
+.offer-link,.links{color:#1877f2}
+.empty-state{border-color:var(--line);color:var(--muted)}
+.empty-state strong{color:var(--text)}
+.step b{color:#1877f2}
+footer{border-color:var(--line);color:var(--muted)}
+/* dark-mode surface corrections */
+html[data-theme="dark"] .art,
+html[data-theme="auto"] .art{background:linear-gradient(145deg,#1c3552,#242526);color:#8bbcff}
+html[data-theme="dark"] .art span,
+html[data-theme="auto"] .art span{color:#b0b3b8}
+html[data-theme="dark"] .notice,
+html[data-theme="auto"] .notice{background:#3a3020;border-color:#66512d;color:#f0dfbd}
+html[data-theme="dark"] .notice strong,
+html[data-theme="auto"] .notice strong{color:#ffdc91}
+.theme-btn{width:42px;height:42px;border:1px solid var(--line);border-radius:50%;background:var(--panel2);color:var(--text);font-size:1.12rem;cursor:pointer}
+.theme-btn:hover{border-color:#1877f2}
+.mobile-nav{display:none}
+@media(max-width:760px){
+ .wrap{width:min(100% - 24px,680px)}
+ .hero{padding:24px 0 14px}
+ .hero h1{font-size:2.2rem}
+ .art{min-height:145px}
+ .mobile-nav{
+  position:fixed;z-index:15;bottom:0;left:0;right:0;display:grid;
+  grid-template-columns:repeat(5,1fr);gap:2px;padding:7px 5px calc(7px + env(safe-area-inset-bottom));
+  background:var(--panel);border-top:1px solid var(--line);box-shadow:0 -2px 12px #00000012
+ }
+ .mobile-nav a,.mobile-nav button{display:grid;place-items:center;gap:1px;min-width:0;
+  border:0;background:transparent;color:var(--muted);font:inherit;font-size:.68rem;padding:3px 1px}
+ .mobile-nav .nav-icon{font-size:1.2rem;line-height:1.2;color:#1877f2}
+ body{padding-bottom:76px}
+ footer{padding-bottom:24px}
+}
+
 </style>
 </head>
 <body>
-<header><div class="wrap"><nav><a class="brand" href="./index.html">Quest<span>Pulse</span></a><div class="navright"><div class="navlinks"><a href="#home">الرئيسية</a><a href="#discover">الفرص العالمية</a><a href="#precise-search">البحث الدقيق</a><a href="./domain-hunter.html">💎 صياد النطاقات</a><a href="#categories">الأقسام</a><a href="#method">منهجية المراجعة</a><a href="./publish.html">النشر</a><a href="./publisher-account.html">حساب الناشر</a><a href="./admin-review.html">الإدارة</a></div><button class="menu-btn" id="openMenu" type="button" aria-label="فتح القائمة الجانبية" aria-controls="sideMenu" aria-expanded="false">☰</button></div></nav></div></header>
+<header><div class="wrap"><nav><a class="brand" href="./index.html">Quest<span>Pulse</span></a><div class="navright"><button class="theme-btn" id="themeToggle" type="button" aria-label="تغيير المظهر" title="المظهر: تلقائي">◐</button><div class="navlinks"><a href="#home">الرئيسية</a><a href="#discover">الفرص العالمية</a><a href="#precise-search">البحث الدقيق</a><a href="./domain-hunter.html">💎 صياد النطاقات</a><a href="#categories">الأقسام</a><a href="#method">منهجية المراجعة</a><a href="./publish.html">النشر</a><a href="./publisher-account.html">حساب الناشر</a><a href="./admin-review.html">الإدارة</a></div><button class="menu-btn" id="openMenu" type="button" aria-label="فتح القائمة الجانبية" aria-controls="sideMenu" aria-expanded="false">☰</button></div></nav></div></header>
 <div class="drawer-shade" id="drawerShade" aria-hidden="true"></div>
 <aside class="drawer" id="sideMenu" aria-label="القائمة الجانبية" aria-hidden="true">
 <div class="drawer-top"><h2>قائمة QuestPulse</h2><button class="close-btn" id="closeMenu" type="button" aria-label="إغلاق القائمة">×</button></div>
@@ -142,6 +238,28 @@ footer{margin-top:30px;padding:25px 0;border-top:1px solid var(--line);color:var
  form.addEventListener('submit',e=>{e.preventDefault();render();document.getElementById('discover').scrollIntoView({behavior:'smooth',block:'start'});});
  form.addEventListener('reset',()=>setTimeout(render,0));
  fetch('./data/offers.json',{cache:'no-store'}).then(r=>{if(!r.ok)throw Error('catalog unavailable');return r.json();}).then(data=>{offers=Array.isArray(data)?data.filter(o=>o&&o.status==='published'&&o.title&&o.url&&o.verifiedAt):[];const storeSelect=document.getElementById('store');const stores=[...new Set(offers.map(o=>String(o.store||'').trim()).filter(Boolean))].sort((a,b)=>a.localeCompare(b));storeSelect.innerHTML='<option value="">الكل</option>'+stores.map(s=>'<option value="'+safe(s)+'">'+safe(s)+'</option>').join('');render();}).catch(()=>{offers=[];render();count.textContent='تعذر تحميل الدليل';});
+})();
+</script>
+
+<nav class="mobile-nav" aria-label="التنقل السريع">
+ <a href="#home"><span class="nav-icon">⌂</span><span>الرئيسية</span></a>
+ <a href="#discover"><span class="nav-icon">⌕</span><span>الفرص</span></a>
+ <a href="#categories"><span class="nav-icon">▦</span><span>الأقسام</span></a>
+ <a href="#world"><span class="nav-icon">◎</span><span>العالم</span></a>
+ <button type="button" id="mobileMenuButton"><span class="nav-icon">☰</span><span>القائمة</span></button>
+</nav>
+
+<script>
+(()=> {
+ const root=document.documentElement,button=document.getElementById('themeToggle');
+ const modes=['auto','light','dark'],labels={auto:'تلقائي',light:'فاتح',dark:'داكن'},icons={auto:'◐',light:'☀',dark:'☾'};
+ let mode='auto';
+ try{const saved=localStorage.getItem('qp-theme');if(modes.includes(saved))mode=saved}catch(e){}
+ function apply(){root.setAttribute('data-theme',mode);if(button){button.textContent=icons[mode];button.title='المظهر: '+labels[mode];button.setAttribute('aria-label','المظهر الحالي: '+labels[mode]+'؛ اضغط للتغيير')}}
+ if(button)button.addEventListener('click',()=>{mode=modes[(modes.indexOf(mode)+1)%modes.length];try{localStorage.setItem('qp-theme',mode)}catch(e){}apply()});
+ const mobileMenu=document.getElementById('mobileMenuButton'),openMenu=document.getElementById('openMenu');
+ if(mobileMenu&&openMenu)mobileMenu.addEventListener('click',()=>openMenu.click());
+ apply();
 })();
 </script>
 </body></html>
