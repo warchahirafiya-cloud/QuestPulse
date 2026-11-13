@@ -54,6 +54,7 @@ Architecture documents:
 - [TLCE master data model](docs/TLCE_MASTER_DATA_MODEL.md)
 - [TLCE social API contract](docs/TLCE_SOCIAL_API_CONTRACT.md)
 - [TLCE modular-monolith repository blueprint](docs/TLCE_REPOSITORY_BLUEPRINT.md)
+- [TLCE Creative Studio & Universal Share architecture](docs/TLCE_CREATIVE_STUDIO_UNIVERSAL_SHARE_ARCHITECTURE.md)
 - [Q.P ↔ TLCE integration gap audit](docs/TLCE_QP_INTEGRATION_GAP_AUDIT.md)
 
 These documents are specifications, not live features or database migrations. The parent TLCE repository has not yet been located in the connected GitHub workspace, so implementation is gated on inspecting the real parent source. No runtime code, protected reference asset, deployment, or paid service is changed by this documentation work.
