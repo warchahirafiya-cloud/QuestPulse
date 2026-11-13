@@ -1,0 +1,7 @@
+{
+  "participant_id": "QP-TRAINER-001",
+  "role": "project_owner_human_trainer",
+  "identity_type": "pseudonymous_project_local_id",
+  "active": true,
+  "notes": "Human-in-the-loop reviewer. This identifier is not an authentication credential."
+}
