@@ -1,0 +1,40 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://questpulse.example/schemas/human-feedback.schema.json",
+  "title": "QuestPulse Human Review Feedback",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "feedback_id",
+    "participant_id",
+    "record_id",
+    "decision",
+    "reason_code",
+    "submitted_at",
+    "consent_scope",
+    "review_status"
+  ],
+  "properties": {
+    "feedback_id": { "type": "string", "minLength": 1, "maxLength": 128 },
+    "participant_id": { "type": "string", "const": "QP-TRAINER-001" },
+    "record_id": { "type": "string", "minLength": 1, "maxLength": 256 },
+    "decision": {
+      "type": "string",
+      "enum": ["accept", "correct", "reject", "uncertain", "request_more_evidence"]
+    },
+    "reason_code": { "type": "string", "minLength": 1, "maxLength": 128 },
+    "optional_correction": { "type": ["string", "object", "null"] },
+    "evidence_reference": { "type": ["string", "null"], "maxLength": 2048 },
+    "submitted_at": { "type": "string", "format": "date-time" },
+    "dataset_version": { "type": ["string", "null"], "maxLength": 128 },
+    "model_version": { "type": ["string", "null"], "maxLength": 128 },
+    "consent_scope": {
+      "type": "string",
+      "enum": ["project_quality_review", "training_dataset_candidate"]
+    },
+    "review_status": {
+      "type": "string",
+      "enum": ["pending", "approved_for_dataset", "excluded", "needs_adjudication"]
+    }
+  }
+}
