@@ -120,3 +120,43 @@ No social migrations, live social routes, frontend controls, or deployment have 
 This report adds documentation only. It does not change Q.P runtime source, database files, account records, `app.asar`, deployment configuration, external services, or paid infrastructure.
 
 **Architecture rule:** one central engine, multiple branches, one identity.
+
+## 8. Follow-up source search and verification notes
+
+A second source search was performed in the Q.P repository for `reaction`, `comment`, `share`, `report`, `notification`, and `idempotency`.
+
+- No implementation matches for a reaction endpoint or reaction handler were found in the searched default-branch source.
+- The `comment` matches were unrelated legacy/archive editorial text, not a live comments API.
+- The `share` matches were documentation or general editorial text, not a share-recording endpoint.
+- The `report` matches were unrelated editorial/ML documents, not a user-report API.
+- The notification match was in archived legacy frontend code, not a shared parent notification service.
+- No idempotency implementation match was found in the searched source.
+
+This is a repository code-search finding, not proof that no such feature exists in an unindexed branch, external service, or unsearched private repository.
+
+A fresh installed-repository search for `TLCE`, `The Last Cosmic Explosion`, and `cosmic explosion` returned no matching repository in the connected GitHub workspace. The parent source therefore remains an explicit blocker.
+
+## 9. Additional test and security review notes
+
+The package scripts expose `npm run test:api`, and the inspected test files cover validation helpers and security helpers such as origin checking, safe user projection, and cookie parsing. The source review did not establish a full HTTP-level integration test suite covering the complete registration/login/submission/moderation lifecycle or concurrent writes.
+
+Before production use, add tests for:
+
+- Authentication lifecycle and session expiry/revocation, including suspended accounts.
+- Authorization boundaries between publisher, moderator, administrator, and branch scopes.
+- Multipart upload rejection, cleanup on every failure path, content-signature mismatch, and path safety.
+- Moderation state transitions, reviewer attribution, and audit history.
+- Duplicate/replayed requests and concurrent actions.
+- Public content expiry and media access after pause, rejection, or deletion.
+- Rate-limit behavior under the actual deployment topology.
+- CSRF and origin policy under the intended frontend/API origin arrangement.
+
+These are test requirements, not claims that a vulnerability has been demonstrated. No live endpoint, deployed host, or production database was tested.
+
+## 10. Current readiness decision
+
+**Q.P prototype:** suitable for continued controlled development and review; not approved by this audit for public activation.
+
+**TLCE social integration:** design specified, implementation blocked until the actual parent source and contracts are available.
+
+**Next permitted engineering step without changing runtime code:** obtain the parent repository, then build a file-by-file integration map and a migration plan based on its real schema. Any runtime implementation, migration execution, deployment, or protected-file modification remains subject to the existing approval boundary.
