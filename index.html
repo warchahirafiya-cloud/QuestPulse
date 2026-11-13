@@ -96,10 +96,12 @@ section{padding:20px 0}
 .step b{color:#1877f2}
 footer{border-color:var(--line);color:var(--muted)}
 /* dark-mode surface corrections */
-html[data-theme="dark"] .art,
-html[data-theme="auto"] .art{background:linear-gradient(145deg,#1c3552,#242526);color:#8bbcff}
-html[data-theme="dark"] .art span,
-html[data-theme="auto"] .art span{color:#b0b3b8}
+html[data-theme="dark"] .art{background:linear-gradient(145deg,#1c3552,#242526);color:#8bbcff}
+html[data-theme="dark"] .art span{color:#b0b3b8}
+@media(prefers-color-scheme:dark){
+ html[data-theme="auto"] .art{background:linear-gradient(145deg,#1c3552,#242526);color:#8bbcff}
+ html[data-theme="auto"] .art span{color:#b0b3b8}
+}
 html[data-theme="dark"] .notice,
 html[data-theme="auto"] .notice{background:#3a3020;border-color:#66512d;color:#f0dfbd}
 html[data-theme="dark"] .notice strong,
