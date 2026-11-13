@@ -27,11 +27,13 @@ jobs:
         run: npm audit --omit=dev --audit-level=high
       - name: Check all backend and test JavaScript syntax
         run: |
-          for file in server/*.js server/tests/*.js; do
+          for file in server/*.js server/tests/*.js scripts/*.mjs; do
             node --check "$file"
           done
       - name: Test publisher API validation and security helpers
         run: npm run test:api
+      - name: Validate ML governance and human feedback contracts
+        run: npm run validate:ml
       - name: Validate website pages
         run: node scripts/validate-site.mjs
       - name: Validate published offers catalogue
