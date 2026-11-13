@@ -1,0 +1,33 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://questpulse.example/schemas/participant.schema.json",
+  "title": "QuestPulse Human Trainer Participant",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["participant_id", "role", "identity_type", "active"],
+  "properties": {
+    "participant_id": {
+      "type": "string",
+      "const": "QP-TRAINER-001"
+    },
+    "role": {
+      "type": "string",
+      "const": "project_owner_human_trainer"
+    },
+    "identity_type": {
+      "type": "string",
+      "const": "pseudonymous_project_local_id"
+    },
+    "active": {
+      "type": "boolean"
+    },
+    "created_at": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "notes": {
+      "type": "string",
+      "maxLength": 500
+    }
+  }
+}
