@@ -45,6 +45,18 @@ An empty public catalogue is intentional until real offers pass review. A listin
 - A Node.js + SQLite API scaffold now exists under `server/`; see [API Phase 2 setup](API_PHASE_2.md). It has account activation, server-side sessions, pending submissions, media validation, and admin review endpoints.
 - A secure backend is required before activating shared accounts, public submissions, or media hosting. No paid service or new Cloudflare dependency is enabled.
 
+## Parent TLCE integration architecture (design only)
+
+QuestPulse is an internal branch of **THE LAST COSMIC EXPLOSION (TLCE)**. The shared Social Engine (likes, comments, shares, reports, moderation, and notifications) is parent-owned; Q.P must consume it through parent contracts and must not create a separate identity or social database.
+
+Architecture documents:
+- [TLCE social engagement engine](docs/TLCE_SOCIAL_ENGAGEMENT_ENGINE.md)
+- [TLCE master data model](docs/TLCE_MASTER_DATA_MODEL.md)
+- [TLCE social API contract](docs/TLCE_SOCIAL_API_CONTRACT.md)
+- [TLCE modular-monolith repository blueprint](docs/TLCE_REPOSITORY_BLUEPRINT.md)
+
+These documents are specifications, not live features or database migrations. The parent TLCE repository has not yet been located in the connected GitHub workspace, so implementation is gated on inspecting the real parent source. No runtime code, protected reference asset, deployment, or paid service is changed by this documentation work.
+
 ## Free repository maintenance
 - GitHub Dependabot checks npm packages and GitHub Actions for updates weekly and can open update pull requests.
 - The quality workflow runs `npm audit` against production dependencies and stops for high-severity advisories.
