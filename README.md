@@ -56,6 +56,7 @@ Architecture documents:
 - [TLCE modular-monolith repository blueprint](docs/TLCE_REPOSITORY_BLUEPRINT.md)
 - [TLCE Creative Studio & Universal Share architecture](docs/TLCE_CREATIVE_STUDIO_UNIVERSAL_SHARE_ARCHITECTURE.md)
 - [Q.P ↔ TLCE integration gap audit](docs/TLCE_QP_INTEGRATION_GAP_AUDIT.md)
+- [TLCE Micro-Frontend & Component Architecture](docs/TLCE_MICRO_FRONTEND_COMPONENT_ARCHITECTURE.md)
 
 These documents are specifications, not live features or database migrations. The parent TLCE repository has not yet been located in the connected GitHub workspace, so implementation is gated on inspecting the real parent source. No runtime code, protected reference asset, deployment, or paid service is changed by this documentation work.
 
