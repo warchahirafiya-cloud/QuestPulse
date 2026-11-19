@@ -1,6 +1,6 @@
 import test from "node:test";
 import assert from "node:assert/strict";
-import { originGuard, safeUser, readCookie } from "../security.js";
+import { originGuard, requireAdmin, safeUser, readCookie } from "../security.js";
 
 function responseRecorder() {
   return {
@@ -61,6 +61,21 @@ test("origin guard allows safe read methods without an origin", () => {
       assert.equal(continued, true, method);
     }
   });
+});
+
+test("admin guard rejects publishers and allows administrators", () => {
+  const res = responseRecorder();
+  let continued = false;
+  requireAdmin({ user: { role: "publisher" } }, res, () => { continued = true; });
+  assert.equal(continued, false);
+  assert.equal(res.statusCode, 403);
+  assert.deepEqual(res.payload, { error: "Administrator access required." });
+
+  const adminRes = responseRecorder();
+  let adminContinued = false;
+  requireAdmin({ user: { role: "admin" } }, adminRes, () => { adminContinued = true; });
+  assert.equal(adminContinued, true);
+  assert.equal(adminRes.statusCode, 200);
 });
 
 test("public user projection excludes password hashes and internal fields", () => {
