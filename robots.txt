@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://getquestpulse.com/sitemap.xml
+Sitemap: https://tlce.store/sitemap.xml

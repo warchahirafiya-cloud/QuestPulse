@@ -13,6 +13,27 @@ for (const path of pages) {
     if (/\b(airdrop|cryptocurrency|web3|wallet|tokenomics|blockchain|mining)\b|إيردروب|محفظة|عملات مشفرة|تعدين/i.test(content)) errors.push("Out-of-scope material remains in active page: " + path);
   } catch {}
 }
+const canonicalFiles = ["index.html", "link-check.html", "privacy.html", "terms.html"];
+for (const path of canonicalFiles) {
+  const content = await readFile(new URL(path, root), "utf8");
+  if (content.includes("getquestpulse.com")) errors.push("Legacy domain remains in canonical page metadata: " + path);
+  if (!content.includes("https://tlce.store")) errors.push("Canonical page metadata is missing the TLCE domain: " + path);
+}
+const robots = await readFile(new URL("robots.txt", root), "utf8");
+if (!robots.includes("Sitemap: https://tlce.store/sitemap.xml") || robots.includes("getquestpulse.com")) {
+  errors.push("robots.txt must reference the TLCE sitemap and must not reference the retired domain.");
+}
+const sitemap = await readFile(new URL("sitemap.xml", root), "utf8");
+if (!sitemap.includes("<urlset") || !sitemap.includes("</urlset>") || /getquestpulse\.com/i.test(sitemap)) {
+  errors.push("sitemap.xml must be a valid URL-set shell and must not contain the retired domain.");
+}
+if ([...sitemap.matchAll(/<loc>(.*?)<\/loc>/g)].some(match => !match[1].startsWith("https://tlce.store/"))) {
+  errors.push("Every sitemap location must use the TLCE custom domain.");
+}
+const schema = JSON.parse(await readFile(new URL("schemas/publisher-submission.schema.json", root), "utf8"));
+if (schema.$id !== "https://tlce.store/schemas/publisher-submission.schema.json") {
+  errors.push("Publisher submission schema ID must use the TLCE custom domain.");
+}
 const home = await readFile(new URL("index.html", root), "utf8");
 for (const link of ["./guide.html","./domain-hunter.html","./publish.html","./publishing-policy.html","./publisher-account.html","./admin-review.html","./link-check.html","./account-safety.html","./privacy.html","./terms.html","./archive.html"]) {
   if (!home.includes(link)) errors.push("Homepage is missing link: " + link);

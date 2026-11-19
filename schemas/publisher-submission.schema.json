@@ -1,6 +1,6 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "$id": "https://getquestpulse.com/schemas/publisher-submission.schema.json",
+  "$id": "https://tlce.store/schemas/publisher-submission.schema.json",
   "title": "QuestPulse publisher submission",
   "type": "object",
   "additionalProperties": false,
