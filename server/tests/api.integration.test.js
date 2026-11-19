@@ -118,6 +118,12 @@ test("HTTP API enforces registration, sessions, publisher roles, moderation, pub
   const unauthenticatedAdmin = await request("/api/admin/submissions", { headers: {} });
   assert.equal(unauthenticatedAdmin.status, 401);
 
+  const concurrentRegistrations = await Promise.all([1, 2].map(() => request("/api/auth/register", {
+    method: "POST",
+    body: JSON.stringify({ displayName: "Race Publisher", accountType: "individual", email: "race@example.test", password: "race-password-2026" })
+  })));
+  assert.deepEqual(concurrentRegistrations.map(response => response.status).sort(), [202, 409]);
+
   const pendingLogin = await request("/api/auth/login", {
     method: "POST",
     body: JSON.stringify({ email: "publisher@example.test", password: "publisher-password-2026" })
@@ -142,7 +148,7 @@ test("HTTP API enforces registration, sessions, publisher roles, moderation, pub
 
   const adminUsers = await request("/api/admin/users?status=pending", { headers: { cookie: adminCookie } });
   assert.equal(adminUsers.status, 200);
-  assert.equal((await adminUsers.json()).users.length, 1);
+  assert.equal((await adminUsers.json()).users.length, 2);
 
   const activation = await request(`/api/admin/users/${registered.accountId}/activate`, {
     method: "PATCH", headers: { cookie: adminCookie },
@@ -200,6 +206,30 @@ test("HTTP API enforces registration, sessions, publisher roles, moderation, pub
     method: "POST", headers: { cookie: publisherCookie }, body: partialUpload
   });
   assert.equal(partialResponse.status, 400);
+  assert.deepEqual(await readdir(path.join(root, "uploads")), []);
+
+  const invalidMultipart = new FormData();
+  invalidMultipart.append("title", "Missing required post fields");
+  invalidMultipart.append("media", new Blob([Buffer.from([0xff, 0xd8, 0xff, 0xe0, 0, 16, 0x4a, 0x46, 0x49, 0x46, 0, 1, 2, 3, 4, 5])], { type: "image/jpeg" }), "orphan.jpg");
+  const invalidMultipartResponse = await request("/api/posts", {
+    method: "POST", headers: { cookie: publisherCookie }, body: invalidMultipart
+  });
+  assert.equal(invalidMultipartResponse.status, 400);
+  assert.deepEqual(await readdir(path.join(root, "uploads")), []);
+
+  const tooManyFiles = new FormData();
+  for (const [key, value] of Object.entries({
+    publisherName: "Test Publisher", postType: "opportunity", title: "Too many media files",
+    description: "This request exceeds the configured maximum number of media files.",
+    countries: "Algeria", disclosure: "no"
+  })) tooManyFiles.set(key, value);
+  for (let i = 0; i < 7; i += 1) {
+    tooManyFiles.append("media", new Blob([Buffer.from([0xff, 0xd8, 0xff, 0xe0, 0, 16, 0x4a, 0x46, 0x49, 0x46, 0, 1, 2, 3, 4, 5])], { type: "image/jpeg" }), `image-${i}.jpg`);
+  }
+  const tooManyResponse = await request("/api/posts", {
+    method: "POST", headers: { cookie: publisherCookie }, body: tooManyFiles
+  });
+  assert.equal(tooManyResponse.status, 400);
   assert.deepEqual(await readdir(path.join(root, "uploads")), []);
 
   const postForm = new FormData();
@@ -266,6 +296,15 @@ test("HTTP API enforces registration, sessions, publisher roles, moderation, pub
     method: "POST", body: JSON.stringify({ email: "publisher@example.test", password: "publisher-password-2026" })
   });
   assert.equal(suspendedLogin.status, 403);
+
+  const firstRateLimitedLogin = await request("/api/auth/login", {
+    method: "POST", body: JSON.stringify({ email: "publisher@example.test", password: "wrong-password-2026" })
+  });
+  assert.equal(firstRateLimitedLogin.status, 401);
+  const rateLimitedLogin = await request("/api/auth/login", {
+    method: "POST", body: JSON.stringify({ email: "publisher@example.test", password: "wrong-password-2026" })
+  });
+  assert.equal(rateLimitedLogin.status, 429);
 
   const expiredSession = await request("/api/auth/me", { headers: { cookie: publisherCookie } });
   assert.equal(expiredSession.status, 401);
