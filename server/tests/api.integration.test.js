@@ -104,6 +104,20 @@ test("HTTP API enforces registration, sessions, publisher roles, moderation, pub
   const registered = await registration.json();
   assert.equal(registered.status, "pending");
 
+  const duplicateRegistration = await request("/api/auth/register", {
+    method: "POST",
+    body: JSON.stringify({ displayName: "Duplicate", accountType: "individual", email: "PUBLISHER@example.test", password: "publisher-password-2026" })
+  });
+  assert.equal(duplicateRegistration.status, 409);
+
+  const wrongPassword = await request("/api/auth/login", {
+    method: "POST", body: JSON.stringify({ email: "publisher@example.test", password: "incorrect-password-2026" })
+  });
+  assert.equal(wrongPassword.status, 401);
+
+  const unauthenticatedAdmin = await request("/api/admin/submissions", { headers: {} });
+  assert.equal(unauthenticatedAdmin.status, 401);
+
   const pendingLogin = await request("/api/auth/login", {
     method: "POST",
     body: JSON.stringify({ email: "publisher@example.test", password: "publisher-password-2026" })
@@ -116,6 +130,15 @@ test("HTTP API enforces registration, sessions, publisher roles, moderation, pub
   });
   assert.equal(adminLogin.status, 200);
   const adminCookie = cookieFrom(adminLogin);
+
+  const invalidUserFilter = await request("/api/admin/users?status=all", { headers: { cookie: adminCookie } });
+  assert.equal(invalidUserFilter.status, 400);
+  const invalidSubmissionFilter = await request("/api/admin/submissions?status=all", { headers: { cookie: adminCookie } });
+  assert.equal(invalidSubmissionFilter.status, 400);
+  const invalidActivation = await request(`/api/admin/users/${registered.accountId}/activate`, {
+    method: "PATCH", headers: { cookie: adminCookie }, body: JSON.stringify({ status: "admin" })
+  });
+  assert.equal(invalidActivation.status, 400);
 
   const adminUsers = await request("/api/admin/users?status=pending", { headers: { cookie: adminCookie } });
   assert.equal(adminUsers.status, 200);
@@ -137,6 +160,9 @@ test("HTTP API enforces registration, sessions, publisher roles, moderation, pub
   const me = await request("/api/auth/me", { headers: { cookie: publisherCookie } });
   assert.equal(me.status, 200);
   assert.equal((await me.json()).user.role, "publisher");
+
+  const forbiddenDomainHunter = await request("/api/domain-hunter", { headers: { cookie: publisherCookie } });
+  assert.equal(forbiddenDomainHunter.status, 403);
 
   const forbiddenAdmin = await request("/api/admin/submissions", { headers: { cookie: publisherCookie } });
   assert.equal(forbiddenAdmin.status, 403);
@@ -207,6 +233,11 @@ test("HTTP API enforces registration, sessions, publisher roles, moderation, pub
   const hiddenMedia = await request(`/api/media/${mediaId}`, { headers: {} });
   assert.equal(hiddenMedia.status, 404);
 
+  const invalidModeration = await request(`/api/admin/posts/${submitted.postId}/review`, {
+    method: "PATCH", headers: { cookie: adminCookie }, body: JSON.stringify({ action: "publish_now" })
+  });
+  assert.equal(invalidModeration.status, 400);
+
   const approved = await request(`/api/admin/posts/${submitted.postId}/review`, {
     method: "PATCH", headers: { cookie: adminCookie },
     body: JSON.stringify({ action: "approve", note: "Verified by integration test." })
@@ -227,6 +258,15 @@ test("HTTP API enforces registration, sessions, publisher roles, moderation, pub
     method: "POST", headers: { cookie: publisherCookie }, body: "{}"
   });
   assert.equal(logout.status, 204);
+  const suspendedPublisher = await request("/api/admin/users/${registered.accountId}/activate", {
+    method: "PATCH", headers: { cookie: adminCookie }, body: JSON.stringify({ status: "suspended" })
+  });
+  assert.equal(suspendedPublisher.status, 200);
+  const suspendedLogin = await request("/api/auth/login", {
+    method: "POST", body: JSON.stringify({ email: "publisher@example.test", password: "publisher-password-2026" })
+  });
+  assert.equal(suspendedLogin.status, 403);
+
   const expiredSession = await request("/api/auth/me", { headers: { cookie: publisherCookie } });
   assert.equal(expiredSession.status, 401);
 });
