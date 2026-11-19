@@ -56,7 +56,7 @@ function clean(value, max = 1200) {
 }
 async function getText(url, accept) {
   const response = await fetch(url, {
-    headers: { "user-agent": "QuestPulseOfferIndexer/1.0 (+https://getquestpulse.com)", accept },
+    headers: { "user-agent": "QuestPulseOfferIndexer/1.0 (+https://tlce.store)", accept },
     signal: AbortSignal.timeout(25000)
   });
   if (!response.ok) throw new Error("HTTP " + response.status);

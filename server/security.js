@@ -7,6 +7,13 @@ export function originGuard(req, res, next) {
   }
   next();
 }
+export function requireAdmin(req, res, next) {
+  if (req.user?.role !== "admin") {
+    return res.status(403).json({ error: "Administrator access required." });
+  }
+  next();
+}
+
 export function safeUser(user) {
   return { id: user.id, displayName: user.display_name, accountType: user.account_type, email: user.email, role: user.role, status: user.status };
 }

@@ -5,6 +5,7 @@ on:
     - cron: "17 3 * * *"
   workflow_dispatch:
   push:
+    branches: [main]
     paths:
       - "data/offers.json"
       - "data/inbox.json"
@@ -24,6 +25,7 @@ permissions:
 
 jobs:
   maintain:
+    if: github.ref == 'refs/heads/main'
     name: Discover candidates, expire offers, and validate catalogues
     runs-on: ubuntu-latest
     steps:

@@ -5,7 +5,7 @@
 QuestPulse combines a public global offers feed with precise search by eligible country, category, reward type, merchant, availability, and expiry. It covers rewards and gifts, online stores, discounts and coupons, competitions, loyalty programmes, apps, tasks, and referral offers.
 
 ## Live project
-- Website: https://getquestpulse.com
+- Website: https://tlce.store
 - Repository: https://github.com/warchahirafiya-cloud/QuestPulse
 
 ## Current scope
@@ -42,7 +42,7 @@ An empty public catalogue is intentional until real offers pass review. A listin
 - The publisher page supports local draft preparation, HTTPS link checks, image/video previews, and JSON metadata export.
 - Important: this static GitHub Pages release does not yet provide real user authentication, shared uploads, central submission, or live moderation. Drafts stay in the visitor's browser. Do not treat a local draft as a submitted or published post.
 - See [Publisher Center](publish.html), [Publisher Account](publisher-account.html), [Admin Review](admin-review.html), [Multi-Publisher Policy](publishing-policy.html), and [submission schema](schemas/publisher-submission.schema.json).
-- A Node.js + SQLite API scaffold now exists under `server/`; see [API Phase 2 setup](API_PHASE_2.md). It has account activation, server-side sessions, pending submissions, media validation, and admin review endpoints.
+- A Node.js + SQLite API scaffold now exists under `server/`; see [API Phase 2 setup](API_PHASE_2.md). It has account activation, server-side sessions, pending submissions, media validation, and admin review endpoints. The shared Domain Hunter candidate list is restricted to administrator accounts.
 - A secure backend is required before activating shared accounts, public submissions, or media hosting. No paid service or new Cloudflare dependency is enabled.
 
 ## Parent TLCE integration architecture (design only)
