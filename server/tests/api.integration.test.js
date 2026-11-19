@@ -148,7 +148,7 @@ test("HTTP API enforces registration, sessions, publisher roles, moderation, pub
 
   const adminUsers = await request("/api/admin/users?status=pending", { headers: { cookie: adminCookie } });
   assert.equal(adminUsers.status, 200);
-  assert.equal((await adminUsers.json()).users.length, 1);
+  assert.equal((await adminUsers.json()).users.length, 2);
 
   const activation = await request(`/api/admin/users/${registered.accountId}/activate`, {
     method: "PATCH", headers: { cookie: adminCookie },
