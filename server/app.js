@@ -9,7 +9,7 @@ import { randomUUID } from "node:crypto";
 import { db } from "./db.js";
 import { hashPassword, verifyPassword, hashToken, makeToken, newId } from "./auth.js";
 import { accountSchema, postSchema } from "./validation.js";
-import { originGuard, safeUser, readCookie } from "./security.js";
+import { originGuard, requireAdmin, safeUser, readCookie } from "./security.js";
 import { domainHunter } from "./domain-hunter.js";
 
 const app = express();
@@ -43,7 +43,6 @@ function requireUser(req,res,next){
   if(!user || user.status!=="active")return res.status(401).json({error:"Session is invalid or account is not active."});
   req.user=user;req.sessionToken=token;next();
 }
-function requireAdmin(req,res,next){if(req.user?.role!=="admin")return res.status(403).json({error:"Administrator access required."});next();}
 function setSession(res,userId){const token=makeToken();statements.insertSession.run(hashToken(token),userId,Date.now()+sessionDays*86400000,new Date().toISOString());res.cookie(cookieName,token,cookieOptions);}
 function cleanFiles(files=[]){return Promise.all(files.map(file=>unlink(file.path).catch(()=>{})));}
 const storage=multer.diskStorage({destination:(_req,_file,cb)=>cb(null,uploadDir),filename:(_req,file,cb)=>cb(null,randomUUID()+path.extname(file.originalname).toLowerCase())});
@@ -66,7 +65,8 @@ async function hasValidSignature(file){
 function postView(row){return {...row,media:db.prepare("SELECT id,mime_type AS mimeType,media_kind AS kind,original_name AS name,size_bytes AS size FROM media WHERE post_id=?").all(row.id).map(m=>({...m,url:"/api/media/"+m.id}))};}
 function publicPostView(row){return {id:row.id,publisherType:row.publisher_type,publisherName:row.publisher_name,postType:row.post_type,title:row.title,description:row.description,website:row.website,offerUrl:row.offer_url,countries:row.countries,expiresAt:row.expires_at,rewardValue:row.reward_value,productPrice:row.product_price,disclosure:row.disclosure,createdAt:row.created_at,media:postView(row).media};}
 app.get("/api/health",(_req,res)=>res.json({ok:true,service:"QuestPulse API",version:"0.2.0"}));
-app.use("/api/domain-hunter", requireUser, domainHunter);
+// Domain candidates are shared project data; only administrators may inspect or change them.
+app.use("/api/domain-hunter", requireUser, requireAdmin, domainHunter);
 
 app.post("/api/auth/register",authLimit,async(req,res)=>{
  const parsed=accountSchema.safeParse(req.body);if(!parsed.success)return res.status(400).json({error:"Invalid registration details.",details:parsed.error.issues.map(x=>({field:x.path.join("."),message:x.message}))});
