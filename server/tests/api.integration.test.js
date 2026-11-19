@@ -2,7 +2,7 @@ import test, { before, after } from "node:test";
 import assert from "node:assert/strict";
 import { spawn } from "node:child_process";
 import { createServer } from "node:net";
-import { mkdtemp, rm } from "node:fs/promises";
+import { mkdtemp, rm, readdir } from "node:fs/promises";
 import os from "node:os";
 import path from "node:path";
 import { once } from "node:events";
@@ -140,6 +140,41 @@ test("HTTP API enforces registration, sessions, publisher roles, moderation, pub
 
   const forbiddenAdmin = await request("/api/admin/submissions", { headers: { cookie: publisherCookie } });
   assert.equal(forbiddenAdmin.status, 403);
+
+  const unauthenticatedSubmission = await request("/api/posts", { method: "POST", body: new FormData() });
+  assert.equal(unauthenticatedSubmission.status, 401);
+
+  const invalidPost = await request("/api/posts", {
+    method: "POST", headers: { cookie: publisherCookie }, body: JSON.stringify({ title: "missing required fields" })
+  });
+  assert.equal(invalidPost.status, 400);
+
+  const spoofedImage = new FormData();
+  for (const [key, value] of Object.entries({
+    publisherName: "Test Publisher", postType: "opportunity", title: "Spoofed media test",
+    description: "This post should fail because the image bytes do not match the declared media type.",
+    countries: "Algeria", disclosure: "no"
+  })) spoofedImage.set(key, value);
+  spoofedImage.append("media", new Blob(["not a real jpeg"], { type: "image/jpeg" }), "spoof.jpg");
+  const spoofedResponse = await request("/api/posts", {
+    method: "POST", headers: { cookie: publisherCookie }, body: spoofedImage
+  });
+  assert.equal(spoofedResponse.status, 400);
+  assert.deepEqual(await readdir(path.join(root, "uploads")), []);
+
+  const partialUpload = new FormData();
+  for (const [key, value] of Object.entries({
+    publisherName: "Test Publisher", postType: "opportunity", title: "Partial upload cleanup",
+    description: "The first valid file must be removed when the second file is rejected.",
+    countries: "Algeria", disclosure: "no"
+  })) partialUpload.set(key, value);
+  partialUpload.append("media", new Blob([Buffer.from([0xff, 0xd8, 0xff, 0xe0, 0, 16, 0x4a, 0x46, 0x49, 0x46, 0, 1, 2, 3, 4, 5])], { type: "image/jpeg" }), "first.jpg");
+  partialUpload.append("media", new Blob(["not allowed"], { type: "text/plain" }), "second.txt");
+  const partialResponse = await request("/api/posts", {
+    method: "POST", headers: { cookie: publisherCookie }, body: partialUpload
+  });
+  assert.equal(partialResponse.status, 400);
+  assert.deepEqual(await readdir(path.join(root, "uploads")), []);
 
   const postForm = new FormData();
   for (const [key, value] of Object.entries({
