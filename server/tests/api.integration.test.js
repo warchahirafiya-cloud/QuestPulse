@@ -284,18 +284,34 @@ test("HTTP API enforces registration, sessions, publisher roles, moderation, pub
   assert.equal(visibleMedia.status, 200);
   assert.equal(visibleMedia.headers.get("x-content-type-options"), "nosniff");
 
-  const logout = await request("/api/auth/logout", {
-    method: "POST", headers: { cookie: publisherCookie }, body: "{}"
+  const paused = await request(`/api/admin/posts/${submitted.postId}/review`, {
+    method: "PATCH", headers: { cookie: adminCookie }, body: JSON.stringify({ action: "pause", note: "Pause visibility test." })
   });
-  assert.equal(logout.status, 204);
+  assert.equal(paused.status, 200);
+  assert.equal((await (await request("/api/posts", { headers: {} })).json()).posts.length, 0);
+  assert.equal((await request(`/api/media/${mediaId}`, { headers: {} })).status, 404);
+
+  const republished = await request(`/api/admin/posts/${submitted.postId}/review`, {
+    method: "PATCH", headers: { cookie: adminCookie }, body: JSON.stringify({ action: "approve", note: "Restore after visibility test." })
+  });
+  assert.equal(republished.status, 200);
+  assert.equal((await (await request("/api/posts", { headers: {} })).json()).posts.length, 1);
+  assert.equal((await request(`/api/media/${mediaId}`, { headers: {} })).status, 200);
+
   const suspendedPublisher = await request(`/api/admin/users/${registered.accountId}/activate`, {
     method: "PATCH", headers: { cookie: adminCookie }, body: JSON.stringify({ status: "suspended" })
   });
   assert.equal(suspendedPublisher.status, 200);
+  const revokedSession = await request("/api/auth/me", { headers: { cookie: publisherCookie } });
+  assert.equal(revokedSession.status, 401);
   const suspendedLogin = await request("/api/auth/login", {
     method: "POST", body: JSON.stringify({ email: "publisher@example.test", password: "publisher-password-2026" })
   });
   assert.equal(suspendedLogin.status, 403);
+  const logout = await request("/api/auth/logout", {
+    method: "POST", headers: { cookie: publisherCookie }, body: "{}"
+  });
+  assert.equal(logout.status, 204);
 
   const firstRateLimitedLogin = await request("/api/auth/login", {
     method: "POST", body: JSON.stringify({ email: "publisher@example.test", password: "wrong-password-2026" })
