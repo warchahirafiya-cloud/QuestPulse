@@ -24,10 +24,10 @@ if (!robots.includes("Sitemap: https://tlce.store/sitemap.xml") || robots.includ
   errors.push("robots.txt must reference the TLCE sitemap and must not reference the retired domain.");
 }
 const sitemap = await readFile(new URL("sitemap.xml", root), "utf8");
-if (!sitemap.includes("<urlset") || !sitemap.includes("</urlset>") || /getquestpulse\\.com/i.test(sitemap)) {
+if (!sitemap.includes("<urlset") || !sitemap.includes("</urlset>") || /getquestpulse\.com/i.test(sitemap)) {
   errors.push("sitemap.xml must be a valid URL-set shell and must not contain the retired domain.");
 }
-if ([...sitemap.matchAll(/<loc>(.*?)<\\/loc>/g)].some(match => !match[1].startsWith("https://tlce.store/"))) {
+if ([...sitemap.matchAll(/<loc>(.*?)<\/loc>/g)].some(match => !match[1].startsWith("https://tlce.store/"))) {
   errors.push("Every sitemap location must use the TLCE custom domain.");
 }
 const schema = JSON.parse(await readFile(new URL("schemas/publisher-submission.schema.json", root), "utf8"));
