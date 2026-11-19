@@ -51,6 +51,15 @@ const upload=multer({storage,limits:{files:6,fileSize:Number(process.env.MAX_VID
  if(images.includes(file.mimetype)||videos.includes(file.mimetype))return cb(null,true);
  cb(new Error("Unsupported media type."));
 }});
+
+// Multer can fail after earlier files have already reached disk. Remove those
+// partial uploads before passing the error to the centralized response handler.
+function receivePostMedia(req,res,next){
+ upload.array("media",6)(req,res,async error=>{
+  if(error){await cleanFiles(req.files||[]);return next(error)}
+  next();
+ });
+}
 async function hasValidSignature(file){
  const {open}=await import("node:fs/promises");const handle=await open(file.path,"r");const b=Buffer.alloc(16);try{await handle.read(b,0,16,0)}finally{await handle.close()}
  if(file.mimetype==="image/jpeg")return b[0]===0xff&&b[1]===0xd8&&b[2]===0xff;
@@ -91,7 +100,7 @@ app.get("/api/posts",(_req,res)=>{
  const rows=db.prepare("SELECT * FROM posts WHERE status='published' AND (expires_at IS NULL OR expires_at='' OR expires_at>=date('now')) ORDER BY created_at DESC LIMIT 100").all();
  res.json({posts:rows.map(publicPostView)});
 });
-app.post("/api/posts",requireUser,submitLimit,upload.array("media",6),async(req,res)=>{
+app.post("/api/posts",requireUser,submitLimit,receivePostMedia,async(req,res)=>{
  const files=req.files||[];
  try{
   const parsed=postSchema.safeParse(req.body);if(!parsed.success){await cleanFiles(files);return res.status(400).json({error:"Invalid post details.",details:parsed.error.issues.map(x=>({field:x.path.join("."),message:x.message}))})}
