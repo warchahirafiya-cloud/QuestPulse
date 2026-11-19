@@ -258,7 +258,7 @@ test("HTTP API enforces registration, sessions, publisher roles, moderation, pub
     method: "POST", headers: { cookie: publisherCookie }, body: "{}"
   });
   assert.equal(logout.status, 204);
-  const suspendedPublisher = await request("/api/admin/users/${registered.accountId}/activate", {
+  const suspendedPublisher = await request(`/api/admin/users/${registered.accountId}/activate`, {
     method: "PATCH", headers: { cookie: adminCookie }, body: JSON.stringify({ status: "suspended" })
   });
   assert.equal(suspendedPublisher.status, 200);
