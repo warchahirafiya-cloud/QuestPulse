@@ -30,7 +30,6 @@ jobs:
           mkdir -p _site/assets _site/data
 
           # Public website pages and root-level static assets only.
-          cp ./*.html ./
           cp ./*.html _site/
           cp ./*.css _site/
           cp ./*.js _site/
