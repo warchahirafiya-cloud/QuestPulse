@@ -37,3 +37,41 @@ table,th,td,hr{border-color:#303030!important}
 ::selection{background:#777!important;color:#fff!important}
 :focus-visible{outline:2px solid #c8c8c8!important;outline-offset:3px}
 @media(prefers-reduced-motion:reduce){*,*:before,*:after{animation:none!important;transition:none!important;scroll-behavior:auto!important}}
+
+/* v2: hard override for legacy inline homepage styles and stale theme variables */
+:root{
+ color-scheme:dark!important;
+ --bg:#050505!important;--panel:#0d0d0d!important;--panel-2:#151515!important;
+ --line:#303030!important;--text:#e7e7e7!important;--muted:#a4a4a4!important;
+ --cyan:#c9c9c9!important;--violet:#d8d8d8!important;--warn:#c6c6c6!important;
+ --accent:linear-gradient(110deg,#dedede,#a4a4a4)!important;
+ --shadow:0 18px 55px #0009!important;
+}
+html,body{background:#050505!important;background-image:none!important;color:#e7e7e7!important}
+body{background-color:#050505!important}
+header,.drawer,.topbar,.navbar,footer{background:#080808!important;background-image:none!important;border-color:#303030!important}
+.drawer-label,.eyebrow,.brand span,.navlinks a:hover,.drawer a:hover,.gradient{
+ color:#d5d5d5!important;background:none!important;-webkit-text-fill-color:#d5d5d5!important;
+}
+.btn,.actions .btn,.hero .btn,button:not(.secondary):not(.alt),input[type=submit],input[type=button]{
+ background:#e6e6e6!important;background-image:none!important;color:#080808!important;
+ border:1px solid #777!important;box-shadow:none!important;
+}
+.btn.secondary,.btn.alt,button.secondary,button.alt,.menu-btn,.close-btn{
+ background:#151515!important;background-image:none!important;color:#e7e7e7!important;border-color:#444!important;
+}
+.art,.hero-art,.visual,.illustration{
+ background:#101010!important;background-image:none!important;border-color:#333!important;
+}
+.eyebrow,.tag,.badge,.pill,.chip{
+ background:#171717!important;background-image:none!important;border-color:#444!important;color:#d0d0d0!important;
+}
+.panel,.item,.card,.type,.notice,.box,.section,.search-panel,.offer-card,.step,.draft,.preview,.result-card,.stat-card,.drawer{
+ background:#0d0d0d!important;background-image:none!important;border-color:#303030!important;color:#e7e7e7!important;
+}
+a{color:#d2d2d2!important}
+a:hover{color:#fff!important}
+h1,h2,h3,h4,h5,strong,b,legend{color:#ededed!important}
+p,small,label,.muted,.help,.hint,.description,.subtle,.field label,.lead{color:#a4a4a4!important}
+input,textarea,select{background:#090909!important;color:#e7e7e7!important;border-color:#383838!important}
+::selection{background:#777!important;color:#fff!important}
