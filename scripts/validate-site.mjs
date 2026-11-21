@@ -35,7 +35,8 @@ if (schema.$id !== "https://tlce.store/schemas/publisher-submission.schema.json"
   errors.push("Publisher submission schema ID must use the TLCE custom domain.");
 }
 const home = await readFile(new URL("index.html", root), "utf8");
-for (const link of ["./guide.html","./domain-hunter.html","./publish.html","./publishing-policy.html","./publisher-account.html","./admin-review.html","./link-check.html","./account-safety.html","./privacy.html","./terms.html","./archive.html"]) {
+if (home.includes("./admin-review.html")) errors.push("Inactive admin review must not be linked from the public homepage.");
+for (const link of ["./guide.html","./domain-hunter.html","./publish.html","./publishing-policy.html","./publisher-account.html","./link-check.html","./account-safety.html","./privacy.html","./terms.html","./archive.html"]) {
   if (!home.includes(link)) errors.push("Homepage is missing link: " + link);
 }
 for (const phrase of ["QuestPulse","الاستبيانات","المهام","منهجية المراجعة","كل الفرص العالمية","البحث الدقيق","اغتنم فرصة","مكافأة مباشرة","منتوج جديد"]) {
