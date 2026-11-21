@@ -1,0 +1,39 @@
+/* TLCE global design system: deep black surfaces and soft silver typography */
+:root{
+ color-scheme:dark;
+ --bg:#050505;--panel:#0d0d0d;--panel-2:#151515;--line:#303030;
+ --text:#e7e7e7;--muted:#a4a4a4;--cyan:#c9c9c9;--violet:#d8d8d8;--warn:#c6c6c6;
+}
+html,body{background:#050505!important;color:#e7e7e7!important}
+body{background:var(--bg)!important;color:var(--text)!important}
+header,footer,.topbar,.navbar{background:#080808!important;border-color:#303030!important}
+nav{border-color:#303030!important}
+a{color:#d2d2d2!important}
+a:hover{color:#fff!important}
+h1,h2,h3,h4,h5,strong,b,legend{color:#ededed!important}
+p,small,label,.muted,.help,.hint,.description,.subtle,.field label{color:#a4a4a4}
+.panel,.item,.card,.type,.notice,.box,.section,.search-panel,.offer-card,.step,.draft,.preview,.result-card,.stat-card{
+ background:#0e0e0e!important;border-color:#303030!important;color:#e7e7e7!important;
+ box-shadow:0 12px 32px #0007!important;
+}
+.btn,button:not(.secondary):not(.alt),input[type="submit"],input[type="button"]{
+ background:#e6e6e6!important;color:#080808!important;border-color:#555!important;
+}
+.btn:hover,button:not(.secondary):not(.alt):hover,input[type="submit"]:hover{background:#fff!important;color:#050505!important}
+.btn.secondary,.btn.alt,button.secondary,button.alt{
+ background:#141414!important;color:#e7e7e7!important;border-color:#383838!important;
+}
+input,textarea,select{
+ background:#090909!important;color:#e7e7e7!important;border-color:#383838!important;
+}
+input::placeholder,textarea::placeholder{color:#777!important}
+input:focus,textarea:focus,select:focus{outline:2px solid #888!important;border-color:#aaa!important}
+.notice{background:#111!important;border-color:#383838!important;color:#c7c7c7!important}
+.notice strong{color:#f0f0f0!important}
+.status,.tag,.badge,.pill,.chip{color:#c9c9c9!important}
+.tag,.badge,.pill,.chip{background:#161616!important;border-color:#3a3a3a!important}
+pre,code{background:#111!important;color:#ddd!important;border-color:#333!important}
+table,th,td,hr{border-color:#303030!important}
+::selection{background:#777!important;color:#fff!important}
+:focus-visible{outline:2px solid #c8c8c8!important;outline-offset:3px}
+@media(prefers-reduced-motion:reduce){*,*:before,*:after{animation:none!important;transition:none!important;scroll-behavior:auto!important}}
