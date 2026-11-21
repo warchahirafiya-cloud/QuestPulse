@@ -31,6 +31,7 @@ jobs:
 
           # Public website pages and root-level static assets only.
           cp ./*.html _site/
+          rm -f _site/admin-review.html
           cp ./*.css _site/
           cp ./*.js _site/
           cp CNAME manifest.webmanifest robots.txt sitemap.xml _site/
@@ -44,14 +45,18 @@ jobs:
           test -s _site/CNAME
           test ! -e _site/data/inbox.json
           test ! -e _site/server
+          test ! -e _site/admin-review.html
           test ! -e _site/backups
           test ! -e _site/archive
 
       - name: Upload Pages artifact
         uses: actions/upload-pages-artifact@v3
         with:
+          name: github-pages-${{ github.run_id }}
           path: _site
 
       - name: Deploy to GitHub Pages without creating a Pages site
         id: deployment
         uses: actions/deploy-pages@v5
+        with:
+          artifact_name: github-pages-${{ github.run_id }}
