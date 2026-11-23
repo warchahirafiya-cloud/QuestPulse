@@ -4,9 +4,10 @@
 
 QuestPulse combines a public global offers feed with precise search by eligible country, category, reward type, merchant, availability, and expiry. It covers rewards and gifts, online stores, discounts and coupons, competitions, loyalty programmes, apps, tasks, and referral offers.
 
-## Live project
-- Website: https://tlce.store
+## Parent platform and deployment
+- Parent platform: https://tlce.store
 - Repository: https://github.com/warchahirafiya-cloud/QuestPulse
+- QuestPulse is an internal TLCE module. Production hosting and the `tlce.store` custom domain are owned by the parent TLCE repository; this repository is not an independent Pages deployment target.
 
 ## Current scope
 The active project is focused on non-cryptocurrency rewards and digital earning opportunities. Cryptocurrency, blockchain, token, mining, and wallet-related features are excluded from the active website and remain only in the historical archive.
